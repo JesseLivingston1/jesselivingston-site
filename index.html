@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesse Livingston — UX Research & Prototyping</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%237F77DD'/><text x='16' y='22.5' text-anchor='middle' font-family='Georgia,serif' font-size='21' font-weight='700' fill='white'>J</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{--p:#7F77DD;--pl:#AFA9EC;--pg:rgba(127,119,221,.15);--bg:#1E2025;--bg2:#252830;--bg3:#2C2F38;--card:#2A2D36;--tx:#E8E6F0;--t2:#B8B5C6;--mt:#7B7891;--bd:rgba(127,119,221,.12);--bh:rgba(127,119,221,.3);--wm:#E8A87C;--gn:#7DD4A7;--bl:#77B8DD;--r:12px;--rs:8px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(30,32,37,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
+.nl{font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:var(--tx);text-decoration:none;cursor:pointer}.nl span{color:var(--pl)}
+.nv{position:fixed;top:0;right:40px;height:64px;display:flex;align-items:center;gap:6px;list-style:none;z-index:101}
+.nt{font-family:'DM Mono',monospace;font-size:12px;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;padding:8px 16px;border-radius:6px;cursor:pointer;border:none;background:none}.nt:hover{color:var(--pl);background:var(--pg)}.nt.on{color:var(--pl);background:var(--pg)}
+.nc{background:var(--p)!important;color:#fff!important;font-weight:500!important}.nc:hover{background:#6E66CC!important}
+.hm{display:none;background:none;border:none;cursor:pointer;padding:4px}.hm span{display:block;width:22px;height:2px;background:var(--t2);margin:5px 0;border-radius:2px}
+.tp{display:none;min-height:calc(100vh - 64px);padding-top:64px}.tp.on{display:block;animation:pgfade .25s ease}@keyframes pgfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.ps{padding:80px 40px;max-width:1200px;margin:0 auto}
+.sl{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--pl);margin-bottom:14px}
+.st{font-family:'Fraunces',serif;font-size:clamp(28px,3.5vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:14px}
+.ss{font-size:16px;color:var(--t2);max-width:600px;line-height:1.7}
+.bp{display:inline-flex;align-items:center;gap:8px;background:var(--p);color:#fff;font-family:'DM Sans';font-size:14px;font-weight:600;padding:14px 28px;border-radius:var(--rs);border:none;cursor:pointer;text-decoration:none}.bp:hover{background:#6E66CC;transform:translateY(-2px)}
+.bs{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--tx);font-family:'DM Sans';font-size:14px;font-weight:500;padding:14px 28px;border-radius:var(--rs);border:1px solid var(--bh);cursor:pointer;text-decoration:none}.bs:hover{border-color:var(--p);background:var(--pg)}
+.hero-grid{display:grid;grid-template-columns:1fr 360px;gap:70px;align-items:center;padding-top:20px}
+.hol{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--pl);margin-bottom:20px;display:flex;align-items:center;gap:12px}.hol::before{content:'';width:32px;height:1px;background:var(--p)}
+.hh{font-family:'Fraunces',serif;font-size:clamp(36px,4.5vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1.1;margin-bottom:24px}.hh em{font-style:italic;color:var(--pl);font-weight:400}
+.hd{font-size:16px;color:var(--t2);line-height:1.75;margin-bottom:32px;max-width:520px}
+.hctas{display:flex;gap:16px;flex-wrap:wrap}
+.hr{display:flex;flex-direction:column;gap:16px}
+.headshot{width:100%;aspect-ratio:1;border-radius:20px;overflow:hidden;border:2px solid var(--bd)}.headshot img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.cstrip{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.crd{background:var(--card);border:1px solid var(--bd);border-radius:var(--rs);padding:14px 16px;text-align:center}.crd b{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--pl);line-height:1;display:block}.crd small{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--mt);margin-top:4px;display:block}
+.logos{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px}
+.lgo{display:flex;align-items:center;gap:7px;color:var(--mt);font-size:13px;font-weight:500}.lgo img,.lgo svg{flex-shrink:0}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:36px}
+.atxt p{color:var(--t2);font-size:15px;margin-bottom:18px;line-height:1.8}
+.aphil{background:var(--card);border-left:3px solid var(--p);border-radius:0 var(--r) var(--r) 0;padding:24px 28px}.aphil h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:10px}.aphil p{color:var(--t2);font-size:14px;line-height:1.7}
+.pgd{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.pri{background:var(--bg3);border-radius:var(--rs);padding:16px}.pri-i{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}.pri h4{font-size:13px;font-weight:600;margin-bottom:3px}.pri p{font-size:12px;color:var(--mt);line-height:1.5}
+.fgd{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+.fc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:28px 24px;position:relative;overflow:hidden}.fc:hover{border-color:var(--bh);transform:translateY(-3px);transition:.2s}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}.fc:nth-child(1)::before{background:var(--p)}.fc:nth-child(2)::before{background:var(--wm)}.fc:nth-child(3)::before{background:var(--gn)}
+.fci{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.fc:nth-child(1) .fci{background:var(--pg);color:var(--pl)}.fc:nth-child(2) .fci{background:rgba(232,168,124,.15);color:var(--wm)}.fc:nth-child(3) .fci{background:rgba(125,212,167,.15);color:var(--gn)}
+.fc h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin-bottom:8px}.fc p{color:var(--t2);font-size:14px;line-height:1.7;margin-bottom:14px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--mt);background:var(--bg3);padding:4px 10px;border-radius:4px}
+.mcg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px}
+.mc{background:var(--card);border:1px solid var(--bd);border-radius:var(--rs);padding:16px 18px}.mc h4{font-size:14px;font-weight:600;margin-bottom:3px}.mc p{font-size:12px;color:var(--mt);line-height:1.5}
+.pra{background:var(--card);border:1px solid var(--bh);border-radius:var(--r);padding:20px 24px;margin-top:20px;display:flex;align-items:center;gap:16px}
+.prai{width:42px;height:42px;border-radius:10px;background:rgba(125,212,167,.15);color:var(--gn);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.egd{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+.eng{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:32px 24px;display:flex;flex-direction:column}.eng.ft{border-color:var(--p);background:linear-gradient(180deg,rgba(127,119,221,.08),var(--card));position:relative}
+.eng.ft::after{content:'Most Popular';position:absolute;top:-1px;right:24px;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--bg);background:var(--p);padding:6px 14px;border-radius:0 0 6px 6px}
+.et{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--pl);margin-bottom:6px}
+.en{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:8px}
+.ed{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:20px}
+.ep{font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:var(--pl);margin-bottom:4px}.ep span{font-size:14px;font-weight:400;color:var(--mt);font-family:'DM Sans'}
+.eno{font-size:12px;color:var(--mt);margin-bottom:20px}
+.ef{list-style:none;flex:1;margin-bottom:20px}.ef li{font-size:13px;color:var(--t2);padding:5px 0;display:flex;gap:10px;line-height:1.5}.ef li::before{content:'→';color:var(--pl);flex-shrink:0}
+.pgt{text-align:center;max-width:480px;margin:36px auto 0}.pgt p{color:var(--t2);font-size:15px;margin-bottom:24px;line-height:1.7}.pgt a{color:var(--pl);text-decoration:none}
+.pwf{display:flex;gap:12px;justify-content:center}
+.pwi{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 20px;font-family:'DM Mono',monospace;font-size:14px;color:var(--tx);width:220px;outline:none}.pwi:focus{border-color:var(--p)}.pwi::placeholder{color:var(--mt)}
+.pwe{color:#E87C7C;font-size:13px;margin-top:12px;display:none}
+.pc{display:none;margin-top:36px}.pc.vis{display:block}
+.ptabs{display:flex;gap:6px;margin-bottom:24px;justify-content:center}
+.ptb{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:10px 20px;border-radius:8px;cursor:pointer;border:1px solid var(--bd);background:none;color:var(--t2)}.ptb:hover{border-color:var(--bh)}.ptb.on{background:var(--pg);border-color:var(--p);color:var(--pl)}
+.pp{display:none}.pp.on{display:block}
+.cgd{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.cc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:.2s}.cc:hover{border-color:var(--bh);transform:translateY(-3px)}
+.cch{padding:24px 24px 0}
+.cco{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--pl);margin-bottom:6px;display:flex;align-items:center;gap:8px}.cco img,.cco svg{flex-shrink:0}
+.cct{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:8px}
+.ccd{font-size:13px;color:var(--t2);line-height:1.65;margin-bottom:12px}
+.ccm{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 24px;border-top:1px solid var(--bd);background:var(--bg3)}
+.ccmi{display:flex;flex-direction:column;gap:2px}
+.ccml{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--mt);display:block}
+.ccmv{font-size:12px;color:var(--t2);display:block}
+/* Proto cards */
+.prcard{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:28px;margin-bottom:20px;display:flex;gap:24px;align-items:flex-start}
+.prcard-icon{width:56px;height:56px;border-radius:14px;background:var(--pg);color:var(--pl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prcard h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:6px}
+.prcard p{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px}
+.prcard .prtags{margin-top:8px}
+/* Modals */
+.mo{display:none;position:fixed;inset:0;z-index:200;background:rgba(10,10,14,.8);backdrop-filter:blur(8px);overflow-y:auto;padding:40px 20px}.mo.vis{display:flex;justify-content:center}
+.mdl{background:var(--bg2);border:1px solid var(--bd);border-radius:20px;max-width:780px;width:100%;margin:auto;position:relative}
+.mx{position:absolute;top:20px;right:20px;background:var(--bg3);border:1px solid var(--bd);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);font-size:18px;z-index:2}.mx:hover{border-color:var(--p)}
+.mhd{padding:40px 40px 0}.mbd{padding:24px 40px 40px}
+.mdl h2{font-family:'Fraunces',serif;font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:8px}
+.mdl h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin-top:28px;margin-bottom:10px}
+.mdl p{color:var(--t2);font-size:15px;line-height:1.8;margin-bottom:12px}.mdl p strong{color:var(--tx)}
+.mtg{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ins{background:var(--bg3);border-left:3px solid var(--p);border-radius:0 var(--rs) var(--rs) 0;padding:16px 20px;margin:16px 0}.ins p{color:var(--tx);font-style:italic;margin:0}
+.imp{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}.imp::before{content:'\2726';color:var(--pl);flex-shrink:0;margin-top:2px}.imp p{margin:0}
+.fw{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.fi{background:var(--bg);border-radius:var(--rs);padding:16px}.fi h4{font-size:14px;font-weight:600;color:var(--pl);margin-bottom:4px}.fi p{font-size:13px;color:var(--mt);margin:0;line-height:1.5}
+.clb{background:var(--bg3);border-radius:var(--rs);padding:16px 20px;margin:16px 0;display:flex;align-items:flex-start;gap:12px}.clb p{color:var(--t2);font-size:14px;line-height:1.6;margin:0}
+.ctf{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:32px}
+.fg{margin-bottom:16px}.fg label{display:block;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mt);margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 16px;font-family:'DM Sans';font-size:14px;color:var(--tx);outline:none}.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--p)}.fg textarea{resize:vertical;min-height:100px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fok{display:none;text-align:center;padding:40px}.fok.vis{display:block}.fok h3{font-family:'Fraunces',serif;font-size:22px;margin-bottom:10px}.fok p{color:var(--t2)}
+footer{border-top:1px solid var(--bd);padding:28px 40px;text-align:center}footer p{font-size:13px;color:var(--mt)}
+@media(max-width:900px){
+nav{padding:0 20px}.ps{padding:60px 20px}.nv{display:none;right:0}.nv.mob{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;bottom:0;background:#1E2025;padding:32px 20px;gap:8px;z-index:150}.hm{display:block}
+.hero-grid,.agrid{grid-template-columns:1fr;gap:40px}.hr{max-width:320px}
+.fgd,.egd{grid-template-columns:1fr}.mcg,.cgd,.fw,.pgd{grid-template-columns:1fr}
+.fr,.ccm{grid-template-columns:1fr}.mhd,.mbd{padding-left:24px;padding-right:24px}
+.pra{flex-direction:column;text-align:center}.prcard{flex-direction:column}
+}
+
+
+</style>
+<style>
+
+.cm-app{display:flex;flex-direction:column;overflow:hidden;border-radius:0 0 var(--r) var(--r);height:620px}
+.cm-topbar{height:48px;background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0}
+.cm-topbar-logo{font-family:'Fraunces',serif;font-size:15px;font-weight:700}.cm-topbar-logo span{color:var(--pl)}
+.cm-topbar-div{width:1px;height:20px;background:var(--bd)}
+.cm-topbar-title{font-size:13px;color:var(--t2)}
+.cm-pipbar{display:flex;align-items:center;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--bd);gap:0;flex-shrink:0;overflow-x:auto}
+.cm-step{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:8px 16px;border-radius:6px;cursor:pointer;border:none;background:none;color:var(--mt);transition:all .15s;white-space:nowrap}
+.cm-step:hover{color:var(--t2);background:var(--bg3)}
+.cm-step.on{color:var(--pl);background:var(--pg)}
+.cm-step.done{color:var(--gn)}
+.cm-step.done::after{content:'\2713';margin-left:5px;font-size:9px}
+.cm-arrow{color:var(--mt);font-size:14px;margin:0 3px;flex-shrink:0}
+.cm-content{flex:1;overflow-y:auto;padding:28px 32px}
+.cm-pg{display:none}.cm-pg.on{display:block}
+.cm-content h2{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:4px;letter-spacing:-.02em}
+.cm-content h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px}
+.cm-content p.sub{color:var(--t2);font-size:13px;margin-bottom:18px}
+.cm-drop{border:2px dashed var(--bh);border-radius:var(--r);padding:40px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.cm-drop:hover{border-color:var(--p);background:var(--pg)}
+.cm-drop-icon{font-size:28px;color:var(--mt);margin-bottom:8px}
+.cm-drop h4{font-size:15px;font-weight:600;margin-bottom:3px}
+.cm-drop p{color:var(--mt);font-size:13px;margin:0}
+.cm-doc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px 20px;margin-top:14px;display:none;align-items:center;gap:14px}
+.cm-doc.vis{display:flex}
+.cm-dlabel{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--pl);margin-bottom:10px}
+.cm-dcard{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:14px 18px;margin-bottom:8px}
+.cm-dcard.core{border-left:3px solid var(--p);border-radius:0 8px 8px 0}
+.cm-dcard h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.cm-dcard p{font-size:12px;color:var(--t2);line-height:1.6;margin:0}
+.cm-dcard .src{font-family:'DM Mono',monospace;font-size:9px;color:var(--mt);margin-top:5px}
+.cm-outline{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.cm-outline-hd{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.cm-outline-hd h3{margin:0}
+.cm-oi{padding:12px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px;cursor:grab;transition:background .1s;font-size:13px}
+.cm-oi:hover{background:var(--bg3)}
+.cm-oi:last-child{border-bottom:none}
+.cm-oi-handle{color:var(--mt);font-size:13px}
+.cm-oi-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--pl);width:20px;text-align:center}
+.cm-oi-text{flex:1}.cm-oi-text strong{font-weight:600}
+.cm-oi-text span{color:var(--mt);font-size:12px}
+.cm-oi-acts{display:flex;gap:4px}
+.cm-oi-act{width:26px;height:26px;border-radius:5px;background:var(--bg3);border:none;color:var(--mt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
+.cm-oi-act:hover{color:var(--pl);background:var(--pg)}
+.cm-sh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cm-sh{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px;cursor:pointer;transition:border-color .15s,background .15s}
+.cm-sh:hover{border-color:var(--bh)}
+.cm-sh.sel{border-color:var(--p);background:var(--pg)}
+.cm-sh-av{width:36px;height:36px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--pl);margin-bottom:8px}
+.cm-sh-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.cm-sh-role{font-size:11px;color:var(--mt);margin-bottom:6px}
+.cm-sh-cares{font-size:11px;color:var(--t2);line-height:1.4}
+.cm-sh-cares strong{color:var(--pl);font-size:10px;display:block;margin-bottom:1px}
+.cm-review{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:28px;max-width:620px}
+.cm-review h3{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin:0 0 4px;letter-spacing:-.02em}
+.cm-review .rsub{font-size:13px;color:var(--mt);margin-bottom:20px}
+.cm-rsec{margin-bottom:20px}
+.cm-rsec h4{font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:8px;padding-left:12px;border-left:3px solid var(--p)}
+.cm-rb{display:flex;gap:8px;margin-bottom:8px;font-size:13px;color:var(--t2);line-height:1.6}
+.cm-rb::before{content:'\2192';color:var(--pl);flex-shrink:0}
+.cm-rb .tag-src{font-family:'DM Mono',monospace;font-size:9px;color:var(--mt);background:var(--bg3);padding:1px 6px;border-radius:3px;white-space:nowrap;margin-left:3px}
+.cm-racts{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd)}
+.cm-btn-p{display:inline-flex;align-items:center;gap:6px;background:var(--p);color:#fff;font-family:'DM Sans';font-size:12px;font-weight:600;padding:9px 16px;border-radius:6px;border:none;cursor:pointer}
+.cm-btn-p:hover{background:#6E66CC}
+.cm-btn-s{display:inline-flex;align-items:center;gap:6px;background:none;color:var(--t2);font-family:'DM Sans';font-size:12px;padding:9px 16px;border-radius:6px;border:1px solid var(--bh);cursor:pointer}
+.cm-btn-s:hover{border-color:var(--p);background:var(--pg)}
+.cm-fw-chips{display:flex;gap:6px;margin-bottom:14px}
+.cm-fw-chip{font-size:11px;padding:6px 12px;border:1px solid var(--bd);border-radius:6px;color:var(--t2);cursor:pointer;background:none;transition:.15s}
+.cm-fw-chip:hover{border-color:var(--bh)}
+.cm-fw-chip.on{border-color:var(--p);color:var(--pl);background:var(--pg)}
+@media(max-width:900px){.cm-content{padding:20px 16px}.cm-sh-grid{grid-template-columns:1fr}}
+
+</style>
+<style>
+/* ARIA PROTOTYPE */
+
+:root{--a-bg:#1E2025;--a-card:#252830;--a-deep:#0D0E11;--a-border:rgba(255,255,255,0.08);--a-border-hover:rgba(255,255,255,0.15);--a-purple:#7F77DD;--a-purple-light:#AFA9EC;--a-purple-dark:rgba(127,119,221,0.25);--a-text:#F0EFF4;--a-muted:rgba(255,255,255,0.5);--a-dim:rgba(255,255,255,0.3);--a-serif:'Fraunces',serif;--a-sans:'DM Sans',sans-serif;--a-mono:'DM Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}.aria-wrap{color:var(--a-text);font-family:var(--a-sans);overflow-x:hidden;position:relative;border-radius:0 0 12px 12px}
+.aria-wrap ::selection{background:rgba(127,119,221,0.3)}.aria-wrap ::-webkit-scrollbar{width:6px}.aria-wrap ::-webkit-scrollbar-track{background:transparent}.aria-wrap ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,180,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,180,0.015) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes gentlePulse{0%,100%{opacity:0.6}50%{opacity:1}}
+@keyframes slideProgress{0%{width:5%}50%{width:70%}100%{width:95%}}
+@keyframes dotPulse{0%,100%{transform:scale(0.8);opacity:0.4}50%{transform:scale(1.2);opacity:1}}
+.fade-up{animation:fadeUp 0.5s ease both}.fd1{animation:fadeUp 0.5s ease 0.08s both}.fd2{animation:fadeUp 0.5s ease 0.16s both}.fd3{animation:fadeUp 0.5s ease 0.24s both}.fd4{animation:fadeUp 0.5s ease 0.32s both}.fd5{animation:fadeUp 0.5s ease 0.4s both}
+.app{position:relative;z-index:1;min-height:600px;display:flex;flex-direction:column}
+/* Top Nav */
+.top-nav{display:flex;align-items:center;gap:10px;padding:12px 24px;background:rgba(30,32,37,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--a-border);position:sticky;top:0;z-index:10}
+.logo-lockup{display:flex;align-items:center;gap:8px;cursor:pointer}
+.logo-icon{width:22px;height:22px;border-radius:4px;background:linear-gradient(135deg,var(--a-purple),var(--a-purple-light));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;font-family:var(--a-mono)}
+.logo-text{font-family:var(--a-sans);font-weight:700;font-size:15px;letter-spacing:-0.3px}
+.logo-sub{color:#fff}.logo-note{color:var(--a-purple-light)}
+.logo-aria{font-family:var(--a-serif);font-weight:400;font-size:13px;color:var(--a-muted);margin-left:2px;letter-spacing:0.5px}
+.project-name{font-size:12px;color:var(--a-muted);font-family:var(--a-mono);margin-left:8px}
+.project-name::before{content:"·";margin-right:10px;color:rgba(255,255,255,0.15)}
+.nav-spacer{flex:1}
+.nav-btn{background:none;border:1px solid var(--a-border);border-radius:6px;padding:5px 10px;cursor:pointer;display:flex;align-items:center;transition:all 0.15s;color:var(--a-muted)}
+.nav-btn:hover{border-color:var(--a-border-hover);color:var(--a-text)}
+/* Step Nav */
+.step-nav{display:flex;align-items:flex-start;gap:0;padding:12px 24px;max-width:900px;margin:0 auto;width:100%;justify-content:center}
+.step-pill{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:4px 0;transition:opacity 0.15s}
+.step-pill:hover{opacity:0.9}
+.sn{width:20px;height:20px;border-radius:50%;font-size:9px;font-weight:600;font-family:var(--a-mono);display:flex;align-items:center;justify-content:center;line-height:1;text-align:center;transition:all 0.2s}
+.sn.active{background:var(--a-purple);color:#fff;border:1px solid var(--a-purple);box-shadow:0 0 10px rgba(127,119,221,0.35)}
+.sn.done{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
+.sn.future{background:rgba(255,255,255,0.04);color:var(--a-dim);border:1px solid rgba(255,255,255,0.08)}
+.step-nav .sl{font-size:9px;font-weight:500;line-height:1;text-align:center;letter-spacing:.06em;text-transform:uppercase;transition:all 0.2s}.step-nav .sl.active{color:var(--a-text);font-weight:600}.step-nav .sl.done{color:rgba(255,255,255,0.5)}.step-nav .sl.future{color:var(--a-dim)}
+.step-line{height:1px;flex:1;margin:0 4px;margin-top:10px;transition:all 0.3s}.step-line.done{background:rgba(52,211,153,0.15)}.step-line.future{background:rgba(255,255,255,0.06)}
+/* Sub Nav */
+.sub-nav{display:flex;align-items:center;gap:0;margin-bottom:28px}
+.sub-pill{display:flex;align-items:center;gap:8px;cursor:pointer;transition:opacity 0.2s}
+.sub-pill.disabled{opacity:0.35;cursor:default}
+.sub-num{width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:600;font-family:var(--a-mono);display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.sub-num.active{background:var(--a-purple);color:#fff;border:1px solid var(--a-purple)}
+.sub-num.done{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
+.sub-num.future{background:rgba(255,255,255,0.06);color:var(--a-dim);border:1px solid rgba(255,255,255,0.1)}
+.sub-label{font-size:11.5px;font-weight:400;font-family:var(--a-sans);transition:color 0.2s}
+.sub-label.active{font-weight:600;color:var(--a-text)}.sub-label.done{color:rgba(255,255,255,0.6)}.sub-label.future{color:var(--a-dim)}
+.sub-line{height:1px;flex:1;margin:0 12px;transition:background 0.3s}.sub-line.done{background:rgba(52,211,153,0.15)}.sub-line.future{background:rgba(255,255,255,0.06)}
+/* Content */
+.content{max-width:900px;margin:0 auto;padding:32px 24px;flex:1;width:100%;animation:fadeIn 0.15s ease}
+.aria-wrap h1{font-family:var(--a-serif);font-weight:900;font-size:36px;color:var(--a-text);letter-spacing:-1px;margin-bottom:6px;line-height:1.15}
+h1 .a{color:var(--a-purple-light)}
+.sub-t{font-size:13px;color:var(--a-muted);line-height:1.6;margin-bottom:24px}
+/* Cards */
+.card{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;padding:18px 22px;margin-bottom:12px;transition:border-color 0.2s}
+.card:hover{border-color:rgba(127,119,221,0.25)}
+/* Buttons */
+.btn{padding:10px 20px;font-size:13px;font-weight:600;border-radius:8px;cursor:pointer;font-family:var(--a-sans);transition:all 0.15s;border:none;display:inline-flex;align-items:center;gap:8px}
+.btn-p{background:var(--a-purple);color:#fff;box-shadow:0 4px 20px rgba(127,119,221,0.25)}
+.btn-p:hover{background:#8B84E3;box-shadow:0 4px 24px rgba(127,119,221,0.35)}
+.btn-g{background:transparent;color:var(--a-purple-light);border:1px solid rgba(127,119,221,0.3)}
+.btn-g:hover{background:rgba(127,119,221,0.08);border-color:rgba(127,119,221,0.5)}
+.btn-m{background:transparent;color:var(--a-muted);border:1px solid var(--a-border)}
+.btn-m:hover{border-color:var(--a-border-hover);color:var(--a-text)}
+/* Misc */
+.sec-l{font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;font-family:var(--a-mono);margin-bottom:8px}
+.badge{font-size:8px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--a-mono);padding:2px 8px;border-radius:4px;display:inline-flex}
+.progress-bar{height:2px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;width:200px;margin:0 auto}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--a-purple),var(--a-purple-light));border-radius:2px;animation:slideProgress 3s ease-in-out infinite}
+.file-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--a-card);border:1px solid var(--a-border);border-radius:8px;font-size:12px;margin-right:8px;margin-bottom:8px;transition:border-color 0.15s}
+.file-chip:hover{border-color:var(--a-border-hover)}
+.file-icon{width:24px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;font-family:var(--a-mono);text-transform:uppercase}
+/* Theme card */
+.tc{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;margin-bottom:10px;transition:border-color 0.2s;overflow:hidden}
+.tc:hover{border-color:rgba(127,119,221,0.25)}
+.tc-head{padding:16px 20px;display:flex;align-items:flex-start;gap:12px}
+.tc-title{font-size:15px;font-weight:600;line-height:1.45;flex:1}
+.tc-expand{background:rgba(255,255,255,0.04);border:1px solid var(--a-border);border-radius:5px;color:var(--a-muted);cursor:pointer;font-size:13px;padding:4px 8px;font-family:var(--a-mono);transition:all 0.15s;flex-shrink:0}
+.tc-expand:hover{border-color:var(--a-border-hover);background:rgba(255,255,255,0.08)}
+.tc-meta{display:flex;gap:6px;padding:0 20px 8px;flex-wrap:wrap;align-items:center}
+.tc-body{padding:0 20px 16px;display:none}
+.tc-body.open{display:block}
+.bullet{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.bullet::before{content:"•";color:rgba(255,255,255,0.25);font-size:6px;flex-shrink:0}
+.bullet-t{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.55}
+.ev-fn{font-size:9px;font-weight:700;color:rgba(127,119,221,0.5);cursor:pointer;font-family:var(--a-mono);padding:0 3px;vertical-align:super;line-height:1;margin-left:2px;transition:color 0.12s;border-radius:3px}
+.ev-fn:hover{color:var(--a-purple-light);background:rgba(127,119,221,0.12)}
+.tc-quote{font-size:12px;font-style:italic;color:rgba(255,255,255,0.5);padding:8px 16px;margin:0 20px 14px;border-left:2px solid rgba(127,119,221,0.3);border-radius:0 6px 6px 0;background:rgba(127,119,221,0.04)}
+.tc-quote .src{display:block;font-style:normal;font-size:10px;color:var(--a-dim);margin-top:4px;font-family:var(--a-mono)}
+.tc-action{font-size:12px;padding:0 20px 14px}
+.tc-action strong{color:var(--a-purple-light);font-weight:600}
+.tc-action .stakes{color:rgba(248,113,113,0.7);font-size:11px;margin-top:2px}
+/* Headline card */
+.hl-card{padding:18px 22px;background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;margin-bottom:16px;position:relative;overflow:hidden;transition:border-color 0.2s}
+.hl-card:hover{border-color:rgba(127,119,221,0.25)}
+.hl-card .bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a-purple),var(--a-purple-light),transparent)}
+.hl-text{font-size:16px;font-weight:600;line-height:1.4;margin-bottom:6px}
+.hl-summary{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
+.hl-meta{display:flex;gap:16px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05);font-size:11px;color:rgba(255,255,255,0.4)}
+.hl-meta span{font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--a-dim);font-family:var(--a-mono);margin-right:4px}
+/* Framework pills */
+.fw{padding:7px 14px;font-size:11px;background:rgba(255,255,255,0.02);color:var(--a-muted);border:1px solid var(--a-border);border-radius:20px;cursor:pointer;font-family:var(--a-sans);transition:all 0.15s}
+.fw.on{background:rgba(127,119,221,0.12);color:var(--a-purple-light);border-color:rgba(127,119,221,0.35);font-weight:600}
+.fw:hover:not(.on){border-color:rgba(127,119,221,0.2);color:var(--a-text)}
+/* Bones */
+.bone{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--a-card);border:1px solid var(--a-border);border-radius:8px;margin-bottom:2px;cursor:grab;transition:all 0.15s}
+.bone:hover{border-color:rgba(127,119,221,0.25)}
+.bone.dragging{opacity:0.4}.bone.drag-over{border-color:rgba(127,119,221,0.4);background:rgba(127,119,221,0.08)}
+.bone-grip{font-size:10px;color:var(--a-dim);font-family:var(--a-mono);flex-shrink:0}
+.bone-title{font-size:12.5px;color:rgba(255,255,255,0.8);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.bridge{padding:4px 0 4px 34px;margin-bottom:2px;font-size:10px;color:rgba(127,119,221,0.45);font-family:var(--a-mono);font-style:italic;cursor:default;transition:color 0.12s}
+.bridge:hover{color:rgba(127,119,221,0.7)}
+.stage-l{display:flex;align-items:center;gap:8px;margin-bottom:6px;margin-top:8px}
+.stage-bar{width:3px;height:14px;border-radius:2px;background:var(--a-purple-light)}
+.stage-txt{font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--a-purple-light);font-family:var(--a-mono)}
+.open-block{padding:10px 16px;background:rgba(56,189,248,0.04);border:1px solid rgba(56,189,248,0.12);border-radius:8px;margin-bottom:12px}
+.close-block{padding:10px 16px;background:rgba(52,211,153,0.04);border:1px solid rgba(52,211,153,0.12);border-radius:8px;margin-top:12px}
+.bl-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--a-mono);margin-bottom:4px}
+.bl-text{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5}
+/* Slides */
+.slide-layout{display:flex;gap:16px;margin-bottom:28px}
+.thumb-strip{width:160px;flex-shrink:0;display:flex;flex-direction:column;gap:2px;max-height:440px;overflow-y:auto}
+.thumb{padding:8px 10px;background:var(--a-card);border:1px solid var(--a-border);border-radius:6px;cursor:pointer;transition:all 0.15s;font-size:8px;color:var(--a-muted);line-height:1.3;min-height:36px;position:relative}
+.thumb:hover{border-color:var(--a-border-hover)}
+.thumb.on{border-color:rgba(127,119,221,0.4);background:rgba(127,119,221,0.06)}
+.thumb .t-type{font-size:7px;font-weight:600;text-transform:uppercase;font-family:var(--a-mono);color:var(--a-purple-light);margin-bottom:2px;letter-spacing:0.04em}
+.slide-canvas{background:#F8F7FC;border:1px solid var(--a-border);border-radius:12px;aspect-ratio:16/9;position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 60px}
+.slide-canvas .g-bar{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--a-purple),var(--a-purple-light),transparent)}
+.slide-canvas .corner-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(127,119,221,0.15)}
+.slide-counter{position:absolute;bottom:10px;right:14px;font-size:10px;color:rgba(127,119,221,0.4);font-family:var(--a-mono)}
+.notes-panel{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;margin-top:12px}
+.notes-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--a-border)}
+.notes-body{padding:12px 16px;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7}
+/* Target */
+.int-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:6px;font-size:10px;font-weight:500;font-family:var(--a-mono)}
+.rc{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;margin-bottom:8px;transition:border-color 0.2s;overflow:hidden}
+.rc:hover{border-color:rgba(127,119,221,0.2)}
+.rc-head{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer}
+.rc-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:600;font-family:var(--a-mono)}
+.rc-name{font-size:14px;font-weight:600}
+.rc-role{font-weight:400;color:var(--a-muted);font-size:12px}
+.rc-rationale{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.4;margin-top:2px}
+.rc-sources{display:flex;align-items:center;gap:6px;margin-top:3px}
+.rc-src{font-size:8px;font-weight:600;letter-spacing:0.04em;font-family:var(--a-mono);text-transform:uppercase}
+.rc-body{padding:0 18px 14px;display:none}
+.rc-body.open{display:block}
+.rc-insight{font-size:10px;padding:4px 10px;border-radius:6px;background:rgba(127,119,221,0.08);border:1px solid rgba(127,119,221,0.15);color:var(--a-purple-light);margin:0 4px 4px 0;display:inline-block;transition:all 0.12s}
+.rc-insight:hover{background:rgba(127,119,221,0.15);border-color:rgba(127,119,221,0.3)}
+.scan-dots{display:flex;gap:3px}
+.scan-dot{width:4px;height:4px;border-radius:50%;background:#34d399;animation:dotPulse 1.5s ease infinite}
+.scan-dot:nth-child(2){animation-delay:0.3s}.scan-dot:nth-child(3){animation-delay:0.6s}
+/* Brief */
+.brief-card{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;padding:20px 24px;margin-bottom:14px;position:relative;transition:border-color 0.2s}
+.brief-card:hover{border-color:rgba(127,119,221,0.2)}
+.brief-to{font-size:11px;color:var(--a-dim);font-family:var(--a-mono);margin-bottom:4px}
+.brief-subj{font-size:14px;font-weight:600;margin-bottom:10px}
+.brief-body{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;white-space:pre-line}
+.brief-copy{position:absolute;top:14px;right:16px;background:rgba(255,255,255,0.03);border:1px solid var(--a-border);border-radius:4px;color:var(--a-muted);cursor:pointer;padding:4px 10px;font-size:10px;font-family:var(--a-mono);transition:all 0.15s}
+.brief-copy:hover{border-color:var(--a-purple-light);color:var(--a-purple-light)}
+/* Finale */
+.export-card{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s}
+.export-card:hover{border-color:rgba(127,119,221,0.3);background:rgba(127,119,221,0.04)}
+.export-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.export-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.export-desc{font-size:12px;color:var(--a-muted)}
+/* Footer */
+.footer{padding:16px 24px;text-align:center;border-top:1px solid var(--a-border);margin-top:auto}
+.footer-text{font-size:10px;color:var(--a-dim);font-family:var(--a-mono);letter-spacing:0.06em}
+/* Utility */
+.screen{display:none}.screen.vis{display:block}
+.action-bar{display:flex;gap:12px;align-items:center;margin-top:28px;flex-wrap:wrap}
+.spacer{flex:1}
+.share-pill{padding:3px 8px 3px 10px;border-radius:20px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.04);border:1px solid var(--a-border);font-family:var(--a-sans);display:inline-flex;align-items:center;gap:5px;margin:0 4px 4px 0}
+.share-x{cursor:pointer;color:rgba(255,255,255,0.3);font-size:13px;line-height:1;transition:color 0.1s}
+.share-x:hover{color:#f87171}
+/* Intro */
+.intro-hero{text-align:center;padding:80px 24px 60px;max-width:700px;margin:0 auto}
+.intro-hero h1{font-size:48px;margin-bottom:16px}
+.intro-hero .tagline{font-size:15px;color:var(--a-muted);line-height:1.7;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:40px;max-width:700px;margin-left:auto;margin-right:auto}
+.pr-card{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;padding:16px;text-align:center;transition:border-color 0.2s}
+.pr-card:hover{border-color:rgba(127,119,221,0.2)}
+.pr-name{font-size:13px;font-weight:600;color:var(--a-purple-light);margin-bottom:4px}
+.pr-desc{font-size:10px;color:var(--a-muted);line-height:1.5}
+/* Tooltip */
+.tooltip{position:fixed;z-index:9999;pointer-events:none;background:#1a1c22;border:1px solid rgba(127,119,221,0.2);border-radius:8px;max-width:320px;padding:10px 14px;box-shadow:0 8px 30px rgba(0,0,0,0.5);opacity:0;transition:opacity 0.15s}
+.tooltip.vis{opacity:1}
+.tooltip-label{font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--a-purple-light);font-family:var(--a-mono);margin-bottom:4px}
+.tooltip-body{font-size:12px;color:rgba(255,255,255,0.75);line-height:1.55}
+/* Add recipient */
+.add-form{background:var(--a-card);border:1px solid var(--a-border);border-radius:10px;padding:16px 20px}
+.add-input{width:100%;padding:7px 12px;font-size:12px;background:rgba(255,255,255,0.03);border:1px solid var(--a-border);border-radius:6px;color:var(--a-text);font-family:var(--a-sans);outline:none;transition:border-color 0.15s;margin-bottom:8px}
+.add-input:focus{border-color:rgba(127,119,221,0.4)}
+.add-input::placeholder{color:var(--a-dim)}
+.add-btn{padding:7px 14px;font-size:11px;font-weight:500;background:rgba(127,119,221,0.08);color:var(--a-purple-light);border:1px solid rgba(127,119,221,0.2);border-radius:6px;cursor:pointer;font-family:var(--a-sans);transition:all 0.12s}
+.add-btn:hover{background:rgba(127,119,221,0.15);border-color:rgba(127,119,221,0.4)}
+@media(max-width:768px){.principles{grid-template-columns:repeat(2,1fr)}h1{font-size:28px}.intro-hero h1{font-size:36px}.slide-layout{flex-direction:column}.thumb-strip{width:100%;flex-direction:row;overflow-x:auto;max-height:none}}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nl" onclick="switchTab('home')">Jesse <span>Livingston</span></a>
+  <button class="hm" onclick="document.getElementById('nv').classList.toggle('mob')"><span></span><span></span><span></span></button>
+</nav>
+<ul class="nv" id="nv">
+  <li><button class="nt on" data-tab="home" onclick="switchTab('home')">Home</button></li>
+  <li><button class="nt" data-tab="services" onclick="switchTab('services')">Services</button></li>
+  <li><button class="nt" data-tab="experience" onclick="switchTab('experience')">Experience</button></li>
+  <li><button class="nt" data-tab="portfolio" onclick="switchTab('portfolio')">Portfolio</button></li>
+  <li><button class="nt nc" data-tab="contact" onclick="switchTab('contact')">Get in Touch</button></li>
+</ul>
+
+<!-- HOME -->
+<div class="tp on" id="page-home">
+  <div class="ps">
+    <div class="hero-grid">
+      <div>
+        <div class="hol">UX Research &amp; Prototyping</div>
+        <h1 class="hh">Research that moves<br>your product <em>forward</em>.</h1>
+        <p class="hd">I'm Jesse — a senior UX researcher with 11+ years at LinkedIn, Microsoft, ServiceNow, and Netflix. I specialize in emerging technology and go beyond the deck: I create interactive prototypes that bring findings to life so your team can react, test, and iterate.</p>
+        <div class="hctas"><button class="bp" onclick="switchTab('contact')">Start a Conversation →</button><button class="bs" onclick="switchTab('portfolio')">View Case Studies</button></div>
+        <div class="logos">
+          <div class="lgo"><img src="images/linkedin.png" style="width:22px;height:22px;object-fit:contain" alt=""> LinkedIn</div>
+          <div class="lgo"><svg viewBox="0 0 22 22" width="22" height="22"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="12" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="12" width="9" height="9" fill="#00A4EF"/><rect x="12" y="12" width="9" height="9" fill="#FFB900"/></svg> Microsoft</div>
+          <div class="lgo"><img src="images/servicenow.png" style="width:22px;height:22px;object-fit:contain" alt=""> ServiceNow</div>
+          <div class="lgo"><img src="images/netflix.png" style="width:22px;height:22px;object-fit:contain" alt=""> Netflix</div>
+        </div>
+      </div>
+      <div class="hr">
+        <div class="headshot"><img src="images/headshot.jpg" alt="Jesse Livingston"></div>
+        <div class="cstrip"><div class="crd"><b>11+</b><small>Years Experience</small></div><div class="crd"><b>50+</b><small>Studies Led</small></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ps" style="padding-top:20px">
+    <div class="sl">About</div>
+    <h2 class="st">Research for the products<br>that don't exist yet.</h2>
+    <div class="agrid">
+      <div class="atxt">
+        <p>I'm drawn to the research nobody has a playbook for. AI features where users are still forming mental models. New product categories where the competitive landscape is blank. Emerging technology where the experience layer is the difference between adoption and abandonment.</p>
+        <p>My foundational research for LinkedIn Talent Insights produced the product principles that guided what became <strong style="color:var(--tx)">the fastest product to hit $50M in revenue in LinkedIn's history</strong>. At Microsoft, I shaped <strong style="color:var(--tx)">foundational insights on Copilot in PowerPoint</strong> that directly influenced shipped features — in just 3 weeks.</p>
+        <p>My background is unusual: I trained as an orchestral conductor. Conducting taught me to synthesize complexity into a single coherent experience — to hear every instrument and shape them into something the audience can feel. That's what I do with research: translate messy, ambiguous data into clear stories that make teams act.</p>
+      </div>
+      <div>
+        <div class="aphil"><h3>Research as Performance</h3><p>An insight that doesn't change behavior is just trivia. I treat every readout like a performance — distilled, dramatic, targeted, and timely. Your stakeholders don't just hear findings. They feel the urgency to act.</p></div>
+        <div class="pgd">
+          <div class="pri"><div class="pri-i" style="background:var(--pg);color:var(--pl)"><svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg></div><h4>Distilled</h4><p>Cut through noise to what matters.</p></div>
+          <div class="pri"><div class="pri-i" style="background:rgba(232,168,124,.15);color:var(--wm)"><svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><h4>Dramatic</h4><p>Stories that make people care.</p></div>
+          <div class="pri"><div class="pri-i" style="background:rgba(125,212,167,.15);color:var(--gn)"><svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h4>Targeted</h4><p>Tailored to each audience.</p></div>
+          <div class="pri"><div class="pri-i" style="background:rgba(119,184,221,.15);color:var(--bl)"><svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h4>Timely</h4><p>Delivered when decisions are made.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="tp" id="page-services">
+  <div class="ps">
+    <div class="sl">Focus Areas</div>
+    <h2 class="st">Where I go deep.</h2>
+    <p class="ss">I specialize in emerging technology research — where the problem space is ambiguous, mental models are still forming, and the stakes of getting it wrong are high.</p>
+    <div class="fgd">
+      <div class="fc"><div class="fci"><svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h-4a3 3 0 00-6 0H5a7 7 0 017-7h1V5.73A2 2 0 0112 2z"/><path d="M7 17v4M12 17v4M17 17v4"/></svg></div><h3>AI &amp; Emerging Tech</h3><p>I research how people actually experience new technology. I've shaped AI features at Microsoft and ServiceNow.</p><div class="tags"><span class="tag">Generative AI</span><span class="tag">LLM UX</span><span class="tag">Voice AI</span><span class="tag">Innovation</span></div></div>
+      <div class="fc"><div class="fci"><svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>Foundational Research</h3><p>When you need to understand who your users are, what they need, and where the opportunity lives.</p><div class="tags"><span class="tag">Journey Mapping</span><span class="tag">Mental Models</span><span class="tag">Personas</span><span class="tag">Concept Testing</span></div></div>
+      <div class="fc"><div class="fci"><svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h3>Research + Prototype</h3><p>After research, I create interactive prototypes informed by findings — a tangible artifact to react to and test.</p><div class="tags"><span class="tag">Interactive Prototypes</span><span class="tag">Concept Mockups</span><span class="tag">Test Stimuli</span><span class="tag">Design Exploration</span></div></div>
+    </div>
+  </div>
+  <div class="ps" style="padding-top:0">
+    <div class="sl">Research Methods</div>
+    <h2 class="st">What I can run for you.</h2>
+    <div class="mcg">
+      <div class="mc"><h4>In-Depth Interviews</h4><p>Deep 1-on-1 conversations to understand needs, motivations, and mental models.</p></div>
+      <div class="mc"><h4>Usability Testing</h4><p>Moderated sessions where users interact with your product in real time.</p></div>
+      <div class="mc"><h4>Concept Testing</h4><p>Evaluate early-stage ideas or prototypes before you commit to building.</p></div>
+      <div class="mc"><h4>Journey Mapping</h4><p>Map the full experience across touchpoints. Reveals pain points and moments of truth.</p></div>
+      <div class="mc"><h4>Contextual Inquiry</h4><p>Observe users in their real environment. Gold standard for workflows.</p></div>
+      <div class="mc"><h4>Diary Studies</h4><p>Longitudinal self-reporting. Captures real-world evolving behavior over weeks.</p></div>
+      <div class="mc"><h4>Focus Groups</h4><p>Moderated group discussions exploring attitudes and social dynamics.</p></div>
+      <div class="mc"><h4>Card Sorting &amp; Tree Testing</h4><p>IA research. How users categorize and find content.</p></div>
+      <div class="mc"><h4>Heuristic Evaluation</h4><p>Expert review against usability principles. Fast, no recruitment.</p></div>
+    </div>
+    <div class="pra"><div class="prai"><svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div><div style="font-size:16px;font-weight:600;margin-bottom:4px">+ Prototype Add-On</div><div style="font-size:13px;color:var(--mt)">Add an interactive prototype to any study. A working mockup informed by findings — to react to, test, and iterate on.</div></div></div>
+  </div>
+  <div class="ps" style="padding-top:0">
+    <div class="sl">Engagement Models</div>
+    <h2 class="st">How we work together.</h2>
+    <div class="egd">
+      <div class="eng"><div class="et">Focused</div><div class="en">Single Study</div><div class="ed">One study, clear deliverables, fast turnaround.</div><div class="ep">$3–10K</div><div class="eno">Scoped per study</div><ul class="ef"><li>Research strategy &amp; design</li><li>Participant recruitment</li><li>Moderated sessions</li><li>Analysis &amp; synthesis</li><li>Findings presentation</li></ul><button class="bs" style="width:100%;justify-content:center" onclick="switchTab('contact')">Scope a Study</button></div>
+      <div class="eng ft"><div class="et">Full Service</div><div class="en">Study + Prototype</div><div class="ed">Research plus an interactive prototype that brings findings to life.</div><div class="ep">$8–18K</div><div class="eno">Research + prototype</div><ul class="ef"><li>Everything in Single Study</li><li>Interactive prototype</li><li>Design rationale docs</li></ul><button class="bp" style="width:100%;justify-content:center" onclick="switchTab('contact')">Let's Talk →</button></div>
+      <div class="eng"><div class="et">Embedded</div><div class="en">Monthly Retainer</div><div class="ed">Ongoing research partnership. Continuous study cycles.</div><div class="ep">$8–14K <span>/ month</span></div><div class="eno">3-month minimum</div><ul class="ef"><li>Dedicated research partner</li><li>Research roadmap</li><li>Continuous studies</li><li>Prototyping as needed</li></ul><button class="bs" style="width:100%;justify-content:center" onclick="switchTab('contact')">Discuss a Retainer</button></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- EXPERIENCE -->
+<div class="tp" id="page-experience">
+  <div class="ps">
+    <div class="sl">Experience</div>
+    <h2 class="st">11+ years across enterprise,<br>consumer, and AI.</h2>
+
+    <!-- Timeline -->
+    <div style="margin-top:40px;max-width:800px">
+
+      <!-- ServiceNow -->
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2021 – Present</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Freelance</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">UX Research</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for fast-paced early and mid-stage startups.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led UX research for an early-stage startup, reducing friction in the checkout experience.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Conducted research for an e-commerce startup clarifying core customer value propositions.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Ran a beta testing program for a voice AI startup, generating early usability insights.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Conducted a concept study for a gaming company, improving site usability and navigation.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Netflix -->
+      
+
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2024 – 2026</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">ServiceNow</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Research Communications Manager</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Research communication coaching, training, and documentation for a 140-person UX research team.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Developed north-star communications principles, increasing team alignment on research storytelling.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Created help documentation and communication guidelines that improved consistency across 140+ researchers.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led office hours, training sessions, and webinars to strengthen storytelling skills.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Partnered with AI leaders to develop executive one-pagers that increased stakeholder engagement.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Microsoft -->
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2024</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Microsoft</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:4px;font-style:italic">Senior User Researcher · Contract</div>
+          <div style="font-size:12px;color:var(--mt);margin-bottom:10px">AI & Storytelling</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for the Copilot AI experience in PowerPoint.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led foundational research on new Copilot AI features, informing product requirements and feature direction.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Analyzed survey data for PowerPoint features, clarifying user expectations and guiding prioritization.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Delivered rapid-turnaround research to meet critical product deadlines.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Velir -->
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2023 – 2024</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Velir Studios</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Principal Strategist & User Researcher · Contract</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Digital strategy and client relationships at a boutique web agency.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Built strong client relationships that contributed to renewed business engagements.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Integrated qualitative and quantitative data with analytics teams for clearer client insights.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Facilitated stakeholder working sessions to align teams on goals, scope, and direction.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Freelance -->
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2020</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Netflix</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Senior User Experience Researcher</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for safety and security teams.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Developed a 6-month research roadmap addressing strategic questions across multiple products.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed and facilitated UX research workshop with partners, resulting in better buy-in of research.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Led customer service chat usability study, resulting in key usability improvements.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LinkedIn -->
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2016 – 2020</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">LinkedIn</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Senior User Experience Researcher</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for Talent Solutions, Careers, and Growth business units.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led foundational research for LinkedIn Talent Insights — fastest product to $50M revenue in LinkedIn history.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Coached UX researchers on storytelling and insight communication, improving presentation effectiveness.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Identified key mental models for LinkedIn Referrals, heavily influencing the decision to sunset the product.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Led an international research study that informed a multi-year, multi-business-unit product roadmap.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Think Company -->
+      <div style="display:flex;gap:24px;margin-bottom:36px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2015 – 2016</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1;padding-bottom:4px">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Think Company</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Experience Design & User Research</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">UX workshops, wireframing, and research at a 40-person design agency.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Developed and led client UX workshops, aligning clients and teams on goals.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed and analyzed a large product survey for e-commerce client.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed data visualization wireframes for complex HR data.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Haystack -->
+      <div style="display:flex;gap:24px;margin-bottom:20px">
+        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2014 – 2015</div></div>
+        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div style="flex:1">
+          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Haystack</div>
+          <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">User Research & Product Design</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Front-end engineering, product design, and user research for a 4-person HealthTech startup.</p>
+          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led usability studies for V1 product, improving usability and decreasing friction.</div>
+            <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed front-end experience for complex health data visualization.</div>
+            <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Wrote HTML, CSS, and JavaScript in collaboration with other developers.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Skills & Education -->
+    <div style="margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:800px">
+      <div>
+        <div class="sl">Key Skills</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+          <span class="tag" style="font-size:12px;padding:6px 14px">Generative AI</span>
+          <span class="tag" style="font-size:12px;padding:6px 14px">Innovation Research</span>
+          <span class="tag" style="font-size:12px;padding:6px 14px">Mixed Methods</span>
+          <span class="tag" style="font-size:12px;padding:6px 14px">Storytelling & Communication</span>
+          <span class="tag" style="font-size:12px;padding:6px 14px">Journey Mapping</span>
+          <span class="tag" style="font-size:12px;padding:6px 14px">Strategy</span>
+        </div>
+      </div>
+      <div>
+        <div class="sl">Education</div>
+        <div style="margin-top:8px">
+          <div style="margin-bottom:12px"><div style="font-size:15px;font-weight:600">Ithaca College</div><div style="font-size:13px;color:var(--t2)">Master of Music · 2008 – 2010</div></div>
+          <div><div style="font-size:15px;font-weight:600">Oberlin College</div><div style="font-size:13px;color:var(--t2)">Bachelor of Music · 2002 – 2006</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="tp" id="page-portfolio">
+  <div class="ps">
+    <div style="text-align:center"><div class="sl">Portfolio</div><h2 class="st">Work samples.</h2></div>
+    <div class="pgt" id="portGate">
+      <p>My work samples contain confidential research from real engagements. Enter the password to view, or <a href="#" onclick="switchTab('contact');return false">reach out</a> and I’ll share&nbsp;it.</p>
+      <div class="pwf"><input type="password" class="pwi" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()"><button class="bp" onclick="checkPw()">Unlock</button></div>
+      <div class="pwe" id="pwError">Incorrect password. Contact me for access.</div>
+    </div>
+    <div class="pc" id="portContent">
+      <div class="ptabs"><button class="ptb on" onclick="portTab('cases',this)">Case Studies</button><button class="ptb" onclick="portTab('protos',this)">Prototype</button></div>
+
+      <!-- CASE STUDIES -->
+      <div class="pp on" id="panel-cases">
+        <div class="cgd">
+          <div class="cc" onclick="openCase('linkedin')"><div class="cch"><div class="cco"><img src="images/linkedin.png" style="width:22px;height:22px;object-fit:contain" alt="LinkedIn"></div><div class="cct">Shaping the Launch of Talent Insights</div><div class="ccd">Sole researcher across 4–6 months of foundational work. Partnered with PMs and designers through multiple rounds of interviews, workshops, and a meta-analysis that produced the T.R.A.C. product framework.</div></div><div class="ccm"><div class="ccmi"><span class="ccml">Role</span><span class="ccmv">Lead Researcher (sole)</span></div><div class="ccmi"><span class="ccml">Methods</span><span class="ccmv">IDIs, Journey Mapping, Workshops</span></div><div class="ccmi"><span class="ccml">Impact</span><span class="ccmv">Fastest to $50M revenue</span></div></div></div>
+
+          <div class="cc" onclick="openCase('microsoft')"><div class="cch"><div class="cco"><svg viewBox="0 0 22 22" width="22" height="22"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="12" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="12" width="9" height="9" fill="#00A4EF"/><rect x="12" y="12" width="9" height="9" fill="#FFB900"/></svg></div><div class="cct">Shaping the AI Experience in PowerPoint</div><div class="ccd">Embedded with the Copilot team under tight timelines. Completed foundational research in 3 weeks with PMs in every session. Insights directly shaped shipped features.</div></div><div class="ccm"><div class="ccmi"><span class="ccml">Role</span><span class="ccmv">Senior Researcher</span></div><div class="ccmi"><span class="ccml">Methods</span><span class="ccmv">IDIs, Concept Evaluation</span></div><div class="ccmi"><span class="ccml">Impact</span><span class="ccmv">Shipped Copilot features</span></div></div></div>
+
+          <div class="cc" onclick="openCase('treehouse')"><div class="cch"><div class="cco"><svg viewBox="0 0 50 50" width="22" height="22"><path d="M25 3L3 21v26h44V21Z" fill="#1DB97B" rx="2"/><rect x="22" y="34" width="6" height="11" fill="white" rx="1"/><line x1="25" y1="38" x2="14" y2="28" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="25" y1="38" x2="36" y2="28" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="25" y1="38" x2="25" y2="18" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="25" y1="26" x2="18" y2="20" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="25" y1="26" x2="32" y2="20" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="cct">Building Trust in Online EV Buying</div><div class="ccd">Sole researcher for a 3-person founding team. CEO, designer, and marketing lead deeply involved at every stage — watching sessions, co-analyzing, building brand narrative together.</div></div><div class="ccm"><div class="ccmi"><span class="ccml">Role</span><span class="ccmv">Lead Researcher</span></div><div class="ccmi"><span class="ccml">Methods</span><span class="ccmv">IDIs (7), Survey (n=250)</span></div><div class="ccmi"><span class="ccml">Impact</span><span class="ccmv">Pivot &amp; rebrand</span></div></div></div>
+
+          <div class="cc" onclick="openCase('dwarvenforge')"><div class="cch"><div class="cco"><img src="images/dwarvenforge.png" style="width:22px;height:22px;border-radius:4px;object-fit:contain" alt="Dwarven Forge"></div><div class="cct">E-Commerce Interaction Research</div><div class="ccd">Partnered with product and photography teams to diagnose friction across desktop and mobile. Team watched every session and co-prioritized fixes.</div></div><div class="ccm"><div class="ccmi"><span class="ccml">Role</span><span class="ccmv">Lead Researcher</span></div><div class="ccmi"><span class="ccml">Methods</span><span class="ccmv">6x Moderated Sessions</span></div><div class="ccmi"><span class="ccml">Impact</span><span class="ccmv">Design &amp; photo overhaul</span></div></div></div>
+        </div>
+      </div>
+
+      <!-- SIDE PROJECTS -->
+      <div class="pp" id="panel-protos">
+        <p style="text-align:center;color:var(--t2);font-size:15px;margin-bottom:28px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.7">A side project exploring how technology can improve research communication. This is a fully interactive prototype — the same kind of artifact I create for clients after a study.</p>
+
+        <div style="background:#1E2025;border:1px solid rgba(127,119,221,.12);border-radius:12px;overflow:hidden;margin-bottom:24px">
+          <div style="padding:16px 24px;border-bottom:1px solid rgba(127,119,221,.12);background:#252830"><h3 style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:3px">Research Communication Pipeline</h3><p style="font-size:13px;color:#7B7891;margin:0">Turn raw research into targeted stakeholder briefs. Click "See it in action" to start.</p></div>
+
+          <div class="aria-wrap">
+<div class="grid-bg"></div>
+<div class="app" id="aria-app"></div>
+<div class="tooltip" id="aria-tooltip"><div class="tooltip-label">Bridge</div><div class="tooltip-body" id="aria-tooltip-body"></div></div>
+
+
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div class="tp" id="page-contact">
+  <div class="ps">
+    <div class="sl">Contact</div>
+    <h2 class="st">Let's work together.</h2>
+    <div style="max-width:560px;margin:36px auto 0">
+      <div class="ctf" id="ctForm">
+        <div class="fr"><div class="fg"><label>Name</label><input type="text" id="fname" placeholder="Your name"></div><div class="fg"><label>Email</label><input type="email" id="femail" placeholder="you@company.com"></div></div>
+        <div class="fg"><label>Interested In</label><select id="fint"><option value="">Select an engagement type</option><option>Single Study</option><option>Study + Prototype</option><option>Monthly Retainer</option><option>Something else</option></select></div>
+        <div class="fg"><label>Tell Me About Your Challenge</label><textarea id="fmsg" placeholder="What are you trying to learn?"></textarea></div>
+        <button class="bp" style="width:100%;justify-content:center" onclick="submitForm()">Send Message →</button>
+      </div>
+      <div class="fok" id="formOk"><h3>Message sent.</h3><p>I'll get back to you within 24 hours.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="mo" id="modal-linkedin"><div class="mdl"><button class="mx" onclick="closeCase('linkedin')">✕</button><div class="mhd"><div class="cco"><img src="images/linkedin.png" style="width:22px;height:22px;object-fit:contain" alt=""> LinkedIn</div><h2>Shaping the Launch of Talent Insights</h2><div class="mtg"><span class="tag">Lead UX Researcher (sole)</span><span class="tag">IDIs</span><span class="tag">Journey Mapping</span><span class="tag">Workshops</span><span class="tag">Meta Analysis</span></div></div><div class="mbd">
+
+<h3>Context</h3>
+<p>LinkedIn had a wealth of workforce data — the kind talent leaders at Fortune 500 companies would pay dearly for. The company had been producing custom insight reports through a small analyst team, helping clients answer questions like "Where are the AI researchers located across the country?" or "How competitive is the engineering talent market in Austin?"</p>
+<p>But clients kept asking for more. They wanted a self-service platform — and it made business sense, since a small analyst team couldn't scale. That became LinkedIn Talent Insights. The problem: the team didn't know who the day-to-day users would be, what they needed, or what the product should look like.</p>
+
+<h3>How I Worked With the Team</h3>
+<div class="clb"><p>I was the sole researcher, but this was never a solo effort. PMs, designers, and product leaders were involved at every step — observing interviews, participating in synthesis workshops, and co-creating artifacts like the journey map and proto-personas. I ran debriefs after every research round so the final readout was never a surprise. By the time I presented, the team had already been building the insights alongside me for months.</p></div>
+
+<h3>Research</h3>
+<p>Over 4–6 months, I ran three to four rounds of research. Each round consisted of 8–10 in-depth interviews (90 minutes each) with talent executives, analysts, data scientists, recruiters, and sourcers at large enterprises. I combined foundational and evaluative approaches — some sessions focused on understanding their workflows and pain points, others evaluated early design concepts and prototypes.</p>
+<p>Key outputs included proto-personas mapping the different roles involved in talent strategy, a journey map tracing the full talent forecasting workflow, and a co-creative workshop where heads of talent from client companies validated our personas and maps against their own organizations.</p>
+
+<h3>The Turning Point</h3>
+<p>Partway through, the team got stuck in a black hole of feature debates: Should we build dashboards? A presentation builder? Notification systems? Each PM had a different priority and they were going in circles.</p>
+<p>Instead of scoping individual studies for each question, I decided to go deeper. I spent several weeks re-reading every set of notes and re-watching interview videos from all our prior studies, asking a single question:</p>
+<div class="ins"><p>"What are participants organically asking us — unprompted, without our prodding?"</p></div>
+<p>Two powerful themes emerged. First, participants across every role and company were intensely focused on <strong>data</strong> — not collaboration features, not dashboards. They wanted to know: Where does your data come from? Can I trust it? How was this metric calculated?</p>
+<p>Second, this anxiety wasn't abstract. It was driven by their need to share data with highly analytical hiring managers and executives. If a recruiter couldn't answer basic questions about the data's provenance, it would undermine their credibility in front of the people they needed to influence.</p>
+<div class="ins"><p>Core problem: Talent professionals are worried that their stakeholders will misinterpret or undermine their data, creating misalignment or hurting their credibility.</p></div>
+
+<h3>The T.R.A.C. Framework</h3>
+<p>I translated this core problem into a "true north" for the team: <em>How might we empower talent professionals with robust, relevant data that earns them trust and credibility with their hiring managers?</em></p>
+<p>Then I broke that into four actionable product principles:</p>
+<div class="fw"><div class="fi"><h4>Transparency</h4><p>Show users exactly how every data point is calculated. No black boxes.</p></div><div class="fi"><h4>Relevance</h4><p>Help users narrow down to the specific data that answers their question.</p></div><div class="fi"><h4>Accuracy</h4><p>If the data isn't trustworthy, nothing else matters. This is table stakes.</p></div><div class="fi"><h4>Control</h4><p>Let users curate, filter, and export data on their own terms.</p></div></div>
+
+<h3>Impact</h3>
+<div class="imp"><p><strong>LinkedIn Talent Insights became the fastest product to hit $50M in revenue in LinkedIn's history.</strong></p></div>
+<div class="imp"><p>The team built detailed explanations of data formulas directly into the product interface (Transparency).</p></div>
+<div class="imp"><p>3–4 additional data scientists were hired specifically to clean and validate data sets (Accuracy).</p></div>
+<div class="imp"><p>More robust search filters and data export capabilities were added (Relevance + Control).</p></div>
+<div class="imp"><p>The T.R.A.C. framework became the team's decision-making lens for every subsequent feature debate.</p></div>
+
+</div></div></div>
+
+<div class="mo" id="modal-microsoft"><div class="mdl"><button class="mx" onclick="closeCase('microsoft')">✕</button><div class="mhd"><div class="cco"><svg viewBox="0 0 22 22" width="22" height="22"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="12" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="12" width="9" height="9" fill="#00A4EF"/><rect x="12" y="12" width="9" height="9" fill="#FFB900"/></svg> Microsoft</div><h2>Shaping the AI Experience in PowerPoint</h2><div class="mtg"><span class="tag">Senior Researcher (contract)</span><span class="tag">IDIs</span><span class="tag">Concept Evaluation</span><span class="tag">AI UX</span></div></div><div class="mbd">
+
+<h3>Context</h3>
+<p>Microsoft was building the Copilot AI experience for PowerPoint — imagining how AI could help people create presentations. This was early days for generative AI in productivity tools, and the team was moving fast. PMs needed to make critical feature decisions within 3–4 weeks, and design mockups were already in progress. I was brought in as a contract researcher and needed to generate impact quickly.</p>
+
+<h3>How I Worked With the Team</h3>
+<div class="clb"><p>I embedded directly with the PM and design team. PMs observed every single interview session, and we ran real-time debriefs immediately after. This meant insights were landing with decision-makers in hours, not weeks — close enough to active development to actually shape it.</p></div>
+
+<h3>Research</h3>
+<p>Within the first three weeks, I completed a foundational study: 6–8 one-hour in-depth interviews with current PowerPoint users who regularly create presentations for work. The participant mix was deliberate — I included people who were already using AI tools for presentations alongside people who had never tried, across a range of demographics and company sizes.</p>
+
+<h3>The Headline</h3>
+<div class="ins"><p>We'd been thinking of AI like a bowling ball — send it down the lane and get a strike. But people needed checkpoints, not one-shot prompts. They needed ways to guide the AI at every step.</p></div>
+
+<h3>Key Insights</h3>
+<p><strong>Context is everything.</strong> We had been imagining prompts like "Create a presentation about the evolution of AI." But that's not what people create at work. They make team updates, progress reports, and quarterly reviews. Users couldn't even imagine how Copilot could help with those — and if they couldn't imagine it, they wouldn't try it at all.</p>
+<p><strong>Documents as starting points.</strong> A key discovery: many participants started their presentations in Word — gathering updates from teammates before building slides. This insight led directly to the "reference file" feature, where users can start a presentation from an existing document.</p>
+<p><strong>Outlines first, not slides.</strong> Nobody dove straight into slide creation. They outlined first — and AI-generated outlines rarely got it right on the first try. Users always needed to tweak. This led to the editable outline step with the ability to add, reorder, and remove sections before generating slides.</p>
+<p><strong>Controls beyond the prompt.</strong> Not every interaction with AI should be a text prompt. Length controls, reference file selection, outline editing — these traditional UI elements gave users structured, familiar ways to guide the AI output without crafting perfect prompts.</p>
+<p><strong>If they can't imagine it, they won't try it.</strong> This was a meta-insight I flagged for broader AI work: the way you describe an AI capability shapes whether people believe in it enough to try. Language is a design decision.</p>
+
+<h3>The Guidance Framework</h3>
+<p>Synthesizing the key findings, I developed a framework for how AI tools should be designed to earn user trust and adoption:</p>
+<div class="fw" style="grid-template-columns:1fr 1fr 1fr"><div class="fi"><h4>Guide the AI</h4><p>Users need checkpoints, not one-shot prompts. Let them steer at every step — outline first, then refine, then generate.</p></div><div class="fi"><h4>Controls Beyond Prompts</h4><p>Not every interaction should require crafting a prompt. Length controls, file selectors, editable outlines — structured UI gives users familiar handles on AI output.</p></div><div class="fi"><h4>Language as Design</h4><p>How an AI capability is named and described determines whether users believe in it enough to try. Framing is a design decision, not a copy decision.</p></div></div>
+
+<h3>Impact</h3>
+<div class="imp"><p>Reference file feature shipped — users can now start presentations from Word docs.</p></div>
+<div class="imp"><p>Length controls added to Copilot's creation flow.</p></div>
+<div class="imp"><p>Editable outline step built into the presentation creation pipeline.</p></div>
+<div class="imp"><p>Inline prompt editing and side-panel Copilot chat shipped for ongoing refinement.</p></div>
+
+</div></div></div>
+
+<div class="mo" id="modal-treehouse"><div class="mdl"><button class="mx" onclick="closeCase('treehouse')">✕</button><div class="mhd"><div class="cco"><svg viewBox="0 0 50 50" width="22" height="22"><path d="M25 3L3 21v26h44V21Z" fill="#1DB97B" rx="2"/><rect x="22" y="34" width="6" height="11" fill="white" rx="1"/><line x1="25" y1="38" x2="14" y2="28" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="25" y1="38" x2="36" y2="28" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="25" y1="38" x2="25" y2="18" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="25" y1="26" x2="18" y2="20" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="25" y1="26" x2="32" y2="20" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg> Treehouse</div><h2>Building Trust in Online EV Buying</h2><div class="mtg"><span class="tag">Lead Researcher (sole)</span><span class="tag">IDIs (7)</span><span class="tag">Survey (n=250)</span><span class="tag">Startup</span></div></div><div class="mbd">
+
+<h3>Context</h3>
+<p>Treehouse was an early-stage startup with a bold vision: replace the car dealership entirely with a transparent, online concierge model for electric vehicles. The founding team — CEO, Head of Design, and Marketing Lead — had hypotheses cobbled together from personal experience and conversations with friends, but they had no real data from actual EV buyers.</p>
+
+<h3>How I Worked With the Team</h3>
+<div class="clb"><p>The founding team was involved at every stage — reviewing the research brief, watching every interview, and discussing findings as they emerged. I ran debriefs after each session and the team participated in analysis. I don't disappear into a tower and come back with insights. The best insights are the ones stakeholders glean themselves from participating in the process.</p></div>
+
+<h3>Research</h3>
+<p>The original plan called for 15 IDIs, an experience sampling study (n=1,000), and a follow-up quantitative survey (n=400). I adapted as we went, guided by one question: <em>When does extra effort and cost stop paying off?</em></p>
+<p>7 in-depth interviews proved sufficient for thematic saturation. An open-ended question in the screener replaced the expensive experience sampling study. And the survey was scaled to 250 respondents — still large enough to validate patterns while respecting the startup's budget.</p>
+
+<h3>The Headline</h3>
+<div class="ins"><p>Trust is the new currency. Treehouse's biggest challenge wasn't pricing, convenience, or vehicle selection — it was earning trust from customers who had been burned by dealerships.</p></div>
+<p>Nearly every participant described dealership experiences characterized by dishonesty in marketing, pressure to buy unwanted vehicles, misleading pricing, deceptive negotiation tactics, and failure to find the best price. Customers coming to Treehouse would arrive damaged — primed to be skeptical that anyone selling cars had their best interests in mind.</p>
+
+<h3>Two User Types</h3>
+<p>Two distinct user types emerged from the research, each needing a fundamentally different experience:</p>
+<div class="fw"><div class="fi"><h4>The Expert</h4><p>High EV knowledge, great researcher, confident. Needs detailed technical data and access to specialists who can answer complex questions. Turned off by superficial or untrustworthy information.</p></div><div class="fi"><h4>The Amateur</h4><p>Overwhelmed by the amount of information, uncertain where to start. Needs noise reduction, guided walkthroughs, and a pre-purchase "wizard." Turned off by too much information upfront.</p></div></div>
+<p>The design implication: Treehouse needed to serve both simultaneously. Layers of content so Experts can drill down, but a guided entry point so Amateurs aren't overwhelmed.</p>
+
+<h3>Impact</h3>
+<div class="imp"><p><strong>Shifted Treehouse's entire brand focus</strong> from "efficient car buying" to "trusted car buying."</p></div>
+<div class="imp"><p>Research directly informed the homepage redesign, marketing strategy, pricing transparency, and website copy.</p></div>
+<div class="imp"><p>Built a research-backed brand narrative that strengthened investor conversations and helped secure additional funding.</p></div>
+<div class="imp"><p>Months later, when Treehouse hit regulatory friction with dealerships, the team returned to our survey data and discovered that home charging was the top-rated value proposition — guiding a critical business pivot to home electrification services.</p></div>
+
+<h3>Reflection</h3>
+<p>If I could do it over, I would have pushed harder to explore alternative business directions earlier. Given how early-stage they were, I took their marketplace direction as more settled than it was. The data that eventually guided their pivot was already in our survey — I just hadn't asked the question broadly enough the first time.</p>
+
+</div></div></div>
+
+<div class="mo" id="modal-dwarvenforge"><div class="mdl"><button class="mx" onclick="closeCase('dwarvenforge')">✕</button><div class="mhd"><div class="cco"><img src="images/dwarvenforge.png" style="width:22px;height:22px;border-radius:4px;object-fit:cover" alt=""> Dwarven Forge</div><h2>E-Commerce Interaction Research</h2><div class="mtg"><span class="tag">Lead Researcher</span><span class="tag">Moderated Usability</span><span class="tag">Desktop &amp; Mobile</span></div></div><div class="mbd">
+
+<h3>Context</h3>
+<p>Dwarven Forge is the premier maker of hand-painted 3D tabletop gaming terrain, with a devoted community of collectors. As the product catalog grew, so did confusion. New customers struggled to find products, returning customers found navigation less intuitive than the physical sets they loved, and the team was concerned about low mobile conversion rates.</p>
+
+<h3>How I Worked With the Team</h3>
+<div class="clb"><p>The product and photography teams watched every session live. We ran debriefs together after each session and co-prioritized what to fix. By the time I wrote up findings, the team already had ownership — they'd seen the problems firsthand and were ready to act.</p></div>
+
+<h3>Research</h3>
+<p>I ran six remote moderated sessions — three on desktop, three on mobile. Mobile was particularly important because the team knew little about how customers used their site on phones. Each 45-minute session followed a structured flow: warm-up exploring brand familiarity and past purchasing, a task-based product search (e.g., "Find Wilderness terrain"), free exploration, visual evaluation of the site, and a wrap-up rating.</p>
+
+<h3>Key Insights</h3>
+<p><strong>Visual-first discovery.</strong> Participants rarely used text search. They scrolled and clicked through images. Google ads without product images were skipped entirely, even when top-ranked. This made default product sorting critically important — the most popular items needed to appear first.</p>
+<p><strong>Filter/sort confusion.</strong> Filters often reloaded or applied prematurely, interrupting the browsing flow. Users confused "Sort" and "Filter" because they were styled identically. These needed clear visual separation and delayed filter application until the user confirmed their choices.</p>
+<div class="ins"><p>Mobile isn't for buying — it's for browsing. Customers browse on their phones, then switch to desktop when they're ready to purchase. Dwarven Forge's "low" mobile conversion rate wasn't a problem to solve — it was a misread of cross-device purchasing behavior.</p></div>
+<p><strong>Inconsistent category ("biome") pages.</strong> Some product category pages featured vivid photography, curated highlights, and auto-playing background videos — these were highly effective and drew users in. But the pattern wasn't consistent. Other category pages were bare-bones product grids that fell flat by comparison.</p>
+
+<h3>Impact</h3>
+<div class="imp"><p>Biome/category pages were restructured for consistency, giving every product category the same compelling visual treatment.</p></div>
+<div class="imp"><p>Photography teams adopted new standards for visual naming and product imagery coherence.</p></div>
+<div class="imp"><p>Multiple points of design friction were fixed across both desktop and mobile experiences.</p></div>
+<div class="imp"><p>Cross-device tracking was recommended to get an accurate picture of mobile's real contribution to conversion, rather than treating it as an isolated funnel.</p></div>
+
+</div></div></div>
+
+<footer><p>&copy; 2026 Jesse Livingston.</p></footer>
+<script>
+
+function switchTab(t){
+  if(t!=="portfolio"){view="intro";step=0;ingestSub=1;shapeSub=1;activeSlide=0;themeOrder=[0,1,2,3,4];openThemes={};openRecipients={};}
+  var p=document.querySelectorAll(".tp");for(var i=0;i<p.length;i++)p[i].classList.remove("on");
+  document.getElementById("page-"+t).classList.add("on");
+  var b=document.querySelectorAll(".nt");for(var i=0;i<b.length;i++)b[i].classList.remove("on");
+  var a=document.querySelectorAll('.nt[data-tab="'+t+'"]');for(var i=0;i<a.length;i++)a[i].classList.add("on");
+  document.getElementById("nv").classList.remove("mob");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function checkPw(){
+  var inp=document.getElementById("pwInput");
+  if(inp.value==="livingston2026!"){document.getElementById("portGate").style.display="none";document.getElementById("portContent").classList.add("vis")}
+  else{document.getElementById("pwError").style.display="block";inp.value="";inp.focus()}
+}
+function portTab(p,el){
+  var t=document.querySelectorAll(".ptb");for(var i=0;i<t.length;i++)t[i].classList.remove("on");
+  el.classList.add("on");
+  var pn=document.querySelectorAll(".pp");for(var i=0;i<pn.length;i++)pn[i].classList.remove("on");
+  document.getElementById("panel-"+p).classList.add("on");
+  if(p==="protos"){try{render();}catch(e){}}
+}
+function openCase(id){document.getElementById("modal-"+id).classList.add("vis");document.body.style.overflow="hidden"}
+function closeCase(id){document.getElementById("modal-"+id).classList.remove("vis");document.body.style.overflow=""}
+var ov=document.querySelectorAll(".mo");for(var i=0;i<ov.length;i++){(function(el){el.addEventListener("click",function(e){if(e.target===el){el.classList.remove("vis");document.body.style.overflow=""}})})(ov[i])}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){var m=document.querySelectorAll(".mo.vis");for(var i=0;i<m.length;i++){m[i].classList.remove("vis");document.body.style.overflow=""}}});
+function submitForm(){
+  var n=document.getElementById("fname").value,e=document.getElementById("femail").value,m=document.getElementById("fmsg").value;
+  if(!n||!e||!m){alert("Please fill out all fields.");return}
+  var ii=document.getElementById("fint").value;
+  var btn=document.querySelector("#ctForm .bp");
+  btn.disabled=true;btn.textContent="Sending...";
+  fetch("https://api.web3forms.com/submit",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify({
+      access_key:"fb8dd8b0-9dd9-4c39-a1e5-51f00ee8fe7d",
+      subject:"Research inquiry from "+n,
+      from_name:n,
+      email:e,
+      interest:ii,
+      message:m,
+      to:"jesse@jesselivingston.com"
+    })
+  }).then(function(r){return r.json()}).then(function(d){
+    if(d.success){
+      document.getElementById("ctForm").style.display="none";
+      document.getElementById("formOk").classList.add("vis");
+    } else {
+      btn.disabled=false;btn.textContent="Send Message →";
+      alert("Something went wrong. Please try again or email jesse@jesselivingston.com directly.");
+    }
+  }).catch(function(){
+    btn.disabled=false;btn.textContent="Send Message →";
+    alert("Something went wrong. Please try again or email jesse@jesselivingston.com directly.");
+  });
+}
+
+/* Comms Pipeline Prototype */
+function cmGo(n){
+  var pgs=document.querySelectorAll(".cm-pg");for(var i=0;i<pgs.length;i++)pgs[i].classList.remove("on");
+  document.getElementById("cm-"+n).classList.add("on");
+  var btns=document.querySelectorAll(".cm-step");for(var i=0;i<btns.length;i++){
+    btns[i].classList.remove("on","done");
+    if(i<n)btns[i].classList.add("done");
+    if(i===n)btns[i].classList.add("on");
+  }
+}
+function cmIngest(){
+  var d=document.getElementById("cmDrop");
+  d.style.borderColor="var(--gn)";d.style.background="rgba(125,212,167,.08)";
+  d.querySelector(".cm-drop-icon").textContent="\u2713";
+  d.querySelector("h4").textContent="File uploaded!";
+  d.querySelector("p").textContent="Processing 24 slides...";
+  document.getElementById("cmDoc").classList.add("vis");
+}
+function cmFw(el){
+  var chips=document.querySelectorAll(".cm-fw-chip");for(var i=0;i<chips.length;i++)chips[i].classList.remove("on");
+  el.classList.add("on");
+}
+
+/* ARIA PROTOTYPE */
+
+/* ═══════════════════════════════════════
+   DEMO DATA
+   ═══════════════════════════════════════ */
+const THEMES=[
+{title:"Buyers frame EVs as a technology bet, not a car purchase",cat:"mental_model",catColor:"#818cf8",catLabel:"Mental Model",type:"foundational",
+ bullets:["Participants consistently compared EVs to early smartphones, not to other vehicles","Decision anxiety centered on battery degradation and resale uncertainty, not sticker price","19 of 24 participants used the phrase 'what if' when describing their hesitation"],
+ quote:{text:"I keep thinking, what if the battery dies in 3 years and I'm stuck with a $40,000 paperweight?",source:"P7, High-mileage commuter"},
+ action:"Reframe marketing from cost savings to technology confidence",stakes:"Current messaging attracts calculator buyers but repels the anxious majority"},
+{title:"Social proof outweighs specifications in the final purchase decision",cat:"behavior",catColor:"#f59e0b",catLabel:"Behavior",type:"foundational",
+ bullets:["Participants who bought cited a friend or neighbor's experience as the tipping point","Spec-sheet comparisons created more anxiety, not less","Test drives converted when a current owner was present"],
+ quote:{text:"My neighbor got one and I kept asking him about it. After six months of watching him, I just went and got one too.",source:"P12, Suburban family"},
+ action:"Build owner ambassador programs instead of spec comparison tools",stakes:"Comparison tools are actively increasing decision paralysis"},
+{title:"Range anxiety is a proxy for control anxiety in daily routines",cat:"jtbd",catColor:"#34d399",catLabel:"JTBD",type:"foundational",
+ bullets:["Range concerns disappeared within 2 weeks of ownership for all participants","Pre-purchase range anxiety correlated with general change resistance, not actual driving patterns","Participants wanted to know they could maintain their exact current routine without adaptation"],
+ quote:{text:"I was terrified I'd be stranded. Now I charge at home and never think about it. It was all in my head.",source:"P3, Urban professional"},
+ action:"Offer 'routine simulation' tool that maps existing driving habits to EV range",stakes:"Addressing range as a technical spec misses the emotional root of the objection"},
+{title:"Environmental benefits are welcome but rarely the primary decision driver",cat:"behavior",catColor:"#f59e0b",catLabel:"Behavior",type:"tactical",
+ bullets:["Only 3 of 24 participants cited environment as their top motivation","Environmental benefits appeared more as post-purchase rationalization","Cost-conscious segments viewed green messaging as 'premium' signaling that excluded them"],
+ quote:{text:"The planet thing is nice but I bought it because my gas bill was killing me. I just don't tell people that.",source:"P19, Budget-conscious buyer"},
+ action:"Lead with financial and convenience benefits; position environmental as bonus",stakes:"Green-first messaging alienates the largest potential market segment"},
+{title:"The dealership experience actively undermines EV consideration",cat:"frustration",catColor:"#f87171",catLabel:"Frustration",type:"tactical",
+ bullets:["Sales staff frequently steered participants toward ICE vehicles they knew better","EV test drives were offered last or not at all in 8 out of 12 dealership visits","Participants who bought through direct-to-consumer channels reported higher satisfaction"],
+ quote:{text:"The salesman literally said 'are you sure?' when I asked to test drive the electric one. Like I was making a mistake.",source:"P15, First-time buyer"},
+ action:"Create dedicated EV purchase channels separate from traditional dealership flow",stakes:"Every traditional dealership interaction is a conversion leak"}
+];
+
+const RECIPIENTS=[
+{name:"Sarah Chen",role:"VP of Marketing",avatar:"S",color:"#34d399",insights:[0,1,3],rationale:"Owns brand positioning and messaging strategy",foundIn:["Jira","Workday"],style:"executive_summary"},
+{name:"Marcus Webb",role:"Head of Retail Experience",avatar:"M",color:"#38bdf8",insights:[1,4],rationale:"Owns dealership partnerships and purchase channels",foundIn:["Jira"],style:"action_items"},
+{name:"Priya Sharma",role:"Product Director, Digital",avatar:"P",color:"#f472b6",insights:[2,1],rationale:"Owns the online configurator and purchase funnel",foundIn:["Jira","Workday"],style:"deep_dive"},
+];
+
+const GROUPS=[
+{name:"EV Go-to-Market Team",members:"Sarah Chen, James Liu, Kai Patel",insights:[0,3],rationale:"Cross-functional team planning Q3 launch messaging",foundIn:["Jira"],style:"executive_summary"}
+];
+
+const BRIEFS=[
+{to:"Sarah Chen",role:"VP of Marketing",subject:"EV buyers decide on social proof, not specs — messaging implications",
+body:`Sarah,
+
+The Pacecar study surfaced something that should change how we talk about EVs.
+
+Buyers aren't making spreadsheet decisions. They're making trust decisions. 19 of 24 participants used the phrase "what if" when describing their hesitation — they frame EV purchase as a technology bet, not a car purchase.
+
+The tipping point? A friend or neighbor who already owns one. Not our spec sheets, not our TCO calculators. Social proof.
+
+Two things to consider:
+
+1. Lead with financial and convenience benefits. Only 3 of 24 cited environment as their top motivator. Green-first messaging signals "premium" to cost-conscious buyers and excludes them.
+
+2. Build owner ambassador programs. The participants who converted all cited a real person's experience as what got them over the line.
+
+Happy to walk through the full findings whenever works for you.
+
+— Research Team`},
+{to:"Marcus Webb",role:"Head of Retail Experience",subject:"Dealership visits are actively killing EV conversions",
+body:`Marcus,
+
+We need to talk about the dealership experience for EV shoppers.
+
+In our Pacecar study, 8 out of 12 dealership visits resulted in sales staff steering buyers toward ICE vehicles. One participant was literally asked "are you sure?" when requesting an EV test drive.
+
+This isn't a training problem — it's a structural one. Sales staff sell what they know, and the commission structure doesn't incentivize the learning curve.
+
+Recommendation: Create dedicated EV purchase channels, separate from the traditional dealership flow. Every traditional interaction is currently a conversion leak.
+
+Let me know if you want to see the full journey map.
+
+— Research Team`},
+{to:"Priya Sharma",role:"Product Director, Digital",subject:"Range anxiety is emotional, not technical — digital tool opportunity",
+body:`Priya,
+
+Quick insight from the Pacecar study that directly impacts the configurator.
+
+Range anxiety disappears within 2 weeks of ownership for every participant we interviewed. It's not a technical concern — it's a proxy for control anxiety. Buyers want to know their exact current routine works without any adaptation.
+
+Opportunity: Build a "routine simulation" tool. Let prospects map their actual weekly driving patterns and see that an EV handles it with room to spare. Pair it with real owner stories from people with similar routines.
+
+Also worth noting: social proof outweighs specifications. The configurator's comparison tables may actually be increasing decision paralysis rather than reducing it.
+
+Want to sketch this out together?
+
+— Research Team`}
+];
+
+const SLIDES=[
+{type:"title",heading:"Pacecar EV Purchase Study",sub:"Understanding first-time buyer decision models",notes:"Welcome everyone. Today we're sharing findings from our in-depth interview study with 24 first-time EV buyers across four segments."},
+{type:"statement",text:"Cost isn't the barrier to EV adoption — it's the fear of making an irreversible mistake with unfamiliar technology.",notes:"This is the headline finding. I want you to sit with this for a moment. We went in expecting price sensitivity to dominate. It didn't."},
+{type:"section",heading:"Situation"},
+{type:"insight",heading:"Buyers frame EVs as a technology bet",bullets:["Compared EVs to early smartphones, not other vehicles","Decision anxiety about battery degradation, not sticker price","19/24 used 'what if' language describing hesitation"],notes:"The mental model is crucial here. These aren't car shoppers — they're technology adopters evaluating risk."},
+{type:"insight",heading:"Social proof outweighs specs",bullets:["Friend/neighbor experience was the tipping point","Spec comparisons created more anxiety","Test drives converted when owners were present"],notes:"This has direct implications for Sarah's team. Our comparison tools may be counterproductive."},
+{type:"quote",text:"I was terrified I'd be stranded. Now I charge at home and never think about it. It was all in my head.",source:"P3, Urban professional",notes:"This quote captures the gap between pre-purchase fear and post-purchase reality perfectly."},
+{type:"insight",heading:"Dealerships undermine EV consideration",bullets:["Staff steered 8/12 visitors toward ICE","EV test drives offered last or not at all","Direct-to-consumer = higher satisfaction"],notes:"Marcus, this one is for you. The channel itself is the problem, not just training."},
+{type:"closing",heading:"The EV purchase journey is a trust problem, not a math problem.",bullets:["Reframe from cost savings → technology confidence","Build owner ambassador programs","Create dedicated EV purchase channels"],notes:"Three clear actions. Each maps to a specific stakeholder. We've drafted targeted briefs for Sarah, Marcus, and Priya."}
+];
+
+const FRAMEWORKS=[
+{id:"sparkline",name:"Sparkline"},{id:"scr",name:"SCR"},{id:"journey",name:"Journey"},
+{id:"diagnostic",name:"Diagnostic"},{id:"reveal",name:"Reveal"},{id:"opportunity",name:"Opportunity"},{id:"freeform",name:"Freeform"}
+];
+
+const BRIDGES=["from mental models to behavior...","the emotional root underneath...","what they say vs what drove them...","where it all breaks down..."];
+const STAGES=[{at:0,label:"Situation"},{at:2,label:"Complication"},{at:4,label:"Resolution"}];
+
+/* ═══ STATE ═══ */
+var view="intro",step=0,ingestSub=1,shapeSub=1,activeFw="scr",activeSlide=0;
+var themeOrder=[0,1,2,3,4];
+var openThemes={};var openRecipients={};
+var dragIdx=null,dragOverIdx=null;
+
+const STEP_IDS=["ingest","distill","shape","present","target","brief","finale"];
+const STEP_LABELS=["Ingest","Distill","Shape","Present","Target","Brief","Finale"];
+
+/* ═══ RENDER ═══ */
+
+
+
+// Aria Prototype
+function ariaUpdateContent(){var c=document.getElementById("aria-content");if(c){c.innerHTML=renderStep();attachEvents();}}
+function ariaStepTo(n){step=n;var c=document.getElementById("aria-content");if(c){c.innerHTML=renderStep();updateStepNav();attachEvents();}else{render();}ariaScrollTop();}
+function ariaIngestTo(n){ingestSub=n;ariaUpdateContent();}
+function ariaShapeTo(n){shapeSub=n;ariaUpdateContent();}
+function ariaSlideClick(n){activeSlide=n;updateSlide();}
+
+function render(){
+  var app=document.getElementById("aria-app");if(!app)return;
+  if(view==="intro"){app.innerHTML=renderIntro();return;}
+  if(view==="loading"){app.innerHTML=renderLoading();setTimeout(function(){view="wizard";step=1;render();},2500);return;}
+  if(view==="scanning"){app.innerHTML=renderNav()+renderStepNav()+'<div class="content" id="aria-content">'+renderScanning()+'</div>'+renderFooter();setTimeout(function(){view="wizard";step=4;render();},2800);return;}
+  var contentEl=document.getElementById("aria-content");
+  if(contentEl){
+    contentEl.innerHTML=renderStep();
+    updateStepNav();
+    attachEvents();
+  } else {
+    app.innerHTML=renderNav()+renderStepNav()+'<div class="content" id="aria-content">'+renderStep()+'</div>'+renderFooter();
+    attachEvents();
+  }
+  ariaScrollTop();
+}
+function updateStepNav(){
+  var pills=document.querySelectorAll(".aria-wrap .sn");
+  var labels=document.querySelectorAll(".aria-wrap .sl");
+  var lines=document.querySelectorAll(".aria-wrap .step-line");
+  for(var i=0;i<pills.length;i++){
+    pills[i].className="sn "+(i<step?"done":i===step?"active":"future");
+    pills[i].textContent=i<step?"\u2713":(i+1);
+    if(labels[i])labels[i].className="sl "+(i<step?"done":i===step?"active":"future");
+  }
+  for(var i=0;i<lines.length;i++){
+    lines[i].className="step-line "+(i<step?"done":"future");
+  }
+}
+function ariaScrollTop(){
+  var wrap=document.querySelector(".aria-wrap");
+  if(wrap)wrap.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function renderIntro(){
+  return `<div class="intro-hero">
+    <h1 class="fd1">Research that <span class="a">moves</span> people</h1>
+    <p class="tagline fd2">Aria transforms raw research data into targeted, compelling narratives that drive decisions. Not a report generator — a research communication platform.</p>
+    <div class="principles fd3">
+      <div class="pr-card"><div class="pr-name">Distilled</div><div class="pr-desc">Plain language. Three paragraphs become one sentence.</div></div>
+      <div class="pr-card"><div class="pr-name">Dramatic</div><div class="pr-desc">Every insight has an action and stakes.</div></div>
+      <div class="pr-card"><div class="pr-name">Targeted</div><div class="pr-desc">Route insights to people who can act.</div></div>
+      <div class="pr-card"><div class="pr-name">Timely</div><div class="pr-desc">Align with business decision moments.</div></div>
+    </div>
+    <button class="btn btn-p fd4" onclick="view='wizard';ariaStepTo(0)" style="font-size:15px;padding:14px 32px">See it in action →</button>
+  </div>`;
+}
+
+function renderNav(){
+  return `<div class="top-nav">
+    <div class="logo-lockup" onclick="view='intro';render()"><div class="logo-icon">S</div><span class="logo-text"><span class="logo-sub">Sub</span><span class="logo-note">Note</span></span><span class="logo-aria">Aria</span></div>
+    <span class="project-name">Pacecar EV Purchase Study</span>
+    <div class="nav-spacer"></div>
+    <button class="nav-btn" title="Projects"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.2"/></svg></button>
+    <button class="nav-btn" title="Account"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 14c0-2.5 2.5-4 5.5-4s5.5 1.5 5.5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+  </div>`;
+}
+
+function renderStepNav(){
+  let h='<div class="step-nav">';
+  STEP_IDS.forEach((s,i)=>{
+    const st=i<step?"done":i===step?"active":"future";
+    h+=`<div class="step-pill" onclick="${i<=step?`ariaStepTo(${i})`:''}"><div class="sn ${st}">${st==="done"?"✓":i+1}</div><span class="sl ${st}">${STEP_LABELS[i]}</span></div>`;
+    if(i<STEP_IDS.length-1)h+=`<div class="step-line ${i<step?"done":"future"}"></div>`;
+  });
+  return h+'</div>';
+}
+
+function renderFooter(){return `<div class="footer"><div class="footer-text">SubNote Aria — Research Communication Platform</div></div>`;}
+
+/* ═══ STEP RENDERS ═══ */
+function renderStep(){
+  switch(step){
+    case 0:return renderIngest();
+    case 1:return renderDistill();
+    case 2:return renderShape();
+    case 3:return renderPresent();
+    case 4:return renderTarget();
+    case 5:return renderBrief();
+    case 6:return renderFinale();
+  }
+}
+
+/* ── INGEST ── */
+function renderIngestSubNav(){
+  const subs=[{id:1,label:"Study Details"},{id:2,label:"Questions"},{id:3,label:"Data"},{id:4,label:"Early Themes"}];
+  let h='<div class="sub-nav">';
+  subs.forEach((s,i)=>{
+    const active=s.id===ingestSub,done=s.id<ingestSub,reachable=s.id<=4;
+    h+=`<div style="display:flex;align-items:center;flex:1"><div class="sub-pill${reachable?'':' disabled'}" onclick="${reachable?`ariaIngestTo(${s.id})`:''}">
+      <div class="sub-num ${active?'active':done?'done':'future'}">${done?'✓':s.id}</div>
+      <span class="sub-label ${active?'active':done?'done':'future'}">${s.label}</span>
+    </div>${i<subs.length-1?`<div class="sub-line ${done?'done':'future'}"></div>`:''}</div>`;
+  });
+  return h+'</div>';
+}
+
+function renderIngest(){
+  let body='';
+  if(ingestSub===1){
+    body=`<div class="card fd1"><div class="sec-l" style="color:var(--a-purple-light)">Project name</div><div style="font-size:14px;font-weight:600">Pacecar EV Purchase Study</div></div>
+    <div class="card fd2"><div class="sec-l" style="color:var(--a-purple-light)">Methodology</div><div style="font-size:13px;color:rgba(255,255,255,0.7)">In-depth interviews (IDI)</div></div>
+    <div class="card fd2"><div class="sec-l" style="color:var(--a-purple-light)">Participants</div><div style="font-size:13px;color:rgba(255,255,255,0.7)">24 first-time EV buyers across 4 segments</div></div>
+    <div class="action-bar fd3"><div class="spacer"></div><button class="btn btn-g" onclick="ariaIngestTo(2)">Research questions →</button></div>`;
+  } else if(ingestSub===2){
+    body=`<div class="card fd1"><div class="sec-l" style="color:var(--a-purple-light)">Research goals</div><div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6">Understand the mental models, motivations, and barriers behind EV purchase decisions among first-time buyers. Identify opportunities to reframe the value proposition for cost-conscious segments.</div></div>
+    <div class="action-bar fd2"><button class="btn btn-m" onclick="ariaIngestTo(1)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="ariaIngestTo(3)">Add your data →</button></div>`;
+  } else if(ingestSub===3){
+    body=`<div class="fd1" style="margin-bottom:20px"><div class="sec-l" style="color:var(--a-muted)">Uploaded files</div>
+      <div class="file-chip"><div class="file-icon" style="background:rgba(52,211,153,0.15);color:#34d399">CSV</div><span>Pacecar IDI Transcripts.csv</span><span style="font-size:10px;color:var(--a-dim);font-family:var(--a-mono)">142 KB</span></div>
+      <div class="file-chip"><div class="file-icon" style="background:rgba(56,189,248,0.15);color:#38bdf8">PDF</div><span>EV Market Segmentation.pdf</span><span style="font-size:10px;color:var(--a-dim);font-family:var(--a-mono)">2.1 MB</span></div>
+    </div>
+    <div class="card fd2" style="border-style:dashed;text-align:center;padding:32px;color:var(--a-muted);cursor:pointer"><svg width="24" height="24" viewBox="0 0 16 16" fill="none" style="margin-bottom:8px"><path d="M8 3v10M3 8h10" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/></svg><div style="font-size:13px">Drop files here or click to upload</div><div style="font-size:10px;margin-top:4px;color:var(--a-dim)">CSV, XLSX, DOCX, PDF, TXT</div></div>
+    <div class="action-bar fd3"><button class="btn btn-m" onclick="ariaIngestTo(2)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="ariaIngestTo(4)">Early themes →</button></div>`;
+  } else {
+    body=`<div class="card fd1"><div class="sec-l" style="color:var(--a-purple-light)">Early themes or observations (optional)</div><div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-style:italic">Anything you've already noticed in the data — Aria will look for these patterns and include them if the data supports it.</div><div style="margin-top:10px;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--a-border);border-radius:6px;font-size:13px;color:rgba(255,255,255,0.7);min-height:60px;line-height:1.6">Buyers seem more motivated by peer experience than by specs or environmental concerns. Dealership experience might be a negative factor.</div></div>
+    <div class="action-bar fd2"><button class="btn btn-m" onclick="ariaIngestTo(3)">← Back</button><div class="spacer"></div><button class="btn btn-p" onclick="view='loading';render()">Distill your data</button></div>`;
+  }
+  return `<h1 class="fade-up">Ingest your <span class="a">research</span></h1><p class="sub-t fd1">Upload your raw data — transcripts, spreadsheets, notes. Aria reads everything.</p>${renderIngestSubNav()}${body}`;
+}
+
+/* ── LOADING ── */
+function renderLoading(){
+  return renderNav()+`<div class="content"><div style="padding:48px 0;text-align:center"><div style="display:inline-flex;flex-direction:column;align-items:center;gap:20px">
+    <h1 class="fade-up">Distilling your <span class="a">data</span></h1>
+    <div class="sub-t fd1" style="max-width:440px;text-align:center;margin-bottom:0">Too many insights create cognitive load for your audience. Aria is distilling your data down to the most impactful insights.</div>
+    <div class="progress-bar fd2"><div class="progress-fill"></div></div>
+  </div></div></div>`;
+}
+
+/* ── DISTILL ── */
+function renderDistill(){
+  let cards='';
+  THEMES.forEach((t,i)=>{
+    const isOpen=openThemes[i];
+    cards+=`<div class="tc fade-up" style="animation-delay:${0.1+i*0.06}s">
+      <div class="tc-head"><div class="tc-title">${t.title}</div><button class="tc-expand" data-theme="${i}">${isOpen?'−':'+'}</button></div>
+      <div class="tc-meta">
+        <span class="badge" style="color:${t.catColor};background:${t.catColor}12;border:1px solid ${t.catColor}28">${t.catLabel}</span>
+        <span class="badge" style="color:var(--a-muted);background:rgba(255,255,255,0.04);border:1px solid var(--a-border)">${t.type}</span>
+        <span class="badge" style="color:rgba(127,119,221,0.5);background:rgba(127,119,221,0.06);border:1px solid rgba(127,119,221,0.12)"><svg width="8" height="8" viewBox="0 0 16 16" fill="none" style="margin-right:3px"><path d="M3 3h10v10H3z" stroke="rgba(127,119,221,0.4)" stroke-width="1.3" stroke-linejoin="round"/></svg>${t.bullets.length} sources</span>
+      </div>
+      <div class="tc-body${isOpen?' open':''}">
+        ${t.bullets.map((b,bi)=>`<div class="bullet"><span class="bullet-t">${b}<span class="ev-fn">[${bi+1}]</span></span></div>`).join('')}
+      </div>
+      ${t.quote?`<div class="tc-quote${isOpen?'':'" style="display:none}'}">"${t.quote.text}"<span class="src">— ${t.quote.source}</span></div>`:''}
+      <div class="tc-action${isOpen?'':'" style="display:none'}"><div><strong>Action:</strong> <span style="color:rgba(255,255,255,0.7)">${t.action}</span></div><div class="stakes">Stakes: ${t.stakes}</div></div>
+    </div>`;
+  });
+  return `<h1 class="fade-up">Your <span class="a">distillation</span></h1><p class="sub-t fd1">5 themes extracted from 2 sources.</p>
+  <div class="hl-card fd1"><div class="bar"></div><div class="hl-text">Cost isn't the barrier to EV adoption — it's the fear of making an irreversible mistake with unfamiliar technology.</div><div class="hl-summary">First-time EV buyers frame the purchase as a technology bet, not a car purchase. Their decision model weighs reversibility and social proof over TCO calculations.</div>
+  <div class="hl-meta"><div><span>Method</span> In-depth interviews</div><div><span>Participants</span> 24 first-time EV buyers</div></div></div>
+  ${cards}
+  <div class="action-bar fd5"><button class="btn btn-m" onclick="step=0;ariaIngestTo(4)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="step=2;ariaShapeTo(1)">Shape narrative →</button></div>`;
+}
+
+/* ── SHAPE ── */
+function renderShapeSubNav(){
+  const subs=[{id:1,label:"Skeleton"},{id:2,label:"Full Narrative"}];
+  let h='<div class="sub-nav">';
+  subs.forEach((s,i)=>{
+    const active=s.id===shapeSub,done=s.id<shapeSub;
+    h+=`<div style="display:flex;align-items:center;flex:1"><div class="sub-pill" onclick="ariaShapeTo(${s.id})">
+      <div class="sub-num ${active?'active':done?'done':'future'}">${done?'✓':s.id}</div>
+      <span class="sub-label ${active?'active':done?'done':'future'}">${s.label}</span>
+    </div>${i<subs.length-1?`<div class="sub-line ${done?'done':'future'}"></div>`:''}</div>`;
+  });
+  return h+'</div>';
+}
+
+function renderShape(){
+var fwPills=FRAMEWORKS.map(function(f){return '<button class="btn btn-m'+(activeFw===f.id?' on':'')+('" onclick="activeFw=\''+f.id+'\';ariaShapeTo(1)">'+f.name+'</button>');}).join('');
+var fwHtml='';
+
+  if(shapeSub===1){
+    let bones='';
+    themeOrder.forEach((ti,i)=>{
+      const t=THEMES[ti];
+      const stg=STAGES.find(s=>s.at===i);
+      if(stg)bones+=`<div class="stage-l"><div class="stage-bar"></div><span class="stage-txt">${stg.label}</span></div>`;
+      bones+=`<div class="bone" draggable="true" data-bone="${i}"><span class="bone-grip">⋮⋮</span><span class="badge" style="color:${t.catColor};background:${t.catColor}12;border:1px solid ${t.catColor}22;font-size:7.5px">${t.catLabel}</span><span class="bone-title">${t.title}</span></div>`;
+      if(i<themeOrder.length-1)bones+=`<div class="bridge" data-bridge="${i}">↳ ${BRIDGES[i]||'...'}</div>`;
+    });
+    return `<h1 class="fade-up">Shape your <span class="a">narrative</span></h1><p class="sub-t fd1">The same findings in a different order create different outcomes. Drag to reorder, then finalize.</p>
+    ${renderShapeSubNav()}
+    <div class="fd2">
+      <div class="open-block"><div class="bl-label" style="color:#38bdf8">Opening</div><div class="bl-text">We interviewed 24 first-time EV buyers across four segments to understand what actually drives — and blocks — their purchase decisions.</div></div>
+      <div class="hl-card" style="margin-bottom:12px"><div class="bar"></div><div style="font-size:14px;font-weight:600;line-height:1.4">Cost isn't the barrier — it's the fear of making an irreversible mistake.</div><div style="display:flex;gap:12px;font-size:10px;color:var(--a-dim);font-family:var(--a-mono);margin-top:6px"><span>In-depth interviews</span><span>24 first-time EV buyers</span></div></div>
+      <div id="bone-container">${bones}</div>
+      <div class="close-block"><div class="bl-label" style="color:#34d399">Closing</div><div class="bl-text">The EV purchase journey is a trust problem, not a math problem. Organizations that solve for reversibility and social proof will capture the next wave of adoption.</div></div>
+    </div>
+    <div class="action-bar fd3"><button class="btn btn-m" onclick="ariaStepTo(1)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="ariaShapeTo(2)">Finalize narrative →</button></div>`;
+  }
+  // Full narrative
+  let insights='';
+  themeOrder.forEach((ti,i)=>{
+    const t=THEMES[ti];const isLast=i===themeOrder.length-1;
+    const stg=STAGES.find(s=>s.at===i);
+    if(stg)insights+=`<div class="stage-l"><div class="stage-bar"></div><span class="stage-txt">${stg.label}</span></div>`;
+    insights+=`<div class="card" style="padding:14px 18px;margin-bottom:4px"><div style="font-size:14px;font-weight:600;margin-bottom:6px">${t.title}</div>
+      ${t.bullets.map(b=>`<div class="bullet"><span class="bullet-t">${b}</span></div>`).join('')}
+      ${t.quote?`<div style="margin-top:8px;font-size:12px;font-style:italic;color:rgba(255,255,255,0.5);padding:6px 12px;border-left:2px solid rgba(127,119,221,0.3);background:rgba(127,119,221,0.04);border-radius:0 6px 6px 0">"${t.quote.text}" <span style="display:block;font-style:normal;font-size:10px;color:var(--a-dim);margin-top:3px;font-family:var(--a-mono)">— ${t.quote.source}</span></div>`:''}</div>`;
+    if(!isLast)insights+=`<div style="padding:6px 0 6px 20px;margin-bottom:4px;font-size:12px;color:rgba(127,119,221,0.5);font-style:italic">${BRIDGES[i]||''}</div>`;
+  });
+  return `<h1 class="fade-up">Your <span class="a">narrative</span></h1><p class="sub-t fd1">Edit your narrative — intro, transitions, and closing are all editable. Drag insights to reorder.</p>
+  ${renderShapeSubNav()}
+  <div class="fd1">
+    <div class="card" style="margin-bottom:20px"><div class="sec-l" style="color:#38bdf8">Opening — What we did and why it matters</div><div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.65">We interviewed 24 first-time EV buyers across four segments to understand what actually drives — and blocks — their purchase decisions. The results challenge fundamental assumptions about how we position and sell electric vehicles.</div></div>
+    <div class="hl-card"><div class="bar"></div><div class="sec-l" style="color:var(--a-purple-light)">Headline</div><div style="font-size:16px;font-weight:600;line-height:1.4">Cost isn't the barrier to EV adoption — it's the fear of making an irreversible mistake with unfamiliar technology.</div></div>
+    <div class="sec-l" style="margin-top:16px"><span style="color:var(--a-purple-light)">5 insights</span><span style="color:var(--a-dim);margin-left:8px">· drag to reorder</span></div>
+    ${insights}
+    <div class="card" style="margin-top:16px"><div class="sec-l" style="color:#34d399">Closing — The takeaway</div><div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.65">The EV purchase journey is a trust problem, not a math problem. Organizations that solve for reversibility and social proof will capture the next wave of adoption.</div></div>
+  </div>
+  <div class="action-bar fd3"><button class="btn btn-m" onclick="ariaShapeTo(1)">← Back to skeleton</button><div class="spacer"></div><button class="btn btn-g" onclick="ariaStepTo(3)">Present →</button></div>`;
+}
+
+/* ── PRESENT ── */
+function renderSlideContent(s){
+  const dark='color:#1a1a2e';const light='color:#6e6e85';
+  switch(s.type){
+    case 'title':return `<div style="font-family:var(--a-serif);font-size:28px;font-weight:900;${dark};margin-bottom:8px">${s.heading}</div><div style="font-size:13px;${light}">${s.sub}</div>`;
+    case 'statement':return `<div style="font-family:var(--a-serif);font-size:22px;font-weight:700;line-height:1.4;color:var(--a-purple)">${s.text}</div>`;
+    case 'section':return `<div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--a-purple);font-family:var(--a-mono);margin-bottom:8px">Section</div><div style="font-family:var(--a-serif);font-size:32px;font-weight:900;${dark}">${s.heading}</div>`;
+    case 'insight':return `<div style="font-size:18px;font-weight:600;${dark};margin-bottom:14px;text-align:left">${s.heading}</div><div style="text-align:left">${s.bullets.map(b=>`<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;${light}"><span style="color:var(--a-purple);flex-shrink:0">→</span>${b}</div>`).join('')}</div>`;
+    case 'quote':return `<div style="font-size:20px;font-style:italic;${dark};line-height:1.6;margin-bottom:12px">"${s.text}"</div><div style="font-size:11px;${light};font-family:var(--a-mono)">— ${s.source}</div>`;
+    case 'closing':return `<div style="font-family:var(--a-serif);font-size:20px;font-weight:700;${dark};margin-bottom:16px;line-height:1.4">${s.heading}</div><div style="text-align:left">${s.bullets.map(b=>`<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px;${light}"><span style="color:#22c55e;flex-shrink:0">✓</span>${b}</div>`).join('')}</div>`;
+  }
+}
+
+function renderPresent(){
+  const s=SLIDES[activeSlide];
+  let thumbs=SLIDES.map((sl,i)=>{
+    const isSec=sl.type==='section'&&i>0;
+    return `${isSec?`<div style="padding:4px 8px 2px 24px"><div style="font-size:7.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--a-purple-light);font-family:var(--a-mono);opacity:0.6">${sl.heading}</div><div style="height:1px;background:rgba(127,119,221,0.15);margin-top:3px"></div></div>`:''}
+    <div class="thumb${i===activeSlide?' on':''}" onclick="ariaSlideClick(${i})"><div class="t-type">${sl.type}</div><div>${sl.heading||sl.text?.slice(0,40)||''}</div></div>`;
+  }).join('');
+  return `<h1 class="fade-up">Your <span class="a">deck</span></h1><p class="sub-t fd1">${SLIDES.length} slides — each one earns its place. Click to edit, drag to reorder, arrow keys to navigate.</p>
+  <div class="slide-layout fd2">
+    <div class="thumb-strip">${thumbs}<button class="btn btn-m" style="width:100%;margin-top:4px;padding:8px 0;font-size:11px;border-style:dashed">+ Add slide</button></div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:12px">
+      <div class="slide-canvas">
+        <div class="g-bar"></div>
+        <div class="corner-dot" style="top:12px;left:12px"></div><div class="corner-dot" style="top:12px;right:12px"></div>
+        <div class="corner-dot" style="bottom:12px;left:12px"></div><div class="corner-dot" style="bottom:12px;right:12px"></div>
+        <div id="slide-display" style="max-width:500px">${renderSlideContent(s)}</div>
+        <div class="slide-counter">${activeSlide+1} / ${SLIDES.length}</div>
+      </div>
+      <div class="notes-panel"><div class="notes-header"><span style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--a-muted);font-family:var(--a-mono)">Speaker Notes</span><span style="font-size:11px;color:var(--a-dim);font-family:var(--a-mono)">−</span></div><div class="notes-body">${s.notes||'No notes for this slide.'}</div></div>
+    </div>
+  </div>
+  <div class="action-bar fd3"><button class="btn btn-m" onclick="step=2;ariaShapeTo(2)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="view='scanning';render()">Target →</button></div>`;
+}
+
+/* ── SCANNING ── */
+function renderScanning(){
+  return `<div style="padding:48px 0;text-align:center"><div style="display:inline-flex;flex-direction:column;align-items:center;gap:20px;animation:fadeUp 0.4s ease both">
+    <h1>Finding your <span class="a">audience</span></h1>
+    <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:440px;text-align:center">Aria is scanning Jira and Workday to match insights to the right people — PMs with active epics, and leaders who own the decisions.</div>
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding:6px 14px;border-radius:8px;background:rgba(52,211,153,0.04);border:1px solid rgba(52,211,153,0.1)">
+      <div class="scan-dots"><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div></div>
+      <span style="font-size:10.5px;color:rgba(255,255,255,0.5);font-family:var(--a-mono)">Jira epics + Workday org chart</span>
+    </div>
+  </div></div>`;
+}
+
+/* ── TARGET ── */
+function renderTarget(){
+  let individuals=RECIPIENTS.map((r,i)=>{
+    const isOpen=openRecipients[`i${i}`];
+    return `<div class="rc"><div class="rc-head" data-rc="i${i}">
+      <div class="rc-avatar" style="background:${r.color}15;border:1px solid ${r.color}33;color:${r.color}">${r.avatar}</div>
+      <div style="flex:1;min-width:0">
+        <div class="rc-name">${r.name} <span class="rc-role">— ${r.role}</span></div>
+        <div class="rc-rationale">${r.rationale}</div>
+        <div class="rc-sources">${r.foundIn.map(s=>`<span class="rc-src" style="color:${s==='Jira'?'#38bdf8':'#fbbf24'}">${s}</span>`).join('')}
+          <span class="badge" style="color:var(--a-purple-light);background:rgba(127,119,221,0.08);border:1px solid rgba(127,119,221,0.15);font-size:7px">${r.style.replace(/_/g,' ')}</span>
+        </div>
+      </div>
+      <span style="font-size:11px;color:var(--a-dim);font-family:var(--a-mono)">${isOpen?'−':'+'}</span>
+    </div>
+    <div class="rc-body${isOpen?' open':''}">
+      <div style="padding-top:4px">${r.insights.map(idx=>`<span class="rc-insight">${THEMES[idx].title.slice(0,50)}...</span>`).join('')}</div>
+    </div></div>`;
+  }).join('');
+
+  let groups=GROUPS.map((g,i)=>{
+    const isOpen=openRecipients[`g${i}`];
+    return `<div class="rc"><div class="rc-head" data-rc="g${i}">
+      <div class="rc-avatar" style="background:#fbbf2415;border:1px solid #fbbf2433;color:#fbbf24;border-radius:8px">G</div>
+      <div style="flex:1;min-width:0">
+        <div class="rc-name">${g.name} <span class="rc-role">— ${g.members}</span></div>
+        <div class="rc-rationale">${g.rationale}</div>
+        <div class="rc-sources">${g.foundIn.map(s=>`<span class="rc-src" style="color:#38bdf8">${s}</span>`).join('')}</div>
+      </div>
+      <span style="font-size:11px;color:var(--a-dim);font-family:var(--a-mono)">${isOpen?'−':'+'}</span>
+    </div>
+    <div class="rc-body${isOpen?' open':''}">
+      <div style="padding-top:4px">${g.insights.map(idx=>`<span class="rc-insight">${THEMES[idx].title.slice(0,50)}...</span>`).join('')}</div>
+    </div></div>`;
+  }).join('');
+
+  return `<h1 class="fade-up">Your <span class="a">audience</span></h1><p class="sub-t fd1">Aria scans Jira and Workday to match insights to the right people. Add anyone who's missing below.</p>
+  <div class="fd1" style="display:flex;gap:8px;margin-bottom:24px">
+    <div class="int-badge" style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.15);color:#38bdf8"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#38bdf8" stroke-width="1.2"/><path d="M5 6h6M5 8.5h4M5 11h2" stroke="#38bdf8" stroke-width="0.8" stroke-linecap="round"/></svg> Jira / Linear <span style="font-weight:700">4</span></div>
+    <div class="int-badge" style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15);color:#fbbf24"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="#fbbf24" stroke-width="1.2"/><path d="M3 14c0-2 2-3.5 5-3.5s5 1.5 5 3.5" stroke="#fbbf24" stroke-width="1.2"/></svg> Workday <span style="font-weight:700">2</span></div>
+  </div>
+  <div class="fd2">
+    <div class="sec-l"><span style="color:var(--a-purple-light)">Individuals</span><span style="color:var(--a-dim);margin-left:6px">${RECIPIENTS.length} people</span></div>
+    ${individuals}
+    <div class="sec-l" style="margin-top:20px"><span style="color:#fbbf24">Groups</span><span style="color:var(--a-dim);margin-left:6px">${GROUPS.length} team</span></div>
+    ${groups}
+    <div style="margin-top:20px;padding:18px 22px;background:var(--a-card);border:1px solid var(--a-border);border-radius:10px">
+      <div class="sec-l" style="color:#f472b6;margin-bottom:10px">Share-out attendees</div>
+      <div style="margin-bottom:10px">
+        <span class="share-pill">Sarah Chen <span class="share-x">×</span></span>
+        <span class="share-pill">Marcus Webb <span class="share-x">×</span></span>
+        <span class="share-pill">Priya Sharma <span class="share-x">×</span></span>
+        <span class="share-pill">James Liu <span class="share-x">×</span></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="flex:1;position:relative"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#f472b6;font-size:13px;font-weight:600;pointer-events:none">@</span><input class="add-input" style="padding-left:26px;margin-bottom:0" placeholder="Add attendee name..."></div>
+        <button class="add-btn">Add</button>
+      </div>
+    </div>
+    <div class="sec-l" style="margin-top:20px;color:var(--a-dim)">Add stakeholder</div>
+    <div class="add-form">
+      <input class="add-input" placeholder="Name"><input class="add-input" placeholder="Role / Title"><input class="add-input" placeholder="Why they need to see this"><button class="add-btn">Add stakeholder</button>
+    </div>
+  </div>
+  <div class="action-bar fd3"><button class="btn btn-m" onclick="ariaStepTo(3)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="ariaStepTo(5)">Draft emails for each person →</button></div>`;
+}
+
+/* ── BRIEF ── */
+function renderBrief(){
+  let cards=BRIEFS.map((b,i)=>`<div class="brief-card fd${i+1}">
+    <button class="brief-copy" onclick="this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+    <div class="brief-to">To: ${b.to} — ${b.role}</div>
+    <div class="brief-subj">${b.subject}</div>
+    <div class="brief-body">${b.body}</div>
+  </div>`).join('');
+  return `<h1 class="fade-up">Targeted <span class="a">briefs</span></h1><p class="sub-t fd1">Each stakeholder gets a personalized brief with only the insights relevant to their decisions.</p>${cards}
+  <div class="action-bar fd4"><button class="btn btn-m" onclick="ariaStepTo(4)">← Back</button><div class="spacer"></div><button class="btn btn-g" onclick="ariaStepTo(6)">Finale →</button></div>`;
+}
+
+/* ── FINALE ── */
+function renderFinale(){
+  return `<div style="text-align:center;padding:24px 0 28px" class="fade-up"><h1>Ready to <span class="a">ship</span></h1><p style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.6;max-width:480px;margin:8px auto 0">Everything you built for <span style="color:var(--a-text);font-weight:600">Pacecar EV Purchase Study</span> — download, copy, and send.</p></div>
+  <div class="fd1">
+    <div class="export-card"><div class="export-icon" style="background:rgba(127,119,221,0.15)"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4V2z" stroke="#AFA9EC" stroke-width="1.2" stroke-linejoin="round"/><path d="M6 8h4M6 10.5h4" stroke="#AFA9EC" stroke-width="0.8" stroke-linecap="round"/></svg></div><div><div class="export-title">Presentation Deck</div><div class="export-desc">${SLIDES.length} slides with speaker notes — download as .pptx</div></div></div>
+    <div class="export-card"><div class="export-icon" style="background:rgba(52,211,153,0.15)"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12H3z" stroke="#34d399" stroke-width="1.2" stroke-linejoin="round"/><path d="M5.5 5h5M5.5 7.5h5M5.5 10h3" stroke="#34d399" stroke-width="0.8" stroke-linecap="round"/></svg></div><div><div class="export-title">Full Report</div><div class="export-desc">Standalone document with executive summary, evidence, and recommendations</div></div></div>
+    <div class="export-card"><div class="export-icon" style="background:rgba(56,189,248,0.15)"><svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M2 4l6 4 6-4M2 4v8h12V4" stroke="#38bdf8" stroke-width="1.2" stroke-linejoin="round"/></svg></div><div><div class="export-title">Stakeholder Briefs</div><div class="export-desc">${BRIEFS.length} targeted emails ready to send — each with routed insights</div></div></div>
+  </div>
+  <div class="action-bar fd3"><button class="btn btn-m" onclick="ariaStepTo(5)">← Back</button><div class="spacer"></div><button class="btn btn-p" onclick="view='intro';render()">New project</button></div>`;
+}
+
+/* ═══ EVENTS ═══ */
+function attachEvents(){
+  /* Theme expand/collapse */
+  document.querySelectorAll('.tc-expand').forEach(btn=>{
+    btn.onclick=()=>{const i=parseInt(btn.dataset.theme);openThemes[i]=!openThemes[i];const tc=btn.closest('.tc');const body=tc.querySelector('.tc-body');if(body)body.classList.toggle('open');btn.textContent=openThemes[i]?'\u25BE':'\u25B8';};
+  });
+  /* Recipient expand/collapse */
+  document.querySelectorAll('.rc-head').forEach(el=>{
+    el.onclick=()=>{const k=el.dataset.rc;openRecipients[k]=!openRecipients[k];const rc=el.closest('.rc');const body=rc.querySelector('.rc-body');if(body)body.classList.toggle('open');};
+  });
+  /* Bone drag-and-drop */
+  document.querySelectorAll('.bone[draggable]').forEach(el=>{
+    el.ondragstart=e=>{dragIdx=parseInt(el.dataset.bone);el.classList.add('dragging');e.dataTransfer.effectAllowed='move';};
+    el.ondragend=()=>{el.classList.remove('dragging');dragIdx=null;document.querySelectorAll('.bone').forEach(b=>b.classList.remove('drag-over'));};
+    el.ondragover=e=>{e.preventDefault();document.querySelectorAll('.bone').forEach(b=>b.classList.remove('drag-over'));el.classList.add('drag-over');};
+    el.ondrop=e=>{e.preventDefault();const to=parseInt(el.dataset.bone);if(dragIdx!==null&&dragIdx!==to){const moved=themeOrder.splice(dragIdx,1)[0];themeOrder.splice(to,0,moved);ariaUpdateContent();}};
+  });
+  /* Bridge hover tooltip */
+  document.querySelectorAll('.bridge').forEach(el=>{
+    const fullTexts=["This shift from technology framing to social behavior is key — it explains why the most logical arguments fail and the most casual conversations convert.","At the root of every stated objection — range, charging infrastructure, resale value — sits the same emotional core: loss of control over daily routine.","The gap between stated motivations and actual behavior reveals that our messaging hierarchy is inverted — we lead with what people say they want, not what actually moves them.","When even the purchase channel actively discourages the product, the entire funnel needs architectural change, not optimization."];
+    el.onmouseenter=e=>{const tip=document.getElementById('aria-tooltip');const body=document.getElementById('aria-tooltip-body');body.textContent=fullTexts[el.dataset.bridge]||'';tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-14)+'px';tip.classList.add('vis');};
+    el.onmousemove=e=>{const tip=document.getElementById('aria-tooltip');tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-14)+'px';};
+    el.onmouseleave=()=>{document.getElementById('aria-tooltip').classList.remove('vis');};
+  });
+  /* Keyboard slide nav */
+  document.onkeydown=e=>{
+    if(step===3&&(e.key==='ArrowRight'||e.key==='ArrowDown')){e.preventDefault();if(activeSlide<SLIDES.length-1){activeSlide++;updateSlide();}}
+    if(step===3&&(e.key==='ArrowLeft'||e.key==='ArrowUp')){e.preventDefault();if(activeSlide>0){activeSlide--;updateSlide();}}
+  };
+}
+
+
+function updateSlide(){
+  var thumbs=document.querySelectorAll('.thumb');
+  thumbs.forEach(function(t,i){t.classList.toggle('on',i===activeSlide);});
+  var s=SLIDES[activeSlide];
+  var display=document.getElementById('slide-display');if(display)display.innerHTML=renderSlideContent(s);
+  var counter=document.querySelector('.slide-counter');if(counter)counter.textContent=(activeSlide+1)+' / '+SLIDES.length;
+  var notesBody=document.querySelector('.notes-body');
+  if(notesBody)notesBody.textContent=s.notes||'';
+}
+
+/* ═══ INIT ═══ */
+document.addEventListener("DOMContentLoaded",function(){try{render();}catch(e){console.log("aria init deferred",e)}});
+
+
+
+</script>
+</body>
+</html>
