@@ -157,6 +157,7 @@ nav{padding:0 20px}.ps{padding:60px 20px}.nv{display:none;right:0}.nv.mob{displa
 .tl .te-content .te-bullets>div{margin-bottom:8px!important}
 /* Skills & Education grid */
 .exp-footer{grid-template-columns:1fr!important}
+#proto-mobile-msg.vis{display:block!important}
 }
 
 
@@ -715,6 +716,12 @@ h1 .a{color:var(--a-purple-light)}
     <div class="pc" id="portContent">
       <div class="ptabs"><button class="ptb on" onclick="portTab('cases',this)">Case Studies</button><button class="ptb" onclick="portTab('protos',this)">Prototype</button></div>
 
+      <div id="proto-mobile-msg" style="display:none;text-align:center;padding:24px 20px;margin-bottom:20px;background:var(--bg3);border:1px solid var(--bh);border-radius:12px">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--pl)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:8px">Best experienced on desktop</div>
+        <p style="font-size:14px;color:var(--t2);line-height:1.6;margin:0">The interactive prototype is built for larger screens. Visit on a desktop or tablet for the full experience.</p>
+      </div>
+
       <!-- CASE STUDIES -->
       <div class="pp on" id="panel-cases">
         <div class="cgd">
@@ -911,6 +918,11 @@ function checkPw(){
   else{document.getElementById("pwError").style.display="block";inp.value="";inp.focus()}
 }
 function portTab(p,el){
+  if(p==="protos"&&window.innerWidth<=900){
+    var m=document.getElementById("proto-mobile-msg");if(m)m.classList.add("vis");
+    return;
+  }
+  var m=document.getElementById("proto-mobile-msg");if(m)m.classList.remove("vis");
   var t=document.querySelectorAll(".ptb");for(var i=0;i<t.length;i++)t[i].classList.remove("on");
   el.classList.add("on");
   var pn=document.querySelectorAll(".pp");for(var i=0;i<pn.length;i++)pn[i].classList.remove("on");
