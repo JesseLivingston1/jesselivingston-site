@@ -145,6 +145,18 @@ nav{padding:0 20px}.ps{padding:60px 20px}.nv{display:none;right:0}.nv.mob{displa
 .fgd,.egd{grid-template-columns:1fr}.mcg,.cgd,.fw,.pgd{grid-template-columns:1fr}
 .fr,.ccm{grid-template-columns:1fr}.mhd,.mbd{padding-left:24px;padding-right:24px}
 .pra{flex-direction:column;text-align:center}.prcard{flex-direction:column}
+/* Experience timeline mobile */
+.tl .te{flex-direction:column!important;gap:0!important;margin-bottom:32px!important}
+.tl .te-date{width:auto!important;text-align:left!important;padding-top:0!important;margin-bottom:6px}
+.tl .te-date div{font-size:12px!important}
+.tl .te-line{display:none!important}
+.tl .te-content{padding-left:16px;border-left:3px solid var(--p);padding-bottom:0!important}
+.tl .te-content>div:first-child{font-size:19px!important}
+.tl .te-content p{font-size:15px!important;line-height:1.75!important}
+.tl .te-content .te-bullets{font-size:14px!important;line-height:1.75!important}
+.tl .te-content .te-bullets>div{margin-bottom:8px!important}
+/* Skills & Education grid */
+.exp-footer{grid-template-columns:1fr!important}
 }
 
 
@@ -528,17 +540,17 @@ h1 .a{color:var(--a-purple-light)}
     <h2 class="st">11+ years across enterprise,<br>consumer, and AI.</h2>
 
     <!-- Timeline -->
-    <div style="margin-top:40px;max-width:800px">
+    <div class="tl" style="margin-top:40px;max-width:800px">
 
       <!-- ServiceNow -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2021 – Present</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2021 – Present</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Freelance</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">UX Research</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for fast-paced early and mid-stage startups.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led UX research for an early-stage startup, reducing friction in the checkout experience.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Conducted research for an e-commerce startup clarifying core customer value propositions.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Ran a beta testing program for a voice AI startup, generating early usability insights.</div>
@@ -550,14 +562,14 @@ h1 .a{color:var(--a-purple-light)}
       <!-- Netflix -->
       
 
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2024 – 2026</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2024 – 2026</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">ServiceNow</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Research Communications Manager</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Research communication coaching, training, and documentation for a 140-person UX research team.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Developed north-star communications principles, increasing team alignment on research storytelling.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Created help documentation and communication guidelines that improved consistency across 140+ researchers.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led office hours, training sessions, and webinars to strengthen storytelling skills.</div>
@@ -567,15 +579,15 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Microsoft -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2024</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2024</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Microsoft</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:4px;font-style:italic">Senior User Researcher · Contract</div>
           <div style="font-size:12px;color:var(--mt);margin-bottom:10px">AI & Storytelling</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for the Copilot AI experience in PowerPoint.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led foundational research on new Copilot AI features, informing product requirements and feature direction.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Analyzed survey data for PowerPoint features, clarifying user expectations and guiding prioritization.</div>
             <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Delivered rapid-turnaround research to meet critical product deadlines.</div>
@@ -584,14 +596,14 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Velir -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2023 – 2024</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2023 – 2024</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Velir Studios</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Principal Strategist & User Researcher · Contract</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Digital strategy and client relationships at a boutique web agency.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Built strong client relationships that contributed to renewed business engagements.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Integrated qualitative and quantitative data with analytics teams for clearer client insights.</div>
             <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Facilitated stakeholder working sessions to align teams on goals, scope, and direction.</div>
@@ -600,14 +612,14 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Freelance -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2020</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2020</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Netflix</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Senior User Experience Researcher</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for safety and security teams.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Developed a 6-month research roadmap addressing strategic questions across multiple products.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed and facilitated UX research workshop with partners, resulting in better buy-in of research.</div>
             <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Led customer service chat usability study, resulting in key usability improvements.</div>
@@ -616,14 +628,14 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- LinkedIn -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2016 – 2020</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2016 – 2020</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">LinkedIn</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Senior User Experience Researcher</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Full-cycle UX research for Talent Solutions, Careers, and Growth business units.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led foundational research for LinkedIn Talent Insights — fastest product to $50M revenue in LinkedIn history.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Coached UX researchers on storytelling and insight communication, improving presentation effectiveness.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Identified key mental models for LinkedIn Referrals, heavily influencing the decision to sunset the product.</div>
@@ -633,14 +645,14 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Think Company -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2015 – 2016</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2015 – 2016</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Think Company</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">Experience Design & User Research</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">UX workshops, wireframing, and research at a 40-person design agency.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Developed and led client UX workshops, aligning clients and teams on goals.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed and analyzed a large product survey for e-commerce client.</div>
             <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed data visualization wireframes for complex HR data.</div>
@@ -649,14 +661,14 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Haystack -->
-      <div style="display:flex;gap:24px;margin-bottom:20px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2014 – 2015</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:20px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pl)">2014 – 2015</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Haystack</div>
           <div style="font-size:14px;color:var(--pl);margin-bottom:10px;font-style:italic">User Research & Product Design</div>
           <p style="font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:10px">Front-end engineering, product design, and user research for a 4-person HealthTech startup.</p>
-          <div style="font-size:13px;color:var(--t2);line-height:1.7">
+          <div class="te-bullets" style="font-size:13px;color:var(--t2);line-height:1.7">
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Led usability studies for V1 product, improving usability and decreasing friction.</div>
             <div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--mt);flex-shrink:0">→</span>Designed front-end experience for complex health data visualization.</div>
             <div style="display:flex;gap:8px"><span style="color:var(--mt);flex-shrink:0">→</span>Wrote HTML, CSS, and JavaScript in collaboration with other developers.</div>
@@ -667,7 +679,7 @@ h1 .a{color:var(--a-purple-light)}
     </div>
 
     <!-- Skills & Education -->
-    <div style="margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:800px">
+    <div class="exp-footer" style="margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:800px">
       <div>
         <div class="sl">Key Skills</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
