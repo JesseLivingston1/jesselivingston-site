@@ -72,6 +72,9 @@ Static hosting. No build step. Push the repo root to:
 
 Domain: `jesselivingston.com` (DNS already on Cloudflare from existing setup)
 
+## Spec Rule
+**Update `SITE_SPEC.md` before touching any code.** If a change affects content, styles, or behavior described in the spec, update the spec first — then make the code change. This applies to every session.
+
 ## Common Edits
 - **Password**: Search for `livingston2026` in the JS
 - **Pricing**: Search for `$3–10K`, `$8–18K`, `$8–14K` in the HTML

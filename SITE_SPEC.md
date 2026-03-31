@@ -1,5 +1,8 @@
 # jesselivingston.com — Site Spec
 
+## Spec Rule
+Update this file **before** making any code changes. If a change affects content, styles, or behavior described here, update the spec first.
+
 ## Overview
 Single-page static site. No build step. Everything in `index.html` (HTML + CSS + JS inline). Images in `/images/`. Deployed via GitHub Pages with Cloudflare DNS.
 
@@ -14,12 +17,12 @@ Single-page static site. No build step. Everything in `index.html` (HTML + CSS +
 ## Tab Structure
 Five main tabs (JS-driven, no routing):
 - **Home** — Hero, About, Principles
-- **Services** — Focus areas, Research Methods, Engagement Models + pricing
-- **Experience** — Timeline resume (8 roles)
+- **Services** — Focus areas, Research Methods, Engagement Models + pricing (no "Most Popular" label)
+- **Experience** — Timeline resume (8 roles, see below)
 - **Portfolio** — Password-gated. Two sub-tabs:
-  - **Case Studies** — 4 cards (LinkedIn, Microsoft, Treehouse, Dwarven Forge) with detail modals
+  - **Case Studies** — 4 cards (LinkedIn, Microsoft, Treehouse, Dwarven Forge) with detail modals. Role tags do NOT include "(sole)".
   - **Prototype** — Full embedded Aria/SubNote prototype (research communication pipeline)
-- **Contact** — Web3Forms form → jesse@jesselivingston.com
+- **Contact** — Web3Forms form → jesse@jesselivingston.com. Header centered.
 
 ---
 
@@ -47,6 +50,8 @@ Five main tabs (JS-driven, no routing):
 - `DM Mono` — labels, code, tags
 
 **Rules**: No emoji in UI. Font weights as numbers (600, 700), never "bold".
+
+**Experience timeline text**: All text (dates, role titles, descriptions, bullets) uses `#fff`. Only the `→` arrows use `var(--mt)` (muted). Do NOT use `var(--t2)` or `var(--tx)` in the timeline — both have a purple cast that reads as purple on the dark background.
 
 ---
 
@@ -158,6 +163,40 @@ Microsoft logo = inline SVG (4-square grid). Treehouse logo = inline SVG (house 
 - Enable "Proxied" (orange cloud) on A records for Cloudflare SSL
 
 ---
+
+## SEO / Meta Tags
+Added to `<head>`:
+- `<meta name="description">` — search snippet
+- `<title>` — "Jesse Livingston — UX Researcher & Prototyper"
+- Open Graph tags (`og:title`, `og:description`, `og:image` → headshot.jpg)
+- Twitter card tags
+- Schema.org `Person` structured data (JSON-LD)
+- `<link rel="canonical" href="https://jesselivingston.com/">`
+
+## Mobile Nav
+`<ul class="nv" id="nv">` is a **sibling of `<nav>`**, not a child. This is intentional — placing it inside `<nav>` caused `backdrop-filter` to create a stacking context that made the mobile dropdown background transparent.
+
+Mobile open state (`.nv.mob`) requires `height:auto` explicitly — without it, the desktop `height:64px` rule overrides `bottom:0` and collapses the menu.
+
+## Experience Timeline Mobile Layout
+The timeline wrapper has `class="exp-tl"`. On mobile (`max-width:768px`):
+- Rows stack vertically (`flex-direction:column`)
+- Date column goes full-width, left-aligned above company name
+- Vertical line/dot column is hidden
+- Content is full-width, no squishing
+
+CSS rule lives in the main `@media(max-width:900px)` block as a separate `@media(max-width:768px)` block.
+
+## Experience Timeline
+8 roles in chronological order (newest first):
+1. Freelance — Jan 2021–Present
+2. ServiceNow — Aug 2024–Mar 2026
+3. Microsoft — Mar–Aug 2024
+4. Velir Studios — Jan 2023–Mar 2024
+5. Netflix — Jun–Nov 2020
+6. LinkedIn — Nov 2016–Jun 2020
+7. Think Company — Apr 2015–Nov 2016
+8. Haystack — Jan 2014–Mar 2015
 
 ## Common Edits
 - **Password**: Search `livingston2026!` in JS

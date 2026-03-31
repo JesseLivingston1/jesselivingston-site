@@ -146,6 +146,11 @@ nav{padding:0 20px}.ps{padding:60px 20px}.nv{display:none;right:0}.nv.mob{displa
 .fr,.ccm{grid-template-columns:1fr}.mhd,.mbd{padding-left:24px;padding-right:24px}
 .pra{flex-direction:column;text-align:center}.prcard{flex-direction:column}
 }
+@media(max-width:768px){
+.tl .te{flex-direction:column!important;gap:0!important;margin-bottom:32px!important}
+.tl .te-date{width:auto!important;text-align:left!important;padding-top:0;margin-bottom:6px}
+.tl .te-line{display:none!important}
+}
 
 
 </style>
@@ -528,13 +533,13 @@ h1 .a{color:var(--a-purple-light)}
     <h2 class="st">11+ years across enterprise,<br>consumer, and AI.</h2>
 
     <!-- Timeline -->
-    <div style="margin-top:40px;max-width:800px">
+    <div class="exp-tl tl" style="margin-top:40px;max-width:800px">
 
       <!-- Freelance -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jan 2021 – Present</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jan 2021 – Present</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Freelance</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">UX Research</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">Full-cycle UX research for fast-paced early and mid-stage start-ups.</p>
@@ -548,10 +553,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- ServiceNow -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Aug 2024 – Mar 2026</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Aug 2024 – Mar 2026</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">ServiceNow</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">Research Communications Manager</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">Research communication coaching, training, and documentation for a 140-person UX research team.</p>
@@ -565,10 +570,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Microsoft -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Mar – Aug 2024</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Mar – Aug 2024</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Microsoft</div>
           <div style="font-size:14px;color:#fff;margin-bottom:4px;font-style:italic">Senior User Researcher · Contract</div>
           <div style="font-size:12px;color:var(--mt);margin-bottom:10px">AI & Storytelling</div>
@@ -582,10 +587,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Velir -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jan 2023 – Mar 2024</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jan 2023 – Mar 2024</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Velir Studios</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">Principal Strategist & User Researcher · Contract</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">Digital strategy and client relationships at Velir, a boutique web agency.</p>
@@ -598,10 +603,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Netflix -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jun – Nov 2020</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jun – Nov 2020</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Netflix</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">Senior User Experience Researcher</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">Full-cycle UX research for safety and security teams.</p>
@@ -614,10 +619,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- LinkedIn -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Nov 2016 – Jun 2020</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Nov 2016 – Jun 2020</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">LinkedIn</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">Senior User Experience Researcher</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">Full-cycle UX research for Talent Solutions, Careers, and Growth business units.</p>
@@ -631,10 +636,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Think Company -->
-      <div style="display:flex;gap:24px;margin-bottom:36px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Apr 2015 – Nov 2016</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1;padding-bottom:4px">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:36px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Apr 2015 – Nov 2016</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1;padding-bottom:4px">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Think Company</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">Experience Design & User Research</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">UX workshops, wireframing, and UX research for Think Company, a 40-person design agency.</p>
@@ -647,10 +652,10 @@ h1 .a{color:var(--a-purple-light)}
       </div>
 
       <!-- Haystack -->
-      <div style="display:flex;gap:24px;margin-bottom:20px">
-        <div style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jan 2014 – Mar 2015</div></div>
-        <div style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
-        <div style="flex:1">
+      <div class="te" style="display:flex;gap:24px;margin-bottom:20px">
+        <div class="te-date" style="width:120px;flex-shrink:0;text-align:right;padding-top:4px"><div style="font-family:'DM Mono',monospace;font-size:11px;color:#fff">Jan 2014 – Mar 2015</div></div>
+        <div class="te-line" style="width:2px;background:var(--bd);flex-shrink:0;position:relative"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);position:absolute;top:0;left:-4px"></div></div>
+        <div class="te-content" style="flex:1">
           <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:2px">Haystack</div>
           <div style="font-size:14px;color:#fff;margin-bottom:10px;font-style:italic">User Research & Product Design</div>
           <p style="font-size:14px;color:#fff;line-height:1.7;margin-bottom:10px">Front-end engineering, product design, and user research for a 4-person HealthTech startup.</p>
