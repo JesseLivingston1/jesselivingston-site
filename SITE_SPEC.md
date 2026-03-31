@@ -185,6 +185,8 @@ The timeline wrapper has `class="exp-tl"`. On mobile (`max-width:768px`):
 - Vertical line/dot column is hidden
 - Content is full-width, no squishing
 
+Date text is purple (`var(--pl)`) on mobile only — overrides the `#fff` inline style via `.tl .te-date div` in the `@media(max-width:768px)` block.
+
 CSS rule lives in the main `@media(max-width:900px)` block as a separate `@media(max-width:768px)` block.
 
 ## Experience Timeline
