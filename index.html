@@ -50,7 +50,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:64px;d
 .nl{font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:var(--tx);text-decoration:none;cursor:pointer}.nl span{color:var(--pl)}
 .nv{position:fixed;top:0;right:40px;height:64px;display:flex;align-items:center;gap:6px;list-style:none;z-index:101}
 .nt{font-family:'DM Mono',monospace;font-size:12px;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;padding:8px 16px;border-radius:6px;cursor:pointer;border:none;background:none}.nt:hover{color:var(--pl);background:var(--pg)}.nt.on{color:var(--pl);background:var(--pg)}
-.nc{background:var(--p)!important;color:#fff!important;font-weight:500!important}.nc:hover{background:#6E66CC!important}
+.nc{background:var(--p) !important;color:#fff !important;font-weight:500 !important}.nc:hover{background:#6E66CC !important}
 .hm{display:none;background:none;border:none;cursor:pointer;padding:4px}.hm span{display:block;width:22px;height:2px;background:var(--t2);margin:5px 0;border-radius:2px}
 .tp{display:none;min-height:calc(100vh - 64px);padding-top:64px}.tp.on{display:block;animation:pgfade .25s ease}@keyframes pgfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .ps{padding:80px 40px;max-width:1200px;margin:0 auto}
@@ -147,10 +147,12 @@ nav{padding:0 20px}.ps{padding:60px 20px}.nv{display:none;right:0}.nv.mob{displa
 .pra{flex-direction:column;text-align:center}.prcard{flex-direction:column}
 }
 @media(max-width:768px){
-.tl .te{flex-direction:column!important;gap:0!important;margin-bottom:32px!important}
-.tl .te-date{width:auto!important;text-align:left!important;padding-top:0;margin-bottom:6px}
-.tl .te-line{display:none!important}
-.tl .te-date div{color:var(--pl)!important}
+.tl .te{flex-direction:column !important;gap:0 !important;margin-bottom:32px !important}
+.tl .te-date{width:auto !important;text-align:left !important;padding-top:0;margin-bottom:6px}
+.tl .te-line{display:none !important}
+.tl .te-date div{color:var(--pl) !important}
+.proto-mobile-msg{display:block !important}
+.proto-content{display:none !important}
 }
 
 
@@ -722,6 +724,12 @@ h1 .a{color:var(--a-purple-light)}
 
       <!-- SIDE PROJECTS -->
       <div class="pp" id="panel-protos">
+        <div class="proto-mobile-msg" style="display:none;text-align:center;padding:40px 20px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--pl)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:8px">Best experienced on desktop</div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.6;margin:0">The interactive prototype is built for larger screens. Visit on a desktop or tablet for the full experience.</p>
+        </div>
+        <div class="proto-content">
         <p style="text-align:center;color:var(--t2);font-size:15px;margin-bottom:28px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.7">A side project exploring how technology can improve research communication. This is a fully interactive prototype — the same kind of artifact I create for clients after a study.</p>
 
         <div style="background:#1E2025;border:1px solid rgba(127,119,221,.12);border-radius:12px;overflow:hidden;margin-bottom:24px">
@@ -734,6 +742,7 @@ h1 .a{color:var(--a-purple-light)}
 
 
           </div>
+        </div>
         </div>
     </div>
   </div>
