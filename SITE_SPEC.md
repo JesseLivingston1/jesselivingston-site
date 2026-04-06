@@ -203,6 +203,9 @@ CSS rule lives in the main `@media(max-width:900px)` block as a separate `@media
 7. Think Company — Apr 2015–Nov 2016
 8. Haystack — Jan 2014–Mar 2015
 
+## Hero Stats
+Displayed as two cards below the hero paragraph: "11+ Years Experience" and "80+ Studies Led". Search `.crd` to find them.
+
 ## Common Edits
 - **Password**: Search `livingston2026!` in JS
 - **Pricing**: Search `$3–10K`, `$8–18K`, `$8–14K`
