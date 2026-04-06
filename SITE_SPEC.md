@@ -17,12 +17,15 @@ Single-page static site. No build step. Everything in `index.html` (HTML + CSS +
 ## Tab Structure
 Five main tabs (JS-driven, no routing):
 - **Home** — Hero, About, Principles
-- **Services** — Focus areas, Research Methods, Engagement Models + pricing (no "Most Popular" label)
+- **Services** — Focus areas, Research Methods, Engagement Models + pricing (no "Most Popular" label). Two engagement tiers: Single Study + Monthly Retainer. No prototype offerings.
 - **Experience** — Timeline resume (8 roles, see below)
-- **Portfolio** — Password-gated. Two sub-tabs:
+- **Portfolio** — Password-gated. One sub-tab visible:
   - **Case Studies** — 4 cards (LinkedIn, Microsoft, Treehouse, Dwarven Forge) with detail modals. Role tags do NOT include "(sole)".
-  - **Prototype** — Full embedded Aria/SubNote prototype (research communication pipeline)
+  - ~~Prototype~~ — Panel hidden (commented out in HTML), JS intact. Button removed. Re-enable by uncommenting `<!-- PROTOTYPE PANEL -->` block and restoring the ptab button.
 - **Contact** — Web3Forms form → jesse@jesselivingston.com. Header centered.
+
+## Prototyping
+Prototyping has been removed from all user-facing content (title, hero, services, portfolio). Do NOT add it back without explicit instruction. The Aria prototype JS and HTML remain in the file but are hidden.
 
 ---
 
