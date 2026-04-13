@@ -124,9 +124,9 @@ footer { border-top: 1px solid var(--border); padding: 40px 48px; display: flex;
   #hero { padding: 60px 20px; min-height: auto; }
   .hero-headline { font-size: clamp(28px, 8vw, 48px); }
   .hero-line { white-space: normal !important; }
-  .hero-stats { flex-direction: column; }
-  .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
-  .hero-stat:last-child { border-bottom: none; }
+  .hero-stats { flex-direction: row; width: 100%; }
+  .hero-stat { flex: 1; padding: 16px 20px; }
+  .hero-stat:first-child { border-right: 1px solid var(--border); }
   .stats-grid, .dim-grid, .steps-grid { grid-template-columns: 1fr !important; }
   .funds-grid, .team-grid { grid-template-columns: 1fr !important; }
   .tam-grid { grid-template-columns: 1fr !important; }
