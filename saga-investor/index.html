@@ -190,6 +190,31 @@ section[id] { scroll-margin-top: 64px; }
 body.unlocked #page-wrap, body.unlocked footer { display: block; }
 body.unlocked #pw-overlay { display: none; }
 
+
+.nav-hamburger {
+  display: none; background: none; border: none; cursor: pointer;
+  padding: 4px; color: var(--txt3); transition: color 0.2s;
+}
+.nav-hamburger:hover { color: var(--txt); }
+.nav-hamburger svg { display: block; }
+@media (max-width: 768px) {
+  .nav-hamburger { display: block; }
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(30,32,37,0.98); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border2);
+    flex-direction: column; padding: 12px 20px; gap: 0 !important;
+    max-width: 100vw !important; overflow: visible !important;
+  }
+  .nav-links.open { display: flex; }
+  .nav-link {
+    padding: 10px 0 !important; font-size: 11px !important;
+    border-bottom: 1px solid var(--border); white-space: normal !important;
+    width: 100%; text-align: left;
+  }
+  .nav-link:last-child { border-bottom: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+}
 </style>
 </head>
 <body>
@@ -217,6 +242,7 @@ body.unlocked #pw-overlay { display: none; }
     <a href="#why-now" class="nav-link">Why Now</a>
     <a href="#ask" class="nav-link">Ask</a>
   </div>
+  <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
 </nav>
 
 <!-- ═══ HERO ═══ -->
@@ -528,6 +554,13 @@ body.unlocked #pw-overlay { display: none; }
     }
   });
 })();
+</script>
+<script>
+document.querySelectorAll('.nav-link').forEach(function(l) {
+  l.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
 </script>
 </body>
 </html>
