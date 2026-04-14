@@ -38,7 +38,7 @@ nav {
   padding-left: max(48px, calc(50vw - 492px)); padding-right: max(48px, calc(50vw - 492px));
 }
 .nav-brand { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--cyan); text-transform: uppercase; }
-.nav-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--txt3); text-transform: uppercase; border: 1px solid var(--border2); padding: 4px 12px; border-radius: 2px; }
+.nav-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.7); text-transform: uppercase; border: 1px solid var(--border2); padding: 4px 12px; border-radius: 2px; }
 #hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 48px; position: relative; }
 #hero::after { content: ''; position: fixed; top: -200px; right: 0; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(127,119,221,0.06) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 .hero-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--cyan); text-transform: uppercase; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
@@ -51,7 +51,7 @@ nav {
 .hero-stat { padding: 20px 36px; border-right: 1px solid var(--border); background: var(--bg2); }
 .hero-stat:last-child { border-right: none; }
 .hero-stat .num { font-family: var(--display); font-size: 32px; font-weight: 900; line-height: 1; display: block; margin-bottom: 4px; letter-spacing: -0.025em; color: var(--cyan); }
-.hero-stat .lbl { font-family: var(--mono); font-size: 10px; color: var(--txt3); letter-spacing: 0.06em; text-transform: uppercase; }
+.hero-stat .lbl { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.7); letter-spacing: 0.06em; text-transform: uppercase; }
 section { padding: 72px 48px; position: relative; }
 section + section { border-top: 1px solid var(--border); }
 .section-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--cyan); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
@@ -107,9 +107,9 @@ section + section { border-top: 1px solid var(--border); }
 .team-creds span { color: var(--cyan); }
 .tam-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: var(--border); margin-bottom: 20px; }
 .tam-card { background: var(--bg2); padding: 28px 24px; text-align: center; }
-.tam-label { font-family: var(--mono); font-size: 10px; color: var(--txt3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.tam-label { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.7); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
 .tam-num { font-family: var(--display); font-size: 40px; font-weight: 900; color: var(--cyan); line-height: 1; margin-bottom: 4px; }
-.tam-sub { font-size: 12px; color: var(--txt2); }
+.tam-sub { font-size: 12px; color: rgba(255,255,255,0.8); }
 footer { border-top: 1px solid var(--border); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; }
 .footer-name { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--txt); }
 .footer-creds { font-family: var(--mono); font-size: 11px; color: var(--txt3); margin-top: 4px; line-height: 1.6; }
@@ -391,19 +391,19 @@ body.unlocked #pw-overlay { display: none; }
 
   <div class="tam-grid">
     <div class="tam-card">
-      <div class="tam-label">TAM</div>
+      <div class="tam-label" style="color:rgba(255,255,255,0.7)">TAM</div>
       <div class="tam-num">$7.2B</div>
-      <div class="tam-sub">400K companies with no or minimal research</div>
+      <div class="tam-sub" style="color:#fff">400K companies with no or minimal research</div>
     </div>
     <div class="tam-card">
-      <div class="tam-label">SAM</div>
+      <div class="tam-label" style="color:rgba(255,255,255,0.7)">SAM</div>
       <div class="tam-num">$2.8B</div>
-      <div class="tam-sub">140K reachable, English-speaking</div>
+      <div class="tam-sub" style="color:#fff">140K reachable, English-speaking</div>
     </div>
     <div class="tam-card">
-      <div class="tam-label">SOM Year 3</div>
+      <div class="tam-label" style="color:rgba(255,255,255,0.7)">SOM Year 3</div>
       <div class="tam-num">$360K</div>
-      <div class="tam-sub">20 clients (SMB + mid-market)</div>
+      <div class="tam-sub" style="color:#fff">20 clients (SMB + mid-market)</div>
     </div>
   </div>
 
@@ -423,22 +423,22 @@ body.unlocked #pw-overlay { display: none; }
     <div class="stat-card">
       <span class="big-num" style="color: var(--cyan); font-size: 36px;">No competition</span>
       <div class="stat-desc">Every AI research tool on the market targets enterprise teams that already have researchers. Nobody is serving the 400K+ companies that have no research function at all. Bento Box Research is the only option for this market.</div>
-      <div class="stat-source">Outset, Knit, Listen Labs all sell to enterprise</div>
+      
     </div>
     <div class="stat-card">
       <span class="big-num" style="color: var(--cyan); font-size: 36px;">Can’t DIY</span>
       <div class="stat-desc">Without a research team, you can’t build this capability in-house. Enterprise companies are starting to build internal AI research tools — but that requires researchers to build and run them. Our clients don’t have that option.</div>
-      <div class="stat-source">The target market’s constraint is Bento Box Research’s moat</div>
+      
     </div>
     <div class="stat-card">
       <span class="big-num" style="color: var(--cyan); font-size: 36px;">Lock-in</span>
       <div class="stat-desc">After months of continuous research, each client has a living knowledge base that exists nowhere else — scores, trends, frustration clusters, and patterns tied to their specific product. Leaving means losing that institutional memory.</div>
-      <div class="stat-source">Switching costs grow with every month of accumulated insight</div>
+      
     </div>
     <div class="stat-card">
       <span class="big-num" style="color: var(--cyan); font-size: 36px;">Relationship</span>
       <div class="stat-desc">Every client gets a dedicated researcher who knows their product, their users, and their history. That relationship deepens over time — it’s not a tool they can swap out, it’s a person they rely on.</div>
-      <div class="stat-source">Human relationships compound alongside the data</div>
+      
     </div>
   </div>
 </section>
