@@ -682,12 +682,16 @@ body.unlocked #pw-overlay { display: none; }
     var scrollY = window.scrollY + 80;
     var active = sections[0];
     for (var i = 0; i < sections.length; i++) {
-      if (sections[i].el.offsetTop <= scrollY) active = sections[i];
+      // Guard against unrendered sections (offsetTop === 0 when body is locked/hidden)
+      if (sections[i].el.offsetTop > 0 && sections[i].el.offsetTop <= scrollY) active = sections[i];
     }
     links.forEach(function(l) { l.classList.remove('active'); });
     if (active) active.link.classList.add('active');
   }
   window.addEventListener('scroll', update);
+  // Re-run on unlock so scroll-spy recomputes once sections are laid out
+  var bodyObserver = new MutationObserver(update);
+  bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   update();
 })();
 </script>
