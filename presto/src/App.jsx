@@ -66,24 +66,37 @@ const DOMAIN_PALETTE = {
   HLT: { label: "Health & Wellbeing",     color: "#34d399", bg: "rgba(52,211,153,0.12)",  border: "rgba(52,211,153,0.35)"  },
   EDU: { label: "Education",              color: "#60a5fa", bg: "rgba(96,165,250,0.12)",  border: "rgba(96,165,250,0.35)"  },
   CRE: { label: "Creative & Media",       color: "#e879f9", bg: "rgba(232,121,249,0.12)", border: "rgba(232,121,249,0.35)" },
+  MKT: { label: "Marketing & Growth",     color: "#fb7185", bg: "rgba(251,113,133,0.12)", border: "rgba(251,113,133,0.35)" },
 };
 
-// Dynamic facet derivation
+// Dynamic facet derivation — pull only domains that actually appear in studies
 const DOMAINS = (() => {
   const used = new Set(STUDIES_DATA.flatMap(s => [s.domain, s.secondaryDomain]).filter(Boolean));
   const result = {};
-  for (const key of Object.keys(DOMAIN_PALETTE)) {
-    if (used.has(key)) result[key] = DOMAIN_PALETTE[key];
+  for (const key of [...used]) {
+    result[key] = DOMAIN_PALETTE[key] || {
+      label: key,
+      color: "#94a3b8",
+      bg: "rgba(148,163,184,0.12)",
+      border: "rgba(148,163,184,0.35)",
+    };
   }
-  return Object.keys(result).length > 0 ? result : DOMAIN_PALETTE;
+  return result;
 })();
-const DOMAIN_KEYS = Object.keys(DOMAINS);
+const DOMAIN_KEYS = Object.keys(DOMAINS).sort();
+
+// Set of valid study IDs — used to filter out orphan references
+const STUDY_ID_SET = new Set(STUDIES_DATA.map(s => s.id));
 
 // Dynamically extract all user types and themes from studies
 const ALL_USERS = [...new Set(STUDIES_DATA.map(s => s.user).filter(Boolean))].sort();
 const META_THEMES = [...new Set(STUDIES_DATA.map(s => s.metaTheme).filter(Boolean))].sort();
 
-const ALL_PROFILES = USER_PROFILES;
+// USER_PROFILES — clean any studyRefs that point to non-existent studies
+const ALL_PROFILES = USER_PROFILES.map(p => ({
+  ...p,
+  studyRefs: (p.studyRefs || []).filter(ref => STUDY_ID_SET.has(ref)),
+}));
 
 // Starter queries relevant to the data.js content
 const STARTER_QUERIES = STUDIES_DATA.length > 0
