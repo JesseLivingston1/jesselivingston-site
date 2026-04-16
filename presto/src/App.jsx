@@ -1877,6 +1877,8 @@ export default function PrestoApp() {
   const [aiResult, setAiResult] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [selectedStudy, setSelectedStudy] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 9; // 3 rows x 3 columns at default desktop layout
 
   useEffect(() => { document.title = "SubNote | Presto"; }, []);
 
@@ -1891,6 +1893,13 @@ export default function PrestoApp() {
   },[filterDomains,filterUsers,filterThemes]);
 
   const totalFilters = filterDomains.length+filterUsers.length+filterThemes.length;
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pagedStudies = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  // Reset to page 1 when filters change
+  useEffect(() => { setCurrentPage(1); }, [filterDomains, filterUsers, filterThemes]);
 
   const runSearch = () => {
     if (!searchQuery.trim()) return;
@@ -2005,9 +2014,31 @@ export default function PrestoApp() {
             </div>
 
             <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(310px,1fr))",gap:14 }}>
-              {filtered.map((study)=><StudyCard key={study.id} study={study} onClick={openStudy}/>)}
+              {pagedStudies.map((study)=><StudyCard key={study.id} study={study} onClick={openStudy}/>)}
               {filtered.length===0&&<div style={{ gridColumn:"1/-1",textAlign:"center",padding:"60px 0",color:"rgba(255,255,255,0.55)",fontSize:14 }}>No studies match the current filters.</div>}
             </div>
+
+            {filtered.length > PAGE_SIZE && (
+              <div style={{ display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginTop:32,paddingTop:24,borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+                <button
+                  onClick={()=>{ setCurrentPage(p=>Math.max(1,p-1)); window.scrollTo({top:0,behavior:"smooth"}); }}
+                  disabled={safePage===1}
+                  style={{ padding:"6px 14px",fontSize:12,fontFamily:"'DM Sans',sans-serif",fontWeight:500,color:safePage===1?"rgba(255,255,255,0.25)":"rgba(255,255,255,0.7)",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:6,cursor:safePage===1?"not-allowed":"pointer",transition:"all 0.15s ease" }}>
+                  &larr; Prev
+                </button>
+                <div style={{ display:"flex",alignItems:"center",gap:6,padding:"0 12px",fontFamily:"'DM Mono',monospace",fontSize:11,color:"rgba(255,255,255,0.55)",letterSpacing:"0.06em" }}>
+                  <span style={{ color:"#7F77DD" }}>{safePage}</span>
+                  <span>/</span>
+                  <span>{totalPages}</span>
+                </div>
+                <button
+                  onClick={()=>{ setCurrentPage(p=>Math.min(totalPages,p+1)); window.scrollTo({top:0,behavior:"smooth"}); }}
+                  disabled={safePage===totalPages}
+                  style={{ padding:"6px 14px",fontSize:12,fontFamily:"'DM Sans',sans-serif",fontWeight:500,color:safePage===totalPages?"rgba(255,255,255,0.25)":"rgba(255,255,255,0.7)",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:6,cursor:safePage===totalPages?"not-allowed":"pointer",transition:"all 0.15s ease" }}>
+                  Next &rarr;
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
