@@ -9,7 +9,7 @@
 // ══════════════════════════════════════════════════════════════════════
 
 import { useState, useMemo, useEffect, useRef } from "react";
-import { STUDIES_DATA, INSIGHTS_MAP, USER_PROFILES, WORKFLOWS_DATA } from "./data.js";
+import { STUDIES_DATA, INSIGHTS_MAP, USER_PROFILES } from "./data.js";
 
 // ── Build STUDY_INDEX for O(1) lookup ──────────────────────────────
 const STUDY_INDEX = {};
@@ -1533,19 +1533,300 @@ function UseCasesTab({ onStudyClick }) {
 }
 
 
-// ── Workflow Tab ──────────────────────────────────────────────────
-// Renders WORKFLOWS_DATA as journey timeline visualizations
+// ── Workflow Diagrams (from original presto_preview.jsx) ────────────
+const WORKFLOW_DIAGRAMS = [
+  {
+    id: "WF-FLW-01", user: "Operations Manager", domain: "OPS",
+    task: "Building their first automation in Flow",
+    context: "A new operations lead opens Flow for the first time. They need to automate their team's PTO approval process. The blank canvas is waiting.",
+    products: ["Flow"],
+    steps: [
+      { label: "Opens the workflow builder", detail: "Sees an empty canvas with a toolbar. No guidance on where to start. The cursor blinks." },
+      { label: "Stares at the blank canvas for 90 seconds", highlight: true, detail: "They know what they want to build \u2014 automate PTO approvals. They don't know where to click first." },
+      { label: "Searches for a template", detail: "Finds a PTO template. Deploys it in 11 minutes. Has no idea what the 8 steps inside it actually do." },
+      { label: "Template works. Decides to build a second workflow from scratch.", detail: "This time there's no template. They're back to the blank canvas. The 90-second stare returns." },
+    ],
+    decision: "Can they build without a template?",
+    leftBranch: { label: "no", title: "Gives up on custom builds", subtitle: "Stays template-dependent", color: "amber", friction: "Template ceiling" },
+    rightBranch: { label: "yes", title: "Builds from scratch", subtitle: "Takes 40 min instead of 11", color: "green" },
+    convergence: "Workflow goes live",
+    annotations: [
+      { title: "The blank canvas is the #1 dropout trigger", text: "Users who don't make their first move within 60 seconds are 3x more likely to abandon the session. The problem isn't capability \u2014 it's orientation." },
+      { title: "Template users complete 3x faster but can't modify what they built", text: "Templates solve the speed problem and create a comprehension problem. When the template needs to flex, the user is stuck." }
+    ]
+  },
+  {
+    id: "WF-PLS-01", user: "People Manager", domain: "ENT",
+    task: "Receiving and acting on engagement survey results",
+    context: "An engineering manager gets notified that their team's latest Pulse results are ready. Their engagement score is 68. They have 30 minutes before their next meeting.",
+    products: ["Pulse"],
+    steps: [
+      { label: "Opens the Pulse dashboard", detail: "Sees the number: 68. It was 71 last quarter. They feel a knot in their stomach." },
+      { label: "Tries to understand what drove the drop", highlight: true, detail: "The dashboard shows the score. It doesn't show the drivers. They click around looking for 'why.'" },
+      { label: "Gives up on the dashboard, opens the action plan tool", detail: "Types 'improve communication' in the action plan field. It's the same plan they wrote last quarter." },
+      { label: "Closes the tab and goes to their meeting", detail: "The action plan sits there. They'll look at it again next quarter. Probably." },
+    ],
+    decision: "Do they know what lever to pull?",
+    leftBranch: { label: "no", title: "Creates a vague action plan", subtitle: "'Improve communication'", color: "amber", friction: "No actionable signal" },
+    rightBranch: { label: "yes", title: "Schedules a team conversation", subtitle: "Co-creates a specific plan", color: "green" },
+    convergence: "Next quarter's survey arrives",
+    annotations: [
+      { title: "15 of 15 managers could state their score. 3 of 15 could name the top driver.", text: "The dashboard shows outcomes but not inputs. Managers can see the number but can't see what produced it \u2014 so they act on assumptions." },
+      { title: "Managers who involved their team in the action plan were 6x more likely to follow through", text: "Solo plans complete at 11%. Co-created plans complete at 67%. The conversation is the intervention." }
+    ]
+  },
+  {
+    id: "WF-CON-01", user: "Enterprise Employee", domain: "ENT",
+    task: "Searching for a decision made three weeks ago in Connect",
+    context: "A product manager needs the pricing decision from three weeks ago. They know it was discussed somewhere. They open Connect search.",
+    products: ["Connect"],
+    steps: [
+      { label: "Types a search query", detail: "'pricing decision Q2' \u2014 returns 47 messages across 6 channels. None of them are the decision." },
+      { label: "Refines the search", detail: "Tries 'pricing approved', 'final price', 'pricing update'. Each returns a different set of messages. None contain the conclusion." },
+      { label: "Opens the most likely channel and scrolls", highlight: true, detail: "Finds the thread where pricing was discussed. It's 84 messages long. The decision is in reply #71." },
+      { label: "Gives up and messages a colleague", detail: "'Hey Rachel, do you remember what we decided on pricing?' Rachel doesn't remember either. She asks someone else." },
+    ],
+    decision: "Can they find the decision?",
+    leftBranch: { label: "no", title: "Asks a colleague", subtitle: "Who also can't find it", color: "amber", friction: "Search failure cascade" },
+    rightBranch: { label: "eventually", title: "Finds it in a thread reply", subtitle: "Took 25 minutes", color: "gray" },
+    convergence: "Decision is (re)confirmed",
+    annotations: [
+      { title: "Users search 6 times per day and succeed twice", text: "The 67% failure rate isn't a search quality problem \u2014 it's a content structure problem. Search returns messages. Users want decisions." },
+      { title: "One team prefixed decisions with 'DECIDED:' and had 89% search success vs. 33% for everyone else", text: "The best solution is already being used by one team. Nobody else knows about it because there's no mechanism to spread the convention." }
+    ]
+  },
+  {
+    id: "WF-LNS-01", user: "Data Analyst", domain: "DAT",
+    task: "Sharing a dashboard with an executive who wasn't involved in building it",
+    context: "A senior analyst built a revenue dashboard over two weeks. They share it with the VP of Product for a quarterly review. The VP opens it for the first time.",
+    products: ["Lens"],
+    steps: [
+      { label: "VP opens the shared dashboard", detail: "Sees 6 charts. Recognizes the revenue trend line. The other 5 charts need context they don't have." },
+      { label: "VP forms an interpretation in 8 seconds", highlight: true, detail: "Their eye lands on the biggest chart. They read it as 'revenue is growing.' The analyst built it to show 'growth is decelerating.'" },
+      { label: "VP presents the dashboard in a leadership meeting", detail: "Cites the revenue chart as evidence that things are going well. The analyst isn't in the room." },
+      { label: "Analyst discovers the misinterpretation two weeks later", detail: "A product decision was made based on the wrong reading. The data was right. The interpretation was wrong. Nobody knew." },
+    ],
+    decision: "Does the VP interpret it correctly?",
+    leftBranch: { label: "no", title: "Misreads the chart", subtitle: "Acts on wrong interpretation", color: "red", friction: "Interpretation gap" },
+    rightBranch: { label: "yes", title: "Asks the analyst to explain", subtitle: "Gets the right context", color: "green" },
+    convergence: "Decision is made from the dashboard",
+    annotations: [
+      { title: "Builder and reader draw different conclusions 40% of the time", text: "The builder knows context the chart doesn't show. The reader fills gaps with assumptions. A one-sentence annotation reduces divergence from 40% to 12%." },
+      { title: "Readers form their interpretation in 8 seconds and rarely change it", text: "The first 8 seconds determine the takeaway for the entire meeting. Everything after that is commentary on a conclusion already formed." }
+    ]
+  },
+  {
+    id: "WF-FLW-02", user: "Operations Manager", domain: "OPS",
+    task: "Diagnosing why an automation failed overnight",
+    context: "An ops manager arrives at 8am. Three Slack messages say the automated invoicing workflow didn't run. They open Flow to figure out what happened.",
+    products: ["Flow"],
+    steps: [
+      { label: "Opens the workflow and sees 'Failed' status", detail: "The error says: 'Workflow execution failed.' No step identified. No cause. No suggestion." },
+      { label: "Assumes they built something wrong", highlight: true, detail: "Starts reviewing each step, looking for what they misconfigured. This takes 30 minutes." },
+      { label: "Deletes and rebuilds two steps that seem suspicious", detail: "It's superstitious debugging \u2014 they don't know what broke, so they rebuild what feels wrong." },
+      { label: "Workflow runs successfully on retry", detail: "It was a transient server issue. The 30 minutes of debugging were unnecessary. They don't know that." },
+    ],
+    decision: "Do they know what caused the failure?",
+    leftBranch: { label: "no", title: "Blames themselves", subtitle: "Rebuilds steps that weren't broken", color: "amber", friction: "Self-blame loop" },
+    rightBranch: { label: "yes", title: "Recognizes a platform issue", subtitle: "Retries without changes", color: "green" },
+    convergence: "Workflow is running again",
+    annotations: [
+      { title: "9 of 12 users assumed they caused the error \u2014 even when the platform was at fault", text: "Error messages that don't attribute the cause default to self-blame. Users stop building after two unexplained failures." },
+      { title: "One clear explanation recovered trust faster than three successful runs", text: "Explanation is a more powerful trust signal than positive outcomes. Users who were told 'this was a platform issue' recovered immediately." }
+    ]
+  },
+];
+
+const WF_USER_ORDER = [...new Set(WORKFLOW_DIAGRAMS.map(w => w.user))];
+
+const WF_C = {
+  gray:   { fill:"rgba(255,255,255,0.04)", stroke:"rgba(255,255,255,0.12)", accent:"rgba(255,255,255,0.45)" },
+  purple: { fill:"rgba(127,119,221,0.12)", stroke:"rgba(127,119,221,0.35)", accent:"#7F77DD" },
+  teal:   { fill:"rgba(52,211,153,0.12)",  stroke:"rgba(52,211,153,0.35)",  accent:"#34d399" },
+  amber:  { fill:"rgba(251,146,60,0.12)",  stroke:"rgba(251,146,60,0.35)",  accent:"#fbbf24" },
+  coral:  { fill:"rgba(248,113,113,0.12)", stroke:"rgba(248,113,113,0.35)", accent:"#f87171" },
+  red:    { fill:"rgba(248,113,113,0.12)", stroke:"rgba(248,113,113,0.35)", accent:"#f87171" },
+  green:  { fill:"rgba(52,211,153,0.12)",  stroke:"rgba(52,211,153,0.35)",  accent:"#34d399" },
+};
+
+function WorkflowDiagram({ wf, collapsed, onToggle, showUser }) {
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const n = wf.steps.length;
+  const tw = (str, fs) => str.length * fs * 0.56 + 40;
+  const fitFont = (str, boxW, base) => {
+    const needed = str.length * base * 0.56 + 28;
+    return needed <= boxW ? base : Math.max(9.5, base * (boxW - 28) / (str.length * base * 0.56));
+  };
+  const stepWidths = wf.steps.map(s => Math.max(180, Math.min(tw(s.label, 12.5), 400)));
+  const PILL_W = Math.max(260, Math.min(tw(wf.decision, 12), 420));
+  const BOX_H = 41;
+  const PILL_H = 41;
+  const leftBW = Math.max(140, Math.min(tw(wf.leftBranch.title, 12), 220));
+  const rightBW = Math.max(140, Math.min(tw(wf.rightBranch.title, 12), 220));
+  const OUTCOME_H = 52;
+  const CONV_W = Math.max(160, Math.min(tw(wf.convergence, 12), 300));
+  let CX = 340;
+  const margin = 14;
+  const rawLeftCX = CX - PILL_W / 2 - leftBW / 2 - margin;
+  const rawRightCX = CX + PILL_W / 2 + rightBW / 2 + margin;
+  const leftEdge = rawLeftCX - leftBW / 2;
+  const shift = leftEdge < 10 ? (10 - leftEdge) : 0;
+  const LEFT_CX = rawLeftCX + shift;
+  const RIGHT_CX = rawRightCX + shift;
+  CX = (LEFT_CX + RIGHT_CX) / 2;
+  const CONV_CX = CX;
+  const SVG_W = Math.max(680, RIGHT_CX + rightBW / 2 + 10);
+  const arrId = `arr-${wf.id}`;
+  const GAP = 17;
+  const stepY = i => 12 + i * (BOX_H + GAP);
+  const lastBottom = stepY(n - 1) + BOX_H;
+  const decY = lastBottom + GAP;
+  const decMid = decY + PILL_H / 2;
+  const branchY = decY + PILL_H + 37;
+  const convergeY = branchY + OUTCOME_H + 30;
+  const svgH = convergeY + BOX_H + 15;
+  const d = DOMAINS[wf.domain];
+  const arrowStroke = "rgba(255,255,255,0.15)";
+  const arrUrl = `url(#${arrId})`;
+  const [tipData, setTipData] = useState(null);
+  const showTip = (e, text) => { if (!text) return; setTipData({ text, cx: e.clientX, cy: e.clientY }); };
+  const hideTip = () => setTipData(null);
+
+  const renderBranch = (branch, cx, side, bw) => {
+    const c = WF_C[branch.color] || WF_C.gray;
+    const edgeX = side === "left" ? (CX - PILL_W / 2) : (CX + PILL_W / 2);
+    const labelX = side === "left" ? (cx + 22) : (edgeX + 16);
+    const hKey = `branch-${side}`;
+    const isHov = hoveredNode === hKey;
+    const tipText = branch.friction
+      ? `This path leads to "${branch.title.toLowerCase()}" \u2014 ${branch.friction.toLowerCase()} shapes what happens next.`
+      : `When the answer is "${branch.label}," the user ${branch.title.toLowerCase()}. ${branch.subtitle}.`;
+    return (
+      <>
+        <path d={`M${edgeX} ${decMid} L${cx} ${decMid} L${cx} ${branchY}`} fill="none" stroke={arrowStroke} strokeWidth={1} markerEnd={arrUrl}/>
+        <text x={labelX} y={decMid - 7} fill="rgba(255,255,255,0.35)" fontSize={11} fontFamily="'DM Sans',sans-serif">{branch.label}</text>
+        {branch.friction && (
+          <>
+            <circle cx={side === "left" ? (cx - bw/2 + 7) : (cx + bw/2 - 7)} cy={branchY - 14} r={6} fill="#fbbf24" opacity={0.9}/>
+            <text x={side === "left" ? (cx - bw/2 + 7) : (cx + bw/2 - 7)} y={branchY - 14} textAnchor="middle" dominantBaseline="central" fill="#1E2025" fontSize={8} fontWeight={700} fontFamily="'DM Sans',sans-serif">!</text>
+            <text x={side === "left" ? (cx - bw/2 + 16) : (cx + bw/2 - 16)} y={branchY - 14} dominantBaseline="central" fill="#fbbf24" fontSize={10} fontFamily="'DM Sans',sans-serif" textAnchor={side === "left" ? "start" : "end"}>{branch.friction}</text>
+          </>
+        )}
+        <rect x={cx - bw/2} y={branchY} width={bw} height={OUTCOME_H} rx={7}
+          fill={isHov ? c.stroke : c.fill} stroke={c.stroke} strokeWidth={isHov ? 1 : 0.5}
+          style={{ cursor: "default", transition: "all 0.15s ease" }}
+          onMouseEnter={e => { setHoveredNode(hKey); showTip(e, tipText); }}
+          onMouseMove={e => showTip(e, tipText)}
+          onMouseLeave={() => { setHoveredNode(null); hideTip(); }}/>
+        <text x={cx} y={branchY + 17} textAnchor="middle" dominantBaseline="central" fill="#f0f4ff" fontSize={12.5} fontWeight={600} fontFamily="'DM Sans',sans-serif" style={{ pointerEvents: "none" }}>{branch.title}</text>
+        <text x={cx} y={branchY + 34} textAnchor="middle" dominantBaseline="central" fill="rgba(255,255,255,0.4)" fontSize={10.5} fontFamily="'DM Sans',sans-serif" style={{ pointerEvents: "none" }}>{branch.subtitle}</text>
+        <path d={`M${cx} ${branchY + OUTCOME_H} L${cx} ${convergeY + BOX_H / 2} L${side === "left" ? (CONV_CX - CONV_W / 2) : (CONV_CX + CONV_W / 2)} ${convergeY + BOX_H / 2}`} fill="none" stroke={arrowStroke} strokeWidth={1} markerEnd={arrUrl}/>
+      </>
+    );
+  };
+
+  return (
+    <div style={{ background: "#252830", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, overflow: "hidden", animation: "fadeUp 0.3s ease" }}>
+      <div style={{ height: 3, background: `linear-gradient(90deg,${d?.color || "#7F77DD"},transparent)` }}/>
+      <div onClick={onToggle}
+        style={{ padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", gap: 12 }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.02)"}
+        onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 14.5, fontWeight: 700, color: "#f0f4ff", fontFamily: "'Fraunces',serif", lineHeight: 1.3, letterSpacing: "-0.01em" }}>{wf.task}</div>
+          {wf.context && <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.5, marginTop: 5 }}>{wf.context}</div>}
+          <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6, alignItems: "center" }}>
+            {showUser && <span style={{ fontSize: 9.5, color: d?.color || "#7F77DD", fontFamily: "'DM Mono',monospace", background: `${d?.color || "#7F77DD"}15`, border: `1px solid ${d?.color || "#7F77DD"}30`, borderRadius: 3, padding: "2px 6px" }}>{wf.user}</span>}
+            {wf.products.map((p, i) => (
+              <span key={i} style={{ fontSize: 9.5, color: "rgba(255,255,255,0.65)", fontFamily: "'DM Mono',monospace", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 3, padding: "2px 6px" }}>{p}</span>
+            ))}
+          </div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0, transition: "transform 0.2s ease", transform: collapsed ? "rotate(0deg)" : "rotate(180deg)" }}>
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      {!collapsed && (
+        <>
+          <div style={{ maxWidth: 648, margin: "0 auto", padding: "0 12px", position: "relative" }}>
+            <svg viewBox={`0 0 ${SVG_W} ${svgH}`} style={{ width: "100%", display: "block" }} xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id={arrId} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M2 1L8 5L2 9" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </marker>
+              </defs>
+              {wf.steps.map((step, i) => {
+                const y = stepY(i);
+                const c = step.highlight ? WF_C.purple : WF_C.gray;
+                const hKey = `step-${i}`;
+                const isHov = hoveredNode === hKey;
+                const tipText = step.detail || `Step ${i + 1}: ${step.label}`;
+                return (
+                  <g key={i}>
+                    <rect x={CX - stepWidths[i] / 2} y={y} width={stepWidths[i]} height={BOX_H} rx={7}
+                      fill={isHov ? c.stroke : c.fill} stroke={c.stroke} strokeWidth={isHov ? 1 : 0.5}
+                      style={{ cursor: "default", transition: "all 0.15s ease" }}
+                      onMouseEnter={e => { setHoveredNode(hKey); showTip(e, tipText); }}
+                      onMouseMove={e => showTip(e, tipText)}
+                      onMouseLeave={() => { setHoveredNode(null); hideTip(); }}/>
+                    <text x={CX} y={y + BOX_H / 2} textAnchor="middle" dominantBaseline="central" fill="#f0f4ff" fontSize={fitFont(step.label, stepWidths[i], 12.5)} fontWeight={step.highlight ? 600 : 400} fontFamily="'DM Sans',sans-serif" style={{ pointerEvents: "none" }}>{step.label}</text>
+                    {i < n - 1 && (
+                      <line x1={CX} y1={y + BOX_H} x2={CX} y2={y + BOX_H + GAP} stroke={arrowStroke} strokeWidth={1} markerEnd={arrUrl}/>
+                    )}
+                  </g>
+                );
+              })}
+              <line x1={CX} y1={lastBottom} x2={CX} y2={decY} stroke={arrowStroke} strokeWidth={1} markerEnd={arrUrl}/>
+              {(() => {
+                const hKey = "decision";
+                const isHov = hoveredNode === hKey;
+                const tipText = `Decision point: "${wf.decision}"`;
+                return (
+                  <g>
+                    <rect x={CX - PILL_W / 2} y={decY} width={PILL_W} height={PILL_H} rx={19}
+                      fill={isHov ? WF_C.purple.stroke : WF_C.purple.fill} stroke={WF_C.purple.stroke} strokeWidth={isHov ? 1 : 0.5}
+                      style={{ cursor: "default", transition: "all 0.15s ease" }}
+                      onMouseEnter={e => { setHoveredNode(hKey); showTip(e, tipText); }}
+                      onMouseMove={e => showTip(e, tipText)}
+                      onMouseLeave={() => { setHoveredNode(null); hideTip(); }}/>
+                    <text x={CX} y={decY + PILL_H / 2} textAnchor="middle" dominantBaseline="central" fill="#7F77DD" fontSize={fitFont(wf.decision, PILL_W, 12.5)} fontWeight={600} fontFamily="'DM Sans',sans-serif" style={{ pointerEvents: "none" }}>{wf.decision}</text>
+                  </g>
+                );
+              })()}
+              {renderBranch(wf.leftBranch, LEFT_CX, "left", leftBW)}
+              {renderBranch(wf.rightBranch, RIGHT_CX, "right", rightBW)}
+              <rect x={CONV_CX - CONV_W / 2} y={convergeY} width={CONV_W} height={BOX_H} rx={7} fill={WF_C.gray.fill} stroke={WF_C.gray.stroke} strokeWidth={0.5}/>
+              <text x={CONV_CX} y={convergeY + BOX_H / 2} textAnchor="middle" dominantBaseline="central" fill="rgba(255,255,255,0.65)" fontSize={12} fontFamily="'DM Sans',sans-serif" style={{ pointerEvents: "none" }}>{wf.convergence}</text>
+            </svg>
+          </div>
+          {wf.annotations?.length > 0 && (
+            <div style={{ padding: "0 24px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
+              {wf.annotations.map((a, i) => (
+                <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 8, padding: "14px 16px" }}>
+                  <div style={{ fontSize: 12.5, fontWeight: 600, color: "#f0f4ff", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.35, marginBottom: 6 }}>{a.title}</div>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.55 }}>{a.text}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {tipData && (
+            <div style={{ position: "fixed", top: tipData.cy + 16, left: Math.min(tipData.cx + 12, window.innerWidth - 340), background: "#252830", border: "1px solid rgba(127,119,221,0.25)", borderRadius: 8, padding: "12px 14px", maxWidth: 320, zIndex: 1000, boxShadow: "0 12px 40px rgba(0,0,0,0.6)", pointerEvents: "none", animation: "fadeUp 0.1s ease" }}>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.9)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.5 }}>{tipData.text}</div>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
 function WorkflowTab() {
   const [expandedId, setExpandedId] = useState(null);
   const [userFilter, setUserFilter] = useState("all");
 
-  const workflows = WORKFLOWS_DATA || [];
-  const allUsers = [...new Set(workflows.map(w => w.user).filter(Boolean))];
-
-  const filteredWfs = userFilter === "all" ? workflows : workflows.filter(w => w.user === userFilter);
-
-  const frictionColors = { high: "#f87171", medium: "#fbbf24", low: "#34d399" };
-  const emotionIcons = { frustrated: "--|", confused: "?", anxious: "~", hopeful: "+", relieved: "++", confident: "+++" };
+  const filteredWfs = userFilter === "all"
+    ? WORKFLOW_DIAGRAMS
+    : WORKFLOW_DIAGRAMS.filter(w => w.user === userFilter);
 
   return (
     <div style={{ animation: "fadeUp 0.3s ease" }}>
@@ -1555,98 +1836,25 @@ function WorkflowTab() {
           <span style={{ fontSize: 10, color: "#7F77DD", fontFamily: "'DM Mono',monospace", letterSpacing: "0.1em", textTransform: "uppercase" }}>Workflows</span>
         </div>
         <h2 style={{ fontSize: 38, fontWeight: 900, color: "#f0f4ff", letterSpacing: "-0.025em", marginBottom: 8, fontFamily: "'Fraunces',serif" }}>How do people actually work?</h2>
-        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, maxWidth: 600 }}>Journey maps showing where users succeed, struggle, and diverge.</p>
+        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, maxWidth: 600 }}>Decision maps showing where users succeed, struggle, and diverge &mdash; based on what research observed.</p>
       </div>
-      {allUsers.length > 0 && (
-        <div style={{ display: "flex", gap: 0, background: "rgba(255,255,255,0.04)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden", width: "fit-content", marginBottom: 24 }}>
-          <button onClick={() => setUserFilter("all")}
-            style={{ padding: "7px 16px", fontSize: 11.5, color: userFilter === "all" ? "#7F77DD" : "rgba(255,255,255,0.45)", background: userFilter === "all" ? "rgba(127,119,221,0.12)" : "none", border: "none", borderRight: "1px solid rgba(255,255,255,0.06)", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontWeight: 500 }}>All</button>
-          {allUsers.map(u => (
-            <button key={u} onClick={() => setUserFilter(u)}
-              style={{ padding: "7px 16px", fontSize: 11.5, color: userFilter === u ? "#f0f4ff" : "rgba(255,255,255,0.45)", background: userFilter === u ? "rgba(255,255,255,0.1)" : "none", border: "none", borderRight: "1px solid rgba(255,255,255,0.06)", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontWeight: 500, transition: "all 0.15s ease" }}>{u}</button>
-          ))}
-        </div>
-      )}
+
+      <div style={{ display: "flex", gap: 0, background: "rgba(255,255,255,0.04)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden", width: "fit-content", marginBottom: 24 }}>
+        <button onClick={() => setUserFilter("all")}
+          style={{ padding: "7px 16px", fontSize: 11.5, color: userFilter === "all" ? "#7F77DD" : "rgba(255,255,255,0.45)", background: userFilter === "all" ? "rgba(127,119,221,0.12)" : "none", border: "none", borderRight: "1px solid rgba(255,255,255,0.06)", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontWeight: 500 }}>All</button>
+        {WF_USER_ORDER.map(u => (
+          <button key={u} onClick={() => setUserFilter(u)}
+            style={{ padding: "7px 16px", fontSize: 11.5, color: userFilter === u ? "#f0f4ff" : "rgba(255,255,255,0.45)", background: userFilter === u ? "rgba(255,255,255,0.1)" : "none", border: "none", borderRight: "1px solid rgba(255,255,255,0.06)", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontWeight: 500, transition: "all 0.15s ease" }}>{u}</button>
+        ))}
+      </div>
+
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        {filteredWfs.map(wf => {
-          const expanded = expandedId === wf.id;
-          const d = DOMAINS[wf.domain] || { color: "#7F77DD" };
-          return (
-            <div key={wf.id} style={{ background: "#252830", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, overflow: "hidden", animation: "fadeUp 0.3s ease" }}>
-              <div style={{ height: 3, background: `linear-gradient(90deg,${d.color},transparent)` }}/>
-              <div onClick={() => setExpandedId(expanded ? null : wf.id)}
-                style={{ padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", gap: 12 }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.02)"}
-                onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14.5, fontWeight: 700, color: "#f0f4ff", fontFamily: "'Fraunces',serif", lineHeight: 1.3, letterSpacing: "-0.01em" }}>{wf.title}</div>
-                  {wf.context && <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.5, marginTop: 5 }}>{wf.context}</div>}
-                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6, alignItems: "center" }}>
-                    <span style={{ fontSize: 9.5, color: d.color, fontFamily: "'DM Mono',monospace", background: `${d.color}15`, border: `1px solid ${d.color}30`, borderRadius: 3, padding: "2px 6px" }}>{wf.user}</span>
-                    {wf.stages && <span style={{ fontSize: 9.5, color: "rgba(255,255,255,0.4)", fontFamily: "'DM Mono',monospace" }}>{wf.stages.length} stages</span>}
-                  </div>
-                </div>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0, transition: "transform 0.2s ease", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}>
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
-              </div>
-              {expanded && wf.stages && (
-                <div style={{ padding: "0 24px 20px" }}>
-                  {/* Journey timeline */}
-                  <div style={{ display: "flex", gap: 0, overflowX: "auto", paddingBottom: 16 }}>
-                    {wf.stages.map((stage, si) => {
-                      const fc = frictionColors[stage.friction] || "#7F77DD";
-                      return (
-                        <div key={si} style={{ flex: "1 0 160px", minWidth: 140, position: "relative" }}>
-                          {/* Connector line */}
-                          {si < wf.stages.length - 1 && (
-                            <div style={{ position: "absolute", top: 20, right: 0, width: "50%", height: 2, background: "rgba(255,255,255,0.1)", zIndex: 0 }}/>
-                          )}
-                          {si > 0 && (
-                            <div style={{ position: "absolute", top: 20, left: 0, width: "50%", height: 2, background: "rgba(255,255,255,0.1)", zIndex: 0 }}/>
-                          )}
-                          {/* Node */}
-                          <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "0 8px" }}>
-                            <div style={{ width: 40, height: 40, borderRadius: "50%", background: `${fc}22`, border: `2px solid ${fc}`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
-                              <span style={{ fontSize: 10, fontWeight: 700, color: fc, fontFamily: "'DM Mono',monospace" }}>{si + 1}</span>
-                            </div>
-                            <div style={{ fontSize: 12, fontWeight: 600, color: "#f0f4ff", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.3, marginBottom: 6 }}>{stage.label}</div>
-                            {stage.description && <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.4, marginBottom: 6 }}>{stage.description}</div>}
-                            <div style={{ display: "flex", gap: 6, alignItems: "center", justifyContent: "center" }}>
-                              <span style={{ fontSize: 9, color: fc, fontFamily: "'DM Mono',monospace", background: `${fc}15`, border: `1px solid ${fc}33`, borderRadius: 3, padding: "1px 6px" }}>{stage.friction}</span>
-                              {stage.emotion && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", fontFamily: "'DM Mono',monospace" }}>{stage.emotion}</span>}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* Opportunities */}
-                  {wf.opportunities?.length > 0 && (
-                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 16, marginTop: 8 }}>
-                      <div style={{ fontSize: 9.5, color: "rgba(255,255,255,0.5)", fontFamily: "'DM Mono',monospace", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 10 }}>Opportunities</div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                        {wf.opportunities.map((opp, oi) => (
-                          <div key={oi} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 8, padding: "12px 14px" }}>
-                            <div style={{ fontSize: 12.5, fontWeight: 600, color: "#f0f4ff", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.35, marginBottom: 4 }}>{opp.title}</div>
-                            {opp.description && <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", fontFamily: "'DM Sans',sans-serif", lineHeight: 1.55 }}>{opp.description}</div>}
-                            {opp.linkedInsights?.length > 0 && (
-                              <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 8 }}>
-                                {opp.linkedInsights.map((li, lii) => (
-                                  <span key={lii} style={{ fontSize: 9, color: "#7F77DD", fontFamily: "'DM Mono',monospace", background: "rgba(127,119,221,0.08)", border: "1px solid rgba(127,119,221,0.2)", borderRadius: 3, padding: "1px 6px" }}>{li}</span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
+        {filteredWfs.map(wf => (
+          <WorkflowDiagram key={wf.id} wf={wf}
+            collapsed={expandedId !== wf.id}
+            onToggle={() => setExpandedId(expandedId === wf.id ? null : wf.id)}
+            showUser={userFilter === "all"}/>
+        ))}
         {filteredWfs.length === 0 && (
           <div style={{ textAlign: "center", padding: "60px 0", color: "rgba(255,255,255,0.4)", fontSize: 14 }}>No workflows for this user type.</div>
         )}
