@@ -1,0 +1,172 @@
+/* Bento Box Research — Design Tokens */
+
+:root {
+  /* ============ COLOR ============ */
+  /* Core warm palette — inspired by actual bento box contents */
+  --coral-50:  #FFF4F0;
+  --coral-100: #FFE4D9;
+  --coral-200: #FFC5AE;
+  --coral-300: #FF9B77;
+  --coral-400: #F57A52;
+  --coral-500: #EC6B4E;  /* PRIMARY — salmon/coral */
+  --coral-600: #D8553A;
+  --coral-700: #B3412A;
+  --coral-800: #8A3220;
+  --coral-900: #5C2115;
+
+  /* Seaweed — deep green for trust/stability */
+  --seaweed-50:  #F1F5F0;
+  --seaweed-100: #DCE6D9;
+  --seaweed-200: #B6C9B0;
+  --seaweed-300: #82A179;
+  --seaweed-400: #577F4E;
+  --seaweed-500: #3D6334;
+  --seaweed-600: #2F4E28;
+  --seaweed-700: #243B1F;
+  --seaweed-800: #1A2C16;
+  --seaweed-900: #0F1A0D;
+
+  /* Pickled ginger — soft pink accent */
+  --ginger-50:  #FDF3F1;
+  --ginger-100: #FADCD6;
+  --ginger-200: #F5BAB0;
+  --ginger-300: #EE9587;
+  --ginger-400: #E07767;
+  --ginger-500: #C85B4B;
+
+  /* Tamago — yolk yellow for delight/highlights */
+  --tamago-50:  #FFF9E8;
+  --tamago-100: #FFEFB8;
+  --tamago-200: #FFE082;
+  --tamago-300: #F5C842;
+  --tamago-400: #E0AE1F;
+  --tamago-500: #B88A12;
+
+  /* Soy — warm brown for secondary text/borders */
+  --soy-50:  #FAF6F1;
+  --soy-100: #F0E8DD;
+  --soy-200: #DFCFBB;
+  --soy-300: #BFA887;
+  --soy-400: #9A7F56;
+  --soy-500: #6E5838;
+
+  /* Rice — warm neutrals */
+  --rice-50:  #FDFAF5;  /* page bg */
+  --rice-100: #F7F2EA;  /* surface */
+  --rice-150: #EFE8DC;  /* hairline bg */
+  --rice-200: #E5DACA;  /* border */
+  --rice-300: #C9B99F;
+  --rice-400: #9E8A6C;
+  --rice-500: #6E5E44;
+  --rice-600: #4C4030;
+  --rice-700: #322A20;
+  --rice-800: #1E1811;
+  --rice-900: #120E09;
+
+  /* Semantic */
+  --bg-page: var(--rice-50);
+  --bg-surface: #FFFFFF;
+  --bg-sunken: var(--rice-100);
+  --bg-inset: var(--rice-150);
+
+  --border-subtle: var(--rice-150);
+  --border-default: var(--rice-200);
+  --border-strong: var(--rice-300);
+
+  --text-primary: var(--rice-800);
+  --text-secondary: var(--rice-600);
+  --text-tertiary: var(--rice-400);
+  --text-inverse: #FFFFFF;
+  --text-brand: var(--coral-600);
+
+  --accent: var(--coral-500);
+  --accent-hover: var(--coral-600);
+  --accent-soft: var(--coral-100);
+
+  --success: var(--seaweed-500);
+  --warning: var(--tamago-400);
+  --danger:  var(--coral-700);
+  --info:    var(--soy-500);
+
+  /* ============ TYPE ============ */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Source Serif 4", "Instrument Serif", Georgia, serif;
+  --font-display-weight: 900;
+  --font-display-opsz: 60;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-28: 28px;
+  --fs-32: 32px;
+  --fs-40: 40px;
+  --fs-56: 56px;
+  --fs-72: 72px;
+
+  /* ============ SPACE ============ */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+
+  /* ============ RADIUS ============
+     Simplified to 4 tokens. Each has one job:
+       --r-sm   → tight controls: buttons, inputs, badges, small chips, insets
+       --r-md   → default surface: cards, tiles, panels, popovers, cells
+       --r-lg   → large surfaces: hero frames, ring tiles, modals, dashboards
+       --r-full → pills: delta chips, dim-chips, avatars, toggles, swatches
+  */
+  --r-sm:   6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-full: 999px;
+
+  /* Back-compat aliases — do not use in new code */
+  --r-xs:  var(--r-sm);
+  --r-xl:  var(--r-lg);
+  --r-2xl: var(--r-lg);
+
+  /* ============ SHADOW ============ */
+  /* Warm-tinted shadows */
+  --shadow-xs: 0 1px 2px rgba(92, 33, 21, 0.04);
+  --shadow-sm: 0 1px 2px rgba(92, 33, 21, 0.05), 0 1px 3px rgba(92, 33, 21, 0.06);
+  --shadow-md: 0 4px 8px -2px rgba(92, 33, 21, 0.06), 0 2px 4px -2px rgba(92, 33, 21, 0.04);
+  --shadow-lg: 0 12px 24px -6px rgba(92, 33, 21, 0.10), 0 4px 8px -4px rgba(92, 33, 21, 0.06);
+  --shadow-xl: 0 24px 48px -12px rgba(92, 33, 21, 0.16);
+  --shadow-inset: inset 0 1px 2px rgba(92, 33, 21, 0.06);
+
+  /* ============ MOTION ============ */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.6, 0, 0.4, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+}
+
+/* Base */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: var(--fs-15);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
