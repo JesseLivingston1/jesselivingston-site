@@ -95,20 +95,23 @@ section:first-of-type { border-top: none; padding-top: 72px; }
 .dash-meta { display: flex; gap: 8px; flex-wrap: wrap; }
 .dash-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--bg-inset); border-radius: var(--r-full); font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); letter-spacing: 0.03em; }
 
-/* Ring tiles — canonical health rings */
+/* Ring tiles — canonical health rings (also carry dimension meaning) */
 .rings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.ring-tile { padding: 24px; border-radius: var(--r-lg); color: white; position: relative; min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; }
+.ring-tile { padding: 22px; border-radius: var(--r-lg); color: white; position: relative; min-height: 280px; display: flex; flex-direction: column; gap: 16px; }
 .ring-tile.ease { background: var(--soy-400); }
 .ring-tile.trust { background: var(--seaweed-500); }
 .ring-tile.value { background: var(--coral-500); }
 .ring-tile.delight { background: var(--tamago-300); color: var(--rice-800); }
-.ring-tile .ring { width: 80px; height: 80px; position: relative; }
-.ring-tile .ring-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 28px; line-height: 1; font-weight: 900; font-variation-settings: "opsz" 32; }
+.ring-tile .ring-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ring-tile .ring { width: 72px; height: 72px; position: relative; flex-shrink: 0; }
+.ring-tile .ring-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 24px; line-height: 1; font-weight: 900; font-variation-settings: "opsz" 32; }
 .ring-tile .ring-val .pct { font-size: 0.5em; opacity: 0.65; margin-left: 0.05em; font-weight: inherit; }
+.ring-tile .delta { background: rgba(255,255,255,0.22); padding: 3px 10px; border-radius: 999px; font-weight: 500; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ring-tile.delight .delta { background: rgba(0,0,0,0.12); color: var(--rice-800); }
 .ring-tile .ring-label { font-family: var(--font-display); font-size: 24px; font-weight: 900; font-variation-settings: "opsz" 32; margin: 0; letter-spacing: -0.015em; }
-.ring-tile .ring-sub { font-size: 12px; opacity: 0.85; margin: 2px 0 0; display: flex; align-items: center; gap: 6px; }
-.ring-tile .ring-sub .delta { background: rgba(255,255,255,0.22); padding: 2px 8px; border-radius: 999px; font-weight: 500; font-size: 11px; font-variant-numeric: tabular-nums; }
-.ring-tile.delight .ring-sub .delta { background: rgba(0,0,0,0.12); color: var(--rice-800); }
+.ring-tile .ring-question { font-family: var(--font-display); font-size: 16px; font-weight: 400; line-height: 1.3; letter-spacing: -0.01em; opacity: 0.95; margin: 0; text-wrap: balance; }
+.ring-tile .ring-predicts { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; opacity: 0.75; line-height: 1.5; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); text-transform: uppercase; }
+.ring-tile.delight .ring-predicts { border-top-color: rgba(0,0,0,0.12); }
 
 /* Sample finding tile (below rings) */
 .finding-tile { background: var(--coral-50); border: 1px solid var(--coral-200); border-radius: var(--r-md); padding: 20px 24px; margin-top: 16px; display: flex; gap: 20px; align-items: flex-start; }
@@ -118,25 +121,6 @@ section:first-of-type { border-top: none; padding-top: 72px; }
 .finding-tile .finding-quote { font-size: 14px; color: var(--coral-800); line-height: 1.55; font-style: italic; }
 .finding-tile .finding-quote::before { content: '"'; }
 .finding-tile .finding-quote::after { content: '"'; }
-
-@media (max-width: 768px) {
-  .rings { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ============ DIM GRID (the four dimensions) ============ */
-.dim-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.dim-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-top: 4px solid var(--coral-500); border-radius: var(--r-md); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
-.dim-card.ease { border-top-color: var(--soy-500); }
-.dim-card.trust { border-top-color: var(--seaweed-500); }
-.dim-card.value { border-top-color: var(--coral-500); }
-.dim-card.delight { border-top-color: var(--tamago-400); }
-.dim-name { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
-.dim-card.ease .dim-name { color: var(--soy-500); }
-.dim-card.trust .dim-name { color: var(--seaweed-500); }
-.dim-card.value .dim-name { color: var(--coral-600); }
-.dim-card.delight .dim-name { color: var(--tamago-500); }
-.dim-question { font-family: var(--font-display); font-size: 18px; font-weight: 400; line-height: 1.25; color: var(--text-primary); text-wrap: balance; letter-spacing: -0.015em; }
-.dim-predicts { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-subtle); }
 
 /* ============ TAM CARDS (Market) ============ */
 .tam-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
@@ -204,7 +188,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 @media (max-width: 1024px) {
   #page-wrap { padding: 0 32px 80px; }
   .card-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
-  .dim-grid { grid-template-columns: repeat(2, 1fr); }
+  .rings { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
   #page-wrap { padding: 0 20px 64px; }
@@ -216,7 +200,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
   .nav-link:last-child { border-bottom: none; }
   .nav-hamburger { display: block; }
   .card-grid.cols-2, .card-grid.cols-3, .card-grid.cols-4 { grid-template-columns: 1fr; }
-  .dim-grid { grid-template-columns: 1fr; }
+  .rings { grid-template-columns: 1fr; }
   .tam-grid { grid-template-columns: 1fr; }
   .funds-grid, .team-grid { grid-template-columns: 1fr; }
   .team-section { flex-direction: column; align-items: flex-start; }
@@ -237,7 +221,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
       <rect x="6" y="19.5" width="10.5" height="10.5" rx="2.5" fill="var(--coral-500)"/>
       <rect x="19.5" y="19.5" width="10.5" height="10.5" rx="2.5" fill="var(--tamago-300)"/>
     </svg>
-    <div class="pw-brand">Bento Box <em>Research</em></div>
+    <div class="pw-brand">Bento Box Research</div>
     <div class="pw-prompt">This page is private</div>
     <input type="password" id="pw-input" placeholder="Enter password" autofocus>
     <div id="pw-hint">Incorrect password</div>
@@ -255,7 +239,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
       <rect x="6" y="19.5" width="10.5" height="10.5" rx="2.5" fill="var(--coral-500)"/>
       <rect x="19.5" y="19.5" width="10.5" height="10.5" rx="2.5" fill="var(--tamago-300)"/>
     </svg>
-    <span>Bento Box <em>Research</em></span>
+    <span>Bento Box Research</span>
   </a>
   <div class="nav-links">
     <a href="#problem" class="nav-link">Problem</a>
@@ -281,7 +265,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 <!-- ═══ PROBLEM ═══ -->
 <section id="problem">
   <div class="section-eyebrow">The Problem</div>
-  <h2 class="section-title">Most companies fly blind on <em>user experience</em></h2>
+  <h2 class="section-title">Most companies <em>fly blind</em> on user experience</h2>
   <p class="section-body">They have analytics and NPS, but no depth. No understanding of why users struggle, leave, or stay. No way to measure whether product decisions actually improved the experience. That gap costs billions.</p>
 
   <div class="stats-grid">
@@ -306,7 +290,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 <!-- ═══ SOLUTION ═══ -->
 <section id="solution">
   <div class="section-eyebrow">The Solution</div>
-  <h2 class="section-title">Meet Bento Box <em>Research</em></h2>
+  <h2 class="section-title">Meet Bento Box Research</h2>
   <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 24px; font-weight: 500;">An AI-native research company</p>
   <p class="section-body">Bento Box Research embeds continuous qualitative research into client products &mdash; so product teams always know how users experience them.</p>
   <p class="section-body">AI-powered tools deliver continuous interview volume and scoring. At Growth and Scale tiers, a research partner works with the team to interpret findings, surface patterns, and translate insight into action &mdash; continuously.</p>
@@ -323,7 +307,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 
   <div class="dash-preview">
     <div class="dash-head">
-      <div class="dash-title">Onboarding <em style="font-style: italic; color: var(--coral-500); font-weight: 700;">flow</em></div>
+      <div class="dash-title">Onboarding flow</div>
       <div class="dash-meta">
         <span class="dash-chip">Last 30 days</span>
         <span class="dash-chip">n = 47 interviews</span>
@@ -332,64 +316,75 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
     </div>
     <div class="rings">
       <div class="ring-tile ease">
-        <div>
+        <div class="ring-top">
           <div class="ring">
-            <svg width="80" height="80" viewBox="0 0 88 88" aria-hidden="true">
+            <svg width="72" height="72" viewBox="0 0 88 88" aria-hidden="true">
               <circle cx="44" cy="44" r="38" stroke="rgba(255,255,255,0.25)" stroke-width="8" fill="none"/>
               <circle cx="44" cy="44" r="38" stroke="white" stroke-width="8" fill="none" stroke-dasharray="239" stroke-dashoffset="67" stroke-linecap="round" transform="rotate(-90 44 44)"/>
             </svg>
             <div class="ring-val">72<span class="pct">%</span></div>
           </div>
+          <span class="delta">&uarr; 4 vs last month</span>
         </div>
         <div>
           <h3 class="ring-label">Ease</h3>
-          <p class="ring-sub"><span class="delta">&uarr; 4</span> vs last month</p>
+          <p class="ring-question">Can they do what they came to do?</p>
         </div>
+        <div class="ring-predicts">Predicts: support volume, task abandonment, feature adoption</div>
       </div>
+
       <div class="ring-tile trust">
-        <div>
+        <div class="ring-top">
           <div class="ring">
-            <svg width="80" height="80" viewBox="0 0 88 88" aria-hidden="true">
+            <svg width="72" height="72" viewBox="0 0 88 88" aria-hidden="true">
               <circle cx="44" cy="44" r="38" stroke="rgba(255,255,255,0.25)" stroke-width="8" fill="none"/>
               <circle cx="44" cy="44" r="38" stroke="white" stroke-width="8" fill="none" stroke-dasharray="239" stroke-dashoffset="100" stroke-linecap="round" transform="rotate(-90 44 44)"/>
             </svg>
             <div class="ring-val">58<span class="pct">%</span></div>
           </div>
+          <span class="delta">&darr; 8 vs last month</span>
         </div>
         <div>
           <h3 class="ring-label">Trust</h3>
-          <p class="ring-sub"><span class="delta">&darr; 8</span> vs last month</p>
+          <p class="ring-question">Do they believe it did what it said?</p>
         </div>
+        <div class="ring-predicts">Predicts: conversion, churn, willingness to share data</div>
       </div>
+
       <div class="ring-tile value">
-        <div>
+        <div class="ring-top">
           <div class="ring">
-            <svg width="80" height="80" viewBox="0 0 88 88" aria-hidden="true">
+            <svg width="72" height="72" viewBox="0 0 88 88" aria-hidden="true">
               <circle cx="44" cy="44" r="38" stroke="rgba(255,255,255,0.25)" stroke-width="8" fill="none"/>
               <circle cx="44" cy="44" r="38" stroke="white" stroke-width="8" fill="none" stroke-dasharray="239" stroke-dashoffset="43" stroke-linecap="round" transform="rotate(-90 44 44)"/>
             </svg>
             <div class="ring-val">82<span class="pct">%</span></div>
           </div>
+          <span class="delta">&uarr; 2 vs last month</span>
         </div>
         <div>
           <h3 class="ring-label">Value</h3>
-          <p class="ring-sub"><span class="delta">&uarr; 2</span> vs last month</p>
+          <p class="ring-question">Is it worth their time and money?</p>
         </div>
+        <div class="ring-predicts">Predicts: retention, NRR, competitive win rate</div>
       </div>
+
       <div class="ring-tile delight">
-        <div>
+        <div class="ring-top">
           <div class="ring">
-            <svg width="80" height="80" viewBox="0 0 88 88" aria-hidden="true">
+            <svg width="72" height="72" viewBox="0 0 88 88" aria-hidden="true">
               <circle cx="44" cy="44" r="38" stroke="rgba(0,0,0,0.12)" stroke-width="8" fill="none"/>
               <circle cx="44" cy="44" r="38" stroke="var(--rice-800)" stroke-width="8" fill="none" stroke-dasharray="239" stroke-dashoffset="115" stroke-linecap="round" transform="rotate(-90 44 44)"/>
             </svg>
             <div class="ring-val">52<span class="pct">%</span></div>
           </div>
+          <span class="delta">&middot; no change</span>
         </div>
         <div>
           <h3 class="ring-label">Delight</h3>
-          <p class="ring-sub"><span class="delta">&middot; no change</span></p>
+          <p class="ring-question">Do they love using it?</p>
         </div>
+        <div class="ring-predicts">Predicts: word-of-mouth, brand loyalty, premium pricing</div>
       </div>
     </div>
 
@@ -399,32 +394,6 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
         <div class="finding-headline">Users don&rsquo;t trust the verification email will arrive.</div>
         <div class="finding-quote">I hit &lsquo;send code&rsquo; three times because I didn&rsquo;t know if the first one went through. It felt broken.</div>
       </div>
-    </div>
-  </div>
-
-  <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 48px; margin-bottom: 14px; font-weight: 500;">The four dimensions we measure</p>
-  <p class="section-body" style="margin-bottom: 24px;">Each dimension answers one question about the experience. Together they cover the full shape of product health.</p>
-
-  <div class="dim-grid">
-    <div class="dim-card ease">
-      <div class="dim-name">Ease</div>
-      <div class="dim-question">Can they do what they came to do?</div>
-      <div class="dim-predicts">Predicts: support volume, task abandonment, feature adoption</div>
-    </div>
-    <div class="dim-card trust">
-      <div class="dim-name">Trust</div>
-      <div class="dim-question">Do they believe it did what it said?</div>
-      <div class="dim-predicts">Predicts: conversion, churn, willingness to share data</div>
-    </div>
-    <div class="dim-card value">
-      <div class="dim-name">Value</div>
-      <div class="dim-question">Is it worth their time and money?</div>
-      <div class="dim-predicts">Predicts: retention, NRR, competitive win rate</div>
-    </div>
-    <div class="dim-card delight">
-      <div class="dim-name">Delight</div>
-      <div class="dim-question">Do they love using it?</div>
-      <div class="dim-predicts">Predicts: word-of-mouth, brand loyalty, premium pricing</div>
     </div>
   </div>
 </section>
