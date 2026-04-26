@@ -1,20 +1,21 @@
-/* Bento Box Research — Design Tokens */
+/* Bento Box Research — Design Tokens
+   Mirror of bento-shopify/docs/design-system/tokens.css. As of
+   2026-04-26 the canonical Bento palette is cool gray (rice scale)
+   + Bento red (coral scale). Token names are unchanged so existing
+   selectors keep resolving; only the values flipped. */
 
 :root {
-  /* ============ COLOR ============ */
-  /* Core warm palette — inspired by actual bento box contents */
-  --coral-50:  #FFF4F0;
-  --coral-100: #FFE4D9;
-  --coral-200: #FFC5AE;
-  --coral-300: #FF9B77;
-  --coral-400: #F57A52;
-  --coral-500: #EC6B4E;  /* PRIMARY — salmon/coral */
-  --coral-600: #D8553A;
-  --coral-700: #B3412A;
-  --coral-800: #8A3220;
-  --coral-900: #5C2115;
+  --coral-50:  #FEF2F2;
+  --coral-100: #FEE2E2;
+  --coral-200: #FECACA;
+  --coral-300: #FCA5A5;
+  --coral-400: #F87171;
+  --coral-500: #D92626;  /* PRIMARY — Bento red */
+  --coral-600: #B91C1C;
+  --coral-700: #991B1B;
+  --coral-800: #7F1D1D;
+  --coral-900: #5F1717;
 
-  /* Seaweed — deep green for trust/stability */
   --seaweed-50:  #F1F5F0;
   --seaweed-100: #DCE6D9;
   --seaweed-200: #B6C9B0;
@@ -26,7 +27,6 @@
   --seaweed-800: #1A2C16;
   --seaweed-900: #0F1A0D;
 
-  /* Pickled ginger — soft pink accent */
   --ginger-50:  #FDF3F1;
   --ginger-100: #FADCD6;
   --ginger-200: #F5BAB0;
@@ -34,7 +34,6 @@
   --ginger-400: #E07767;
   --ginger-500: #C85B4B;
 
-  /* Tamago — yolk yellow for delight/highlights */
   --tamago-50:  #FFF9E8;
   --tamago-100: #FFEFB8;
   --tamago-200: #FFE082;
@@ -42,7 +41,6 @@
   --tamago-400: #E0AE1F;
   --tamago-500: #B88A12;
 
-  /* Soy — warm brown for secondary text/borders */
   --soy-50:  #FAF6F1;
   --soy-100: #F0E8DD;
   --soy-200: #DFCFBB;
@@ -50,18 +48,18 @@
   --soy-400: #9A7F56;
   --soy-500: #6E5838;
 
-  /* Rice — warm neutrals */
-  --rice-50:  #FDFAF5;  /* page bg */
-  --rice-100: #F7F2EA;  /* surface */
-  --rice-150: #EFE8DC;  /* hairline bg */
-  --rice-200: #E5DACA;  /* border */
-  --rice-300: #C9B99F;
-  --rice-400: #9E8A6C;
-  --rice-500: #6E5E44;
-  --rice-600: #4C4030;
-  --rice-700: #322A20;
-  --rice-800: #1E1811;
-  --rice-900: #120E09;
+  /* Rice — neutral grays (cool, not warm) */
+  --rice-50:  #FAFBFC;
+  --rice-100: #F5F6F8;
+  --rice-150: #ECEEF1;
+  --rice-200: #E1E4EA;
+  --rice-300: #C2C7D1;
+  --rice-400: #8E97A4;
+  --rice-500: #5A6271;
+  --rice-600: #3D4351;
+  --rice-700: #2A2E39;
+  --rice-800: #1A1D24;
+  --rice-900: #0F1216;
 
   /* Semantic */
   --bg-page: var(--rice-50);
@@ -142,12 +140,12 @@
 
   /* ============ SHADOW ============ */
   /* Warm-tinted shadows */
-  --shadow-xs: 0 1px 2px rgba(92, 33, 21, 0.04);
-  --shadow-sm: 0 1px 2px rgba(92, 33, 21, 0.05), 0 1px 3px rgba(92, 33, 21, 0.06);
-  --shadow-md: 0 4px 8px -2px rgba(92, 33, 21, 0.06), 0 2px 4px -2px rgba(92, 33, 21, 0.04);
-  --shadow-lg: 0 12px 24px -6px rgba(92, 33, 21, 0.10), 0 4px 8px -4px rgba(92, 33, 21, 0.06);
-  --shadow-xl: 0 24px 48px -12px rgba(92, 33, 21, 0.16);
-  --shadow-inset: inset 0 1px 2px rgba(92, 33, 21, 0.06);
+  --shadow-xs: 0 1px 2px rgba(15, 16, 20, 0.04);
+  --shadow-sm: 0 1px 2px rgba(15, 16, 20, 0.05), 0 1px 3px rgba(15, 16, 20, 0.06);
+  --shadow-md: 0 4px 8px -2px rgba(15, 16, 20, 0.06), 0 2px 4px -2px rgba(15, 16, 20, 0.04);
+  --shadow-lg: 0 12px 24px -6px rgba(15, 16, 20, 0.10), 0 4px 8px -4px rgba(15, 16, 20, 0.06);
+  --shadow-xl: 0 24px 48px -12px rgba(15, 16, 20, 0.16);
+  --shadow-inset: inset 0 1px 2px rgba(15, 16, 20, 0.06);
 
   /* ============ MOTION ============ */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
