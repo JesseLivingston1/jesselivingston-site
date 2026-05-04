@@ -95,8 +95,8 @@ section:first-of-type { border-top: none; padding-top: 72px; }
 .dash-meta { display: flex; gap: 8px; flex-wrap: wrap; }
 .dash-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--bg-inset); border-radius: var(--r-full); font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); letter-spacing: 0.03em; }
 
-/* Ring tiles — canonical health rings (also carry dimension meaning) */
-.rings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+/* Ring tiles — canonical health rings (Ease / Trust / Value) */
+.rings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .ring-tile { padding: 22px; border-radius: var(--r-lg); color: white; position: relative; min-height: 280px; display: flex; flex-direction: column; gap: 16px; }
 .ring-tile.ease { background: var(--soy-400); }
 .ring-tile.trust { background: var(--seaweed-500); }
@@ -188,7 +188,6 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 @media (max-width: 1024px) {
   #page-wrap { padding: 0 32px 80px; }
   .card-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
-  .rings { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
   #page-wrap { padding: 0 20px 64px; }
@@ -253,8 +252,8 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 
 <!-- ═══ HERO ═══ -->
 <div id="hero">
-  <h1 class="hero-headline">Continuous user research <em>for every team.</em></h1>
-  <p class="hero-sub">An AI moderator runs the interviews, scores them, and turns them into decisions &mdash; built for product teams without a researcher on staff.</p>
+  <h1 class="hero-headline">Continuous customer research <em>for SMBs.</em></h1>
+  <p class="hero-sub">AI runs the interviews, scores them, and turns them into the fixes that move revenue &mdash; built for the 99% of businesses that can&rsquo;t afford a UX research team.</p>
   <div class="hero-stats">
     <div class="hero-stat"><span class="num">$600K</span><span class="lbl">Pre-Seed Raise</span></div>
     <div class="hero-stat"><span class="num">$7M</span><span class="lbl">Valuation Cap</span></div>
@@ -264,8 +263,8 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 <!-- ═══ PROBLEM ═══ -->
 <section id="problem">
   <div class="section-eyebrow">The Problem</div>
-  <h2 class="section-title">Most teams ship without <em>continuous user signal</em></h2>
-  <p class="section-body">They have analytics and NPS, but no depth. No understanding of why users struggle, leave, or stay. No way to measure whether product decisions actually improved the experience. That gap costs billions.</p>
+  <h2 class="section-title">Most SMBs ship without knowing <em>why customers leave</em></h2>
+  <p class="section-body">SMBs have analytics, surveys, NPS, heatmaps, and review feeds &mdash; but none of these tools tell them <em>why</em> customers don&rsquo;t buy, don&rsquo;t return, or don&rsquo;t recommend. That gap costs billions, and 99% of businesses can&rsquo;t afford the UX research team that would close it.</p>
 
   <div class="stats-grid">
     <div class="stat-card">
@@ -297,7 +296,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
     <rect x="19.5" y="19.5" width="10.5" height="10.5" rx="2.5" fill="#9CA3AF"/>
   </svg>
   <h2 class="section-title">Meet Bento Box Research</h2>
-  <p class="section-body">Bento Box Research embeds continuous qualitative research into client products &mdash; so product teams always know how users experience them. AI handles the work that doesn&rsquo;t need a human: sampling, interviewing, scoring, and synthesis. The team gets back hours and a continuous signal they didn&rsquo;t have before.</p>
+  <p class="section-body">Bento Box Research is an open-and-go customer insights solution for SMBs. Once installed, Bento runs 5&ndash;7 minute AI-moderated interviews with the SMB&rsquo;s actual customers &mdash; scoring each one, clustering issues, and turning them into the specific fixes that move revenue. No researcher required. No study to design.</p>
 
   <div style="margin-top: 8px; margin-bottom: 56px;">
     <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-bottom: 14px; font-weight: 500;">See it in action</p>
@@ -306,8 +305,8 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
     </div>
   </div>
 
-  <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 40px; margin-bottom: 14px; font-weight: 500;">What the client sees</p>
-  <p class="section-body" style="margin-bottom: 24px;">Every interview is scored against four dimensions of product experience &mdash; grounded in validated psychometric research. Scores roll up into a continuous health signal for every product area.</p>
+  <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 40px; margin-bottom: 14px; font-weight: 500;">What the SMB sees</p>
+  <p class="section-body" style="margin-bottom: 24px;">Every interview is scored against three dimensions of customer experience &mdash; Ease, Trust, and Value &mdash; grounded in applied behavioral sciences research. Scores roll up into a continuous health signal for every part of the SMB&rsquo;s product or storefront.</p>
 
   <div class="dash-preview">
     <div class="rings">
@@ -364,24 +363,6 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
         </div>
         <div class="ring-predicts">Predicts: retention, NRR, competitive win rate</div>
       </div>
-
-      <div class="ring-tile delight">
-        <div class="ring-top">
-          <div class="ring">
-            <svg width="72" height="72" viewBox="0 0 88 88" aria-hidden="true">
-              <circle cx="44" cy="44" r="38" stroke="rgba(0,0,0,0.12)" stroke-width="8" fill="none"/>
-              <circle cx="44" cy="44" r="38" stroke="var(--rice-800)" stroke-width="8" fill="none" stroke-dasharray="239" stroke-dashoffset="115" stroke-linecap="round" transform="rotate(-90 44 44)"/>
-            </svg>
-            <div class="ring-val">52<span class="pct">%</span></div>
-          </div>
-          <span class="delta">&middot; no change</span>
-        </div>
-        <div>
-          <h3 class="ring-label">Delight</h3>
-          <p class="ring-question">Do they love using it?</p>
-        </div>
-        <div class="ring-predicts">Predicts: word-of-mouth, brand loyalty, premium pricing</div>
-      </div>
     </div>
 
     <div class="finding-tile">
@@ -399,28 +380,28 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 <section id="how">
   <div class="section-eyebrow">How It Works</div>
   <h2 class="section-title">A standardized research system, <em>run continuously</em></h2>
-  <p class="section-body">No scoping, no weeks of negotiation. The framework is fixed &mdash; the same four dimensions for every product area &mdash; so setup takes days, not months. The first interview produces data; by interview twenty, the health signal is live and keeps sharpening.</p>
+  <p class="section-body">No scoping, no weeks of negotiation. The framework is fixed &mdash; the same three dimensions for every customer journey &mdash; so setup takes minutes, not months. The first interview produces data; by interview twenty, the health signal is live and keeps sharpening.</p>
 
   <div class="card-grid cols-4">
     <div class="step-card" data-step="01">
       <div class="step-num">Step 01</div>
       <div class="step-title">Intercept</div>
-      <div class="step-body">A lightweight intercept is embedded on the client&rsquo;s product. Targeting is configured for the right users at the right moments. The client approves the setup; we handle everything else.</div>
+      <div class="step-body">A lightweight intercept embeds on the SMB&rsquo;s product or storefront. Targeting is configured for the right customers at the right moments. The SMB approves the setup; we handle everything else.</div>
     </div>
     <div class="step-card" data-step="02">
       <div class="step-num">Step 02</div>
       <div class="step-title">Interview</div>
-      <div class="step-body">An AI moderator conducts a 10&ndash;15 minute interview, probing all four product health dimensions.</div>
+      <div class="step-body">An AI moderator conducts a 5&ndash;7 minute interview in exchange for a small incentive, probing all three customer experience dimensions.</div>
     </div>
     <div class="step-card" data-step="03">
       <div class="step-num">Step 03</div>
       <div class="step-title">Score</div>
-      <div class="step-body">Each interview is scored 1&ndash;5 across four dimensions using behavioral anchors grounded in validated psychometric research. Every interview sharpens the next &mdash; frustration patterns cluster automatically.</div>
+      <div class="step-body">Each interview is scored across three dimensions &mdash; Ease, Trust, Value &mdash; using a proprietary scoring mechanism grounded in applied behavioral sciences research. Every interview sharpens the next &mdash; frustration patterns cluster automatically.</div>
     </div>
     <div class="step-card" data-step="04">
       <div class="step-num">Step 04</div>
       <div class="step-title">Act</div>
-      <div class="step-body">The signal appears immediately on the dashboard. Clients see where users struggle and the qualitative depth to understand why &mdash; so product teams have the signal they need to prioritize the next fix.</div>
+      <div class="step-body">The signal appears immediately on the dashboard. SMBs see where customers struggle, the qualitative depth to understand why, and the specific fixes that move revenue &mdash; ranked by impact.</div>
     </div>
   </div>
 </section>
@@ -429,26 +410,29 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
 <!-- ═══ MARKET ═══ -->
 <section id="market">
   <div class="section-eyebrow">Market Opportunity</div>
-  <h2 class="section-title">A <em>$12B</em> category priced out of qualitative research</h2>
-  <p class="section-body">2.5M Shopify merchants doing $1K+/mo in revenue. No app today gives them real conversations with real shoppers under $100/mo.</p>
+  <h2 class="section-title">A <em>$7&ndash;10B</em> category priced out of qualitative research</h2>
+  <p class="section-body">SMBs already spend billions every year on tools to hear from their customers &mdash; surveys, NPS, heatmaps, voice-of-customer. None tell them why. We start with e-commerce, where the spend is concentrated and the data moat compounds fastest.</p>
 
   <div class="tam-grid">
     <div class="tam-card primary">
       <div class="tam-label">TAM</div>
-      <div class="tam-num">$12B</div>
-      <div class="tam-sub">~10M global SMB e-commerce merchants</div>
+      <div class="tam-num">$7&ndash;10B</div>
+      <div class="tam-sub">Global SMB spend on hearing from customers</div>
     </div>
     <div class="tam-card">
       <div class="tam-label">SAM</div>
-      <div class="tam-num">$3B</div>
-      <div class="tam-sub">2.5M Shopify merchants at $1K+/mo revenue</div>
+      <div class="tam-num">$2&ndash;3B</div>
+      <div class="tam-sub">E-commerce SMB spend &mdash; where we start</div>
     </div>
     <div class="tam-card">
       <div class="tam-label">SOM Year 3</div>
-      <div class="tam-num">$25M</div>
-      <div class="tam-sub">~18&ndash;40K merchants &middot; 0.7&ndash;1.7% capture &middot; $65M ceiling at 5%</div>
+      <div class="tam-num">$20&ndash;30M</div>
+      <div class="tam-sub">1&ndash;2% capture of e-commerce SMB spend</div>
     </div>
   </div>
+
+  <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 48px; margin-bottom: 16px; font-weight: 500;">SMBs are already paying for this</p>
+  <p class="section-body" style="margin-bottom: 24px;">Shopify merchants alone spend roughly <strong>$700M/yr</strong> on tools to hear from customers &mdash; Hotjar, Yotpo, Lucky Orange, Judge.me, Fairing, KNO, Zigpoll. Adoption is deep: Judge.me has 500,000+ Shopify installs; Lucky Orange has 38,985 paying installs at $39+/mo; Hotjar runs on 54,206 Shopify stores. None synthesize <em>why</em>. The category is paid for &mdash; what&rsquo;s missing is the answer.</p>
 
   <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 48px; margin-bottom: 16px; font-weight: 500;">The competitive gap</p>
   <div class="stats-grid">
@@ -466,14 +450,14 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
     </div>
   </div>
 
-  <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 48px; margin-bottom: 16px; font-weight: 500;">The path to $25M</p>
+  <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--coral-600); text-transform: uppercase; margin-top: 48px; margin-bottom: 16px; font-weight: 500;">The path to first revenue</p>
   <div style="display: grid; grid-template-columns: 140px 1fr; gap: 12px 20px; max-width: 760px; font-size: 15px; color: var(--text-primary); line-height: 1.55;">
     <div style="font-family: var(--font-mono); font-size: 12px; color: var(--coral-600); font-weight: 500; padding-top: 2px;">ENTER</div>
-    <div>Shopify App Store. $49 Starter tier. Highest-volume, lowest-CAC beachhead.</div>
+    <div>Shopify App Store. $49 Starter tier. Highest-volume, lowest-CAC beachhead. Shopify is where we start, not where we end.</div>
     <div style="font-family: var(--font-mono); font-size: 12px; color: var(--coral-600); font-weight: 500; padding-top: 2px;">SCALE</div>
-    <div>$25M ARR at 40K merchants on Starter, or ~18K with tier upsell. Every install compounds the data asset. <span style="color: var(--text-tertiary); font-size: 13px;">Pricing beyond $49 TBD post-pilot.</span></div>
-    <div style="font-family: var(--font-mono); font-size: 12px; color: var(--coral-600); font-weight: 500; padding-top: 2px;">MOVE UPMARKET</div>
-    <div>Living Insights at $3.5K&ndash;$7K/mo &mdash; 30&ndash;60x ACV. The benchmark + correlation library is a time-built asset &mdash; the kind of moat capital alone can&rsquo;t shortcut. Mid-market first; then beyond ecommerce entirely.</div>
+    <div>$20&ndash;30M ARR at 1&ndash;2% capture of e-commerce SMB spend. Every install compounds the data asset (category benchmarks + outcome-correlation library). <span style="color: var(--text-tertiary); font-size: 13px;">Pricing beyond $49 TBD post-pilot.</span></div>
+    <div style="font-family: var(--font-mono); font-size: 12px; color: var(--coral-600); font-weight: 500; padding-top: 2px;">EXPAND</div>
+    <div>Up-market expansion is TBD post-pilot. Early signal from mid-market design teams (Braze and Everlaw paid pilot LOIs) suggests the same pipeline scales without rebuilding the product. Direction confirmed once pilot data lands.</div>
   </div>
 </section>
 
@@ -570,11 +554,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
   <div class="team-grid">
     <div class="team-card">
       <div class="team-role">CTO &mdash; Active Search</div>
-      <div class="team-bio">Recruiting in progress now. The technical cofounder will own platform architecture, AI infrastructure, and the engineering team through the seed stage. Candidate pipeline engaged; this hire is funded by the round.</div>
-    </div>
-    <div class="team-card">
-      <div class="team-role">Design Co-Founder</div>
-      <div class="team-bio">In active conversations with a potential design partner to own the product experience and client-facing design system.</div>
+      <div class="team-bio">Three conversations are live. Equity is near-equal for the right person. The technical cofounder will own platform architecture, AI infrastructure, and the engineering team through the seed stage. This hire is funded by the round.</div>
     </div>
     <div class="team-card">
       <div class="team-role">Advisory Network</div>
@@ -627,7 +607,7 @@ footer { max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid
       <div class="footer-creds"><span>Founder</span> &middot; jesse@jesselivingston.com</div>
     </div>
   </div>
-  <div class="footer-tag">Bento Box Research &middot; Continuous Qualitative Intelligence &middot; 2026</div>
+  <div class="footer-tag">Bento Box Research &middot; Continuous customer research for SMBs &middot; 2026</div>
 </footer>
 
 <script>
