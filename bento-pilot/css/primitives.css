@@ -1,0 +1,208 @@
+/* Bento Box Research — Canonical Primitives
+   Single source of truth for repeated patterns.
+   Audit decisions locked in:
+   - Ring tile label: display serif, full dimension name (1A)
+   - Score %: inline at 0.5em, 0.65 opacity (2B)
+   - Delta: pill-shaped (3A)
+   - Metric card: 3 surfaces allowed (filled / neutral / tint) (4)
+   - Low-score state: flip filled → tint-surface with full-color number (4b-B)
+   - Dimension swatch: rounded square (6A)
+*/
+
+/* ============================================================
+   SCORE DISPLAY — numeric value with subtle percent
+   ============================================================ */
+.score-value {
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight, 900);
+  font-variation-settings: "opsz" var(--font-display-opsz, 60);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+}
+.score-value .pct {
+  font-size: 0.5em;
+  opacity: 0.65;
+  font-weight: inherit;
+  margin-left: 0.05em;
+}
+
+/* ============================================================
+   DELTA PILL — change indicator, always pill-shaped
+   Three contextual variants based on surface
+   ============================================================ */
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 9px;
+  border-radius: var(--r-full);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+/* On filled/dark colored surfaces */
+.delta.on-color {
+  background: rgba(255, 255, 255, 0.22);
+  color: white;
+  backdrop-filter: blur(2px);
+}
+/* On light/neutral surfaces */
+.delta.on-light {
+  background: var(--rice-100);
+  color: var(--text-secondary);
+}
+/* On tinted surfaces, uses dimension's own 100 tint */
+.delta.on-tint-ease    { background: var(--soy-100);     color: var(--soy-500); }
+.delta.on-tint-trust   { background: var(--seaweed-100); color: var(--seaweed-700); }
+.delta.on-tint-value   { background: var(--coral-100);   color: var(--coral-700); }
+.delta.on-tint-delight { background: var(--tamago-100);  color: var(--tamago-500); }
+
+/* ============================================================
+   DIMENSION SWATCH — rounded square (6A)
+   ============================================================ */
+.dim-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  vertical-align: -1px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.dim-swatch.lg { width: 16px; height: 16px; border-radius: 4px; }
+.dim-swatch.ease    { background: var(--soy-500); }
+.dim-swatch.trust   { background: var(--seaweed-500); }
+.dim-swatch.value   { background: var(--coral-500); }
+.dim-swatch.delight { background: var(--tamago-400); }
+
+/* ============================================================
+   DIMENSION CHIP — swatch + label (for inline use)
+   ============================================================ */
+.dim-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border-radius: var(--r-full);
+  background: var(--rice-100);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   METRIC CARD — three canonical surfaces (Issue 4)
+   ============================================================ */
+.metric-card {
+  padding: 20px;
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 130px;
+  position: relative;
+}
+.metric-card .mc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+.metric-card .mc-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.metric-card .mc-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variation-settings: "opsz" 60;
+  font-size: 56px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-top: auto;
+}
+.metric-card .mc-value .pct {
+  font-size: 0.5em;
+  opacity: 0.65;
+}
+
+/* Surface A: filled (hero, bento tiles) */
+.metric-card.surface-filled.ease    { background: var(--soy-500);     color: white; }
+.metric-card.surface-filled.trust   { background: var(--seaweed-500); color: white; }
+.metric-card.surface-filled.value   { background: var(--coral-500);   color: white; }
+.metric-card.surface-filled.delight { background: var(--tamago-400);  color: var(--rice-800); }
+
+/* Surface B: neutral (white card w/ border) */
+.metric-card.surface-neutral {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+}
+.metric-card.surface-neutral .mc-label { color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+
+/* Surface C: soft tint (dimension color background) */
+.metric-card.surface-tint.ease    { background: var(--soy-50);     color: var(--soy-500); }
+.metric-card.surface-tint.trust   { background: var(--seaweed-50); color: var(--seaweed-700); }
+.metric-card.surface-tint.value   { background: var(--coral-50);   color: var(--coral-700); }
+.metric-card.surface-tint.delight { background: var(--tamago-50);  color: var(--tamago-500); }
+
+/* ============================================================
+   LOW-SCORE STATE (Issue 4b, option B)
+   When a filled card has .is-problematic, it flips to tint.
+   Full-color number + tint background.
+   ============================================================ */
+.metric-card.surface-filled.is-problematic {
+  color: unset;
+}
+.metric-card.surface-filled.is-problematic.ease    { background: var(--soy-50);     color: var(--soy-500); }
+.metric-card.surface-filled.is-problematic.trust   { background: var(--seaweed-50); color: var(--seaweed-700); }
+.metric-card.surface-filled.is-problematic.value   { background: var(--coral-50);   color: var(--coral-700); }
+.metric-card.surface-filled.is-problematic.delight { background: var(--tamago-50);  color: var(--tamago-500); }
+
+.metric-card.surface-filled.is-problematic .delta.on-color {
+  background: rgba(0, 0, 0, 0.05);
+  color: inherit;
+}
+
+/* Thresholds documented:
+   .is-good       score >= 70  (no class needed — default)
+   .is-watch      score 50-69  (optional: subtle indicator)
+   .is-problematic    score < 50   (apply .is-problematic to flip)
+*/
+
+/* ============================================================
+   RING — canonical donut score visual
+   Low state (Issue 4b-E companion): track tints coral when concern
+   ============================================================ */
+.ring-svg {
+  --ring-track: var(--rice-150);
+  --ring-fill: var(--coral-500);
+}
+.ring-svg .ring-track  { stroke: var(--ring-track); }
+.ring-svg .ring-fill   { stroke: var(--ring-fill); stroke-linecap: round; }
+
+.ring-svg.ease    { --ring-fill: var(--soy-500);     --ring-track: var(--soy-100); }
+.ring-svg.trust   { --ring-fill: var(--seaweed-500); --ring-track: var(--seaweed-100); }
+.ring-svg.value   { --ring-fill: var(--coral-500);   --ring-track: var(--coral-100); }
+.ring-svg.delight { --ring-fill: var(--tamago-400);  --ring-track: var(--tamago-100); }
+
+.ring-svg.is-problematic { --ring-track: var(--coral-100); }
+
+/* ============================================================
+   RING TILE — label in display serif (Issue 1A)
+   ============================================================ */
+.ring-tile .ring-tile-label {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variation-settings: "opsz" 32;
+  letter-spacing: -0.01em;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text-primary);
+}

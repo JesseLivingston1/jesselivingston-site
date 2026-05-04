@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bento Pilot · Find the sales you're losing</title>
+<meta name="description" content="A private invitation: continuous AI customer research for SMB Shopify merchants. Find what's costing you sales, in plain English. Pilot cohort closing soon.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/primitives.css">
+<style>
+/* ============ BASE / LOCK ============ */
+body.locked #page-wrap, body.locked footer { display: none; }
+body:not(.locked) #pw-overlay { display: none; }
+body { background: var(--bg-page); color: var(--text-primary); font-family: var(--font-sans); font-size: var(--fs-15); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* ============ PASSWORD OVERLAY ============ */
+#pw-overlay { position: fixed; inset: 0; background: var(--bg-page); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+#pw-box { text-align: center; max-width: 380px; padding: 48px 32px; }
+.pw-brand { font-family: var(--font-display); font-weight: 900; font-variation-settings: "opsz" 60; font-size: 28px; letter-spacing: -0.025em; color: var(--text-primary); margin-bottom: 10px; }
+.pw-brand em { font-style: normal; color: var(--coral-500); font-weight: 700; }
+.pw-prompt { font-size: 14px; color: var(--text-tertiary); margin-bottom: 20px; font-family: var(--font-mono); letter-spacing: 0.02em; }
+#pw-input { width: 100%; padding: 12px 16px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-sm); color: var(--text-primary); font-size: 15px; outline: none; font-family: var(--font-sans); transition: border-color var(--dur-fast) var(--ease-out); }
+#pw-input:focus { border-color: var(--coral-500); }
+#pw-input.shake { animation: shake 0.4s; border-color: var(--danger); }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+#pw-hint { margin-top: 10px; font-size: 12px; color: var(--danger); opacity: 0; transition: opacity var(--dur-base); font-family: var(--font-mono); }
+#pw-hint.show { opacity: 1; }
+
+/* ============ LAYOUT ============ */
+#page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 48px 96px; }
+
+/* ============ NAV ============ */
+nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0 24px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 0; position: sticky; top: 0; background: var(--bg-page); z-index: 50; backdrop-filter: blur(8px); }
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 900; font-variation-settings: "opsz" 40; font-size: 18px; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; }
+.nav-brand em { font-style: normal; color: var(--coral-500); font-weight: 700; }
+.logo-mark { width: 28px; height: 28px; flex-shrink: 0; }
+.nav-cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: white; background: var(--coral-500); padding: 8px 16px; border-radius: var(--r-sm); text-decoration: none; transition: background var(--dur-fast); }
+.nav-cta:hover { background: var(--coral-600); }
+
+/* ============ SECTION ============ */
+section { padding: 80px 0; border-top: 1px solid var(--border-subtle); }
+section:first-of-type { border-top: none; padding-top: 64px; }
+.section-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+.section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--coral-500); }
+.section-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(28px, 3.4vw, 44px); line-height: 1.08; letter-spacing: -0.025em; color: var(--text-primary); margin-bottom: 18px; max-width: 820px; text-wrap: balance; }
+.section-title em { font-style: normal; color: var(--coral-500); font-weight: 700; }
+.section-body { font-size: 17px; line-height: 1.55; color: var(--text-secondary); max-width: 680px; margin-bottom: 40px; text-wrap: pretty; }
+.section-body strong { color: var(--text-primary); font-weight: 600; }
+
+/* ============ HERO ============ */
+#hero { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: 64px 0 32px; }
+.hero-headline { font-family: var(--font-display); font-size: clamp(40px, 6.8vw, 88px); font-weight: 900; font-variation-settings: "opsz" 60; line-height: 1; letter-spacing: -0.03em; color: var(--text-primary); max-width: 1080px; margin-bottom: 28px; text-wrap: balance; }
+.hero-headline em { font-style: normal; color: var(--coral-500); font-weight: 700; }
+.hero-sub { font-size: clamp(17px, 1.5vw, 21px); color: var(--text-secondary); line-height: 1.5; max-width: 720px; margin-bottom: 40px; text-wrap: pretty; }
+.hero-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--coral-500); color: white; padding: 16px 32px; border-radius: var(--r-sm); text-decoration: none; font-weight: 600; font-size: 16px; transition: background var(--dur-fast); margin-right: 12px; }
+.hero-cta:hover { background: var(--coral-600); }
+.hero-meta { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.04em; }
+.hero-meta::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--coral-500); }
+
+/* ============ PROBLEM (3 stat cards) ============ */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px; }
+.stat-card .big-num { font-family: var(--font-display); font-size: 52px; font-weight: 900; font-variation-settings: "opsz" 60; line-height: 1; margin-bottom: 14px; letter-spacing: -0.03em; color: var(--coral-500); }
+.stat-card .stat-desc { font-size: 15px; color: var(--text-primary); line-height: 1.55; margin-bottom: 8px; text-wrap: pretty; }
+.stat-card .stat-source { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+
+/* ============ HOW IT WORKS (4 step cards) ============ */
+.step-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.step-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px; position: relative; overflow: hidden; transition: border-color var(--dur-fast); }
+.step-card:hover { border-color: var(--coral-500); }
+.step-card::before { content: attr(data-step); position: absolute; top: -10px; right: 16px; font-family: var(--font-display); font-size: 92px; font-weight: 900; font-variation-settings: "opsz" 60; color: var(--coral-50); line-height: 1; pointer-events: none; letter-spacing: -0.04em; }
+.step-num { font-family: var(--font-mono); font-size: 11px; color: var(--coral-600); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; font-weight: 500; position: relative; z-index: 1; }
+.step-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; line-height: 1.2; color: var(--text-primary); margin-bottom: 10px; text-wrap: balance; letter-spacing: -0.015em; position: relative; z-index: 1; }
+.step-body { font-size: 14px; color: var(--text-secondary); line-height: 1.55; text-wrap: pretty; position: relative; z-index: 1; }
+
+/* ============ SAMPLE FINDING (in-product preview) ============ */
+.preview { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-lg); padding: 28px 32px; box-shadow: var(--shadow-md); }
+.preview-head { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 22px; }
+.preview-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral-500); }
+.preview-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--text-tertiary); text-transform: uppercase; }
+.preview-meta { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); }
+
+.finding-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-600); font-weight: 500; margin-bottom: 8px; }
+.finding-title { font-family: var(--font-display); font-weight: 900; font-variation-settings: "opsz" 32; font-size: 26px; line-height: 1.2; color: var(--text-primary); margin: 0 0 16px; letter-spacing: -0.015em; }
+.finding-quote { background: var(--coral-50); border-left: 3px solid var(--coral-500); padding: 16px 20px; border-radius: 0 var(--r-md) var(--r-md) 0; margin: 18px 0; font-family: var(--font-display); font-style: italic; font-size: 17px; line-height: 1.5; color: var(--coral-800); }
+.finding-quote-attr { display: block; margin-top: 10px; font-family: var(--font-sans); font-style: normal; font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.02em; }
+.finding-recco-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); font-weight: 500; margin: 22px 0 8px; }
+.finding-recco { font-size: 15.5px; line-height: 1.6; color: var(--text-primary); }
+.finding-recco strong { font-weight: 600; }
+.finding-impact { display: inline-block; margin-top: 16px; padding: 6px 14px; background: var(--seaweed-50, #ECF7EE); border: 1px solid var(--seaweed-200, #B6DDB6); color: var(--seaweed-700, #1F6E33); border-radius: var(--r-full); font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
+
+/* ============ COMPARE TABLE ============ */
+.compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.compare-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.compare-card.us { border-color: var(--coral-500); background: var(--coral-50); }
+.compare-tool { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); font-weight: 500; }
+.compare-card.us .compare-tool { color: var(--coral-700); }
+.compare-headline { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--text-primary); letter-spacing: -0.01em; }
+.compare-body { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+.compare-card.us .compare-body { color: var(--coral-800); }
+
+/* ============ PILOT CARD ============ */
+.pilot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pilot-side { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px 32px; }
+.pilot-side h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 16px; color: var(--text-primary); }
+.pilot-side ul { margin: 0; padding-left: 0; list-style: none; }
+.pilot-side ul li { padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-size: 15px; line-height: 1.55; color: var(--text-primary); display: flex; gap: 12px; }
+.pilot-side ul li:last-child { border-bottom: 0; }
+.pilot-side ul li::before { content: '→'; color: var(--coral-500); flex-shrink: 0; font-family: var(--font-mono); font-weight: 600; }
+.pilot-side.you-give ul li::before { color: var(--text-tertiary); }
+.pilot-side strong { color: var(--text-primary); font-weight: 600; }
+
+/* ============ FAQ ============ */
+.faq-list { display: flex; flex-direction: column; gap: 0; max-width: 820px; }
+.faq-item { border-bottom: 1px solid var(--border-subtle); padding: 20px 0; }
+.faq-item:first-child { border-top: 1px solid var(--border-subtle); }
+.faq-q { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-primary); margin: 0 0 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.faq-q::after { content: '+'; color: var(--coral-500); font-family: var(--font-mono); font-size: 18px; font-weight: 500; flex-shrink: 0; transition: transform var(--dur-fast); }
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a { font-size: 15.5px; line-height: 1.6; color: var(--text-secondary); margin: 0; max-height: 0; overflow: hidden; transition: max-height var(--dur-base) var(--ease-out); }
+.faq-item.open .faq-a { max-height: 600px; padding-top: 4px; }
+.faq-a p { margin: 0 0 10px; }
+.faq-a p:last-child { margin-bottom: 0; }
+.faq-a strong { color: var(--text-primary); font-weight: 600; }
+
+/* ============ APPLY FORM ============ */
+.apply-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-lg); padding: 36px 40px; box-shadow: var(--shadow-md); max-width: 720px; }
+.apply-card h2 { margin-top: 0; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid .full { grid-column: 1 / -1; }
+.fld { display: flex; flex-direction: column; gap: 6px; }
+.fld label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); font-weight: 500; }
+.fld label .req { color: var(--coral-500); margin-left: 2px; }
+.fld input, .fld select, .fld textarea {
+  width: 100%; padding: 11px 14px; background: var(--bg-page); border: 1px solid var(--border-default); border-radius: var(--r-sm);
+  color: var(--text-primary); font-size: 14px; font-family: var(--font-sans); outline: none;
+  transition: border-color var(--dur-fast);
+}
+.fld input:focus, .fld select:focus, .fld textarea:focus { border-color: var(--coral-500); box-shadow: 0 0 0 3px var(--coral-50); }
+.fld textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.fld .hint { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+
+.form-submit { margin-top: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.form-submit button { background: var(--coral-500); color: white; padding: 14px 32px; border-radius: var(--r-sm); border: 0; font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer; transition: background var(--dur-fast); }
+.form-submit button:hover { background: var(--coral-600); }
+.form-submit button:disabled { opacity: 0.6; cursor: default; }
+.form-status { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); }
+.form-status.ok { color: var(--seaweed-700, #1F6E33); }
+.form-status.err { color: var(--coral-700); }
+
+/* ============ FOOTER ============ */
+footer { max-width: 1200px; margin: 0 auto; padding: 40px 48px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.04em; }
+footer a { color: var(--text-tertiary); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  #page-wrap { padding: 0 32px 80px; }
+  .step-grid { grid-template-columns: repeat(2, 1fr); }
+  .pilot-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  #page-wrap { padding: 0 20px 64px; }
+  section { padding: 56px 0; }
+  .step-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .apply-card { padding: 28px 24px; }
+}
+</style>
+</head>
+<body class="locked">
+
+<!-- ═══ PASSWORD GATE ═══ -->
+<div id="pw-overlay">
+  <div id="pw-box">
+    <svg width="56" height="56" viewBox="0 0 36 36" fill="none" style="margin-bottom: 20px;">
+      <rect x="1.5" y="1.5" width="33" height="33" rx="7" stroke="var(--rice-800)" stroke-width="1.5"/>
+      <rect x="6" y="6" width="10.5" height="10.5" rx="2.5" fill="#9CA3AF"/>
+      <rect x="19.5" y="6" width="10.5" height="10.5" rx="2.5" fill="#6B7280"/>
+      <rect x="6" y="19.5" width="10.5" height="10.5" rx="2.5" fill="var(--coral-500)"/>
+      <rect x="19.5" y="19.5" width="10.5" height="10.5" rx="2.5" fill="#9CA3AF"/>
+    </svg>
+    <div class="pw-brand">Bento <em>pilot</em></div>
+    <div class="pw-prompt">This page is private</div>
+    <input type="password" id="pw-input" placeholder="Enter password" autofocus>
+    <div id="pw-hint">Incorrect password</div>
+  </div>
+</div>
+
+<div id="page-wrap">
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-brand" aria-label="Bento — home">
+    <svg class="logo-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="33" height="33" rx="7" stroke="currentColor" stroke-width="1.5"/>
+      <rect x="6" y="6" width="10.5" height="10.5" rx="2.5" fill="#9CA3AF"/>
+      <rect x="19.5" y="6" width="10.5" height="10.5" rx="2.5" fill="#6B7280"/>
+      <rect x="6" y="19.5" width="10.5" height="10.5" rx="2.5" fill="var(--coral-500)"/>
+      <rect x="19.5" y="19.5" width="10.5" height="10.5" rx="2.5" fill="#9CA3AF"/>
+    </svg>
+    <span>Bento <em>pilot</em></span>
+  </a>
+  <a href="#apply" class="nav-cta">Apply now</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div id="hero">
+  <h1 class="hero-headline">You're losing sales <em>you can't see.</em></h1>
+  <p class="hero-sub">
+    Your analytics tell you <strong>what</strong> shoppers do. Your tickets tell you what they
+    <strong>complain about</strong>. Neither tells you <strong>why</strong> they don't buy.
+    Bento gets your real shoppers into 5-minute conversations &mdash; mid-shop &mdash; and
+    tells you exactly what's costing you sales, in plain English.
+  </p>
+  <div>
+    <a href="#apply" class="hero-cta">Apply for the pilot &nbsp;→</a>
+    <span class="hero-meta">Limited cohort &middot; closing soon</span>
+  </div>
+</div>
+
+<!-- ═══ THE PROBLEM ═══ -->
+<section id="problem">
+  <div class="section-eyebrow">The problem</div>
+  <h2 class="section-title">Most of your store's <em>biggest leaks</em> are invisible to your tools.</h2>
+  <p class="section-body">
+    Your shoppers leave for reasons they never tell you. They get confused, they hesitate, they go look
+    somewhere else. By the time they bounce, your dashboard just shows another lost cart &mdash; with
+    no clue why. That gap costs SMB merchants billions every year, and the tools you're already paying
+    for can't close it.
+  </p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="big-num">70%</div>
+      <div class="stat-desc">Average cart-abandonment rate across e-commerce. Most of those shoppers had real intent &mdash; something specific stopped them, and you'll never know what unless you ask.</div>
+      <div class="stat-source">Baymard Institute, 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-num">$260B</div>
+      <div class="stat-desc">In recoverable revenue lost to poor checkout experience every year. Most of that is fixable once you know what specifically broke for which shoppers.</div>
+      <div class="stat-source">Baymard Institute, 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-num">5&ndash;25×</div>
+      <div class="stat-desc">More expensive to acquire a new shopper than to recover one you almost had. Your CAC keeps climbing &mdash; the highest-leverage move is closing the leak, not pouring more in the top.</div>
+      <div class="stat-source">Bain &amp; Company / HBR</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT BENTO IS ═══ -->
+<section>
+  <div class="section-eyebrow">What Bento is</div>
+  <h2 class="section-title">Continuous customer research, <em>without the researcher.</em></h2>
+  <p class="section-body">
+    Bento is an app you install on your store. Real shoppers &mdash; the ones already on your site &mdash;
+    get invited into a 5-minute AI-moderated conversation in exchange for a small gift card.
+    The interviews get scored across <strong>three dimensions</strong> &mdash; how easy it is to buy
+    (Ease), whether your shop feels trustworthy (Trust), and whether the price feels worth it (Value).
+    A pipeline of agents finds patterns across interviews and surfaces the specific fixes that move revenue,
+    ranked by how much you're losing on each.
+  </p>
+  <p class="section-body">
+    No surveys to design. No researcher to hire. No reports to interpret. The app delivers what to fix,
+    in plain English, with the actual shopper quotes that prove the problem.
+  </p>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section>
+  <div class="section-eyebrow">How it works</div>
+  <h2 class="section-title">Four steps. <em>One install.</em></h2>
+
+  <div class="step-grid">
+    <div class="step-card" data-step="01">
+      <div class="step-num">Step 01</div>
+      <div class="step-title">Install in one click</div>
+      <div class="step-body">Install Bento from the Shopify App Store (or get the embed snippet for other platforms). Pick how many interviews you want per week. We handle the rest.</div>
+    </div>
+    <div class="step-card" data-step="02">
+      <div class="step-num">Step 02</div>
+      <div class="step-title">Bento talks to real shoppers</div>
+      <div class="step-body">Real customers on your site get invited into a 5-minute conversation, mid-shop, in exchange for a gift card. The AI moderator was trained on UX research best practices &mdash; it asks the right follow-ups to get past surface answers.</div>
+    </div>
+    <div class="step-card" data-step="03">
+      <div class="step-num">Step 03</div>
+      <div class="step-title">Patterns surface automatically</div>
+      <div class="step-body">Every conversation gets scored on Ease, Trust, and Value. Recurring frustrations cluster into issues. You see what's costing you sales the moment two or more shoppers bring it up &mdash; not in three weeks of analysis.</div>
+    </div>
+    <div class="step-card" data-step="04">
+      <div class="step-num">Step 04</div>
+      <div class="step-title">You get specific fixes</div>
+      <div class="step-body">Each issue comes with a recommended fix, the verbatim shopper quotes that back it up, and an estimate of how much you're losing &mdash; ranked top to bottom. You decide which to ship.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SAMPLE — what you actually see ═══ -->
+<section>
+  <div class="section-eyebrow">A real example</div>
+  <h2 class="section-title">This is what shows up in your <em>dashboard.</em></h2>
+  <p class="section-body">
+    Pulled from a live Bento install on a real e-commerce store. The shopper had clear intent to buy &mdash; the
+    site couldn't help them get there.
+  </p>
+
+  <div class="preview">
+    <div class="preview-head">
+      <span class="preview-dot"></span>
+      <span class="preview-label">Issue</span>
+      <span style="font-family: var(--font-mono); font-size: 11px; color: var(--coral-700); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500;">Ease &middot; high severity</span>
+      <span class="preview-meta">$1,420/mo at risk</span>
+    </div>
+
+    <div class="finding-eyebrow">The pattern</div>
+    <div class="finding-title">Out-of-stock products show no restock date &mdash; shoppers go straight to resellers.</div>
+    <p style="font-size: 15px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 6px;">
+      Shoppers who want the product but can't buy it today aren't waiting &mdash; they're sourcing it
+      elsewhere. With nothing on the page to anchor them, the sale and the customer relationship both
+      go to a third-party reseller.
+    </p>
+
+    <div class="finding-quote">
+      I can't buy something that's out of stock, but I still want to buy it &mdash; I might need to look at kind
+      of an aftermarket and buy it from a third party.
+      <span class="finding-quote-attr">&mdash; Shopper, May 4 &middot; returning customer &middot; Discord workaround confirmed</span>
+    </div>
+
+    <div class="finding-recco-eyebrow">Recommended fix</div>
+    <p class="finding-recco">
+      <strong>On each out-of-stock product page</strong>, show an estimated restock date if known and add
+      a "notify me" email field directly below the unavailable Add to Cart button. Even an honest "we don't
+      know yet, get notified" beats silent empty stock.
+    </p>
+    <span class="finding-impact">↗ Recovers ~3% of category visitors</span>
+  </div>
+</section>
+
+<!-- ═══ DIFFERENT FROM YOUR CURRENT STACK ═══ -->
+<section>
+  <div class="section-eyebrow">How is this different?</div>
+  <h2 class="section-title">You probably already have <em>tools that try.</em></h2>
+  <p class="section-body">
+    The tools below are good at what they do &mdash; they just don't tell you <strong>why</strong>.
+    Bento doesn't replace your reviews app or your helpdesk. It fills the gap none of them can.
+  </p>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="compare-tool">Heatmaps &amp; session replay</div>
+      <div class="compare-headline">Hotjar, Lucky Orange, Microsoft Clarity</div>
+      <div class="compare-body">Show you where shoppers click and how far they scroll. They can't tell you what they were thinking when they bounced, or what they wished was on the page.</div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-tool">Surveys &amp; NPS</div>
+      <div class="compare-headline">Zigpoll, Fairing, KnoCommerce</div>
+      <div class="compare-body">Ask shoppers your questions. The shoppers who left don't answer. The shoppers who do answer pick from a list you wrote &mdash; the actual reason rarely fits.</div>
+    </div>
+    <div class="compare-card">
+      <div class="compare-tool">Reviews</div>
+      <div class="compare-headline">Yotpo, Judge.me, Loox</div>
+      <div class="compare-body">Capture happy customers. The shoppers who didn't buy don't leave reviews, and "5 stars, love it" doesn't tell you what almost stopped the next one.</div>
+    </div>
+    <div class="compare-card us">
+      <div class="compare-tool">Bento</div>
+      <div class="compare-headline">Real conversations with real shoppers, mid-shop.</div>
+      <div class="compare-body">A 5-minute interview with shoppers who self-selected, while the experience is fresh. Scored, clustered, and turned into the specific fixes that move revenue.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE PILOT ═══ -->
+<section id="pilot">
+  <div class="section-eyebrow">The pilot</div>
+  <h2 class="section-title">A small cohort of merchants. <em>Founder-level access.</em></h2>
+  <p class="section-body">
+    Bento is in pre-launch. We're inviting a handful of e-commerce merchants who are willing to install it,
+    run it for a couple of months, and tell us what works and what doesn't. In exchange, we work
+    closely with you to make sure you get real value out of it.
+  </p>
+
+  <div class="pilot-grid">
+    <div class="pilot-side">
+      <h3>What you get</h3>
+      <ul>
+        <li><span><strong>Free for 60 days.</strong> No credit card to start. After the pilot, you choose whether to continue at $49/mo &mdash; pilot pricing locked in for life.</span></li>
+        <li><span><strong>Hands-on setup.</strong> The founder personally walks through your install, helps target the right pages, and tunes the question sequence to your store.</span></li>
+        <li><span><strong>Direct line to the team.</strong> A Slack/email channel with the founder &mdash; ask anything, request features, flag issues. You're influencing what ships.</span></li>
+        <li><span><strong>Your data is yours.</strong> Every interview is redacted (PII scrubbed) before storage. Your data never feeds anyone else's recommendations. Full export on request.</span></li>
+        <li><span><strong>Cancel anytime.</strong> If it's not delivering value in the first 30 days, walk away &mdash; no charge, no questions.</span></li>
+      </ul>
+    </div>
+    <div class="pilot-side you-give">
+      <h3>What we ask</h3>
+      <ul>
+        <li><span><strong>Install the widget.</strong> ~30 minutes, one-click after you connect your store. We're available to help if anything is unusual.</span></li>
+        <li><span><strong>Read the insights.</strong> Open the dashboard once a week or so. The whole point is closing the loop on what your shoppers are telling you.</span></li>
+        <li><span><strong>Tell us what's working.</strong> Honest feedback &mdash; what's useful, what's noise, what's missing. We talk every couple of weeks.</span></li>
+        <li><span><strong>Optional case study.</strong> If something genuinely moves your revenue, we'd love to share the story (anonymized if you prefer). Always your call.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq">
+  <div class="section-eyebrow">Frequently asked</div>
+  <h2 class="section-title">Honest answers to <em>the obvious questions.</em></h2>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary class="faq-q">Will my shoppers actually do this?</summary>
+      <div class="faq-a">
+        <p>Yes &mdash; the gift-card incentive is the load-bearing piece. Most shoppers who accept the invitation finish the conversation. Bento targets a small fraction of your traffic per week (you set the volume), so it doesn't blanket every visitor.</p>
+        <p>The conversations are short, friendly, and one of the few times shoppers feel <em>heard</em> by an online brand. Several pilot merchants have been surprised by how much shoppers want to share.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">Won't this annoy my brand experience?</summary>
+      <div class="faq-a">
+        <p>The intercept is small, in your brand colors, and easy to dismiss. It only fires for a small percentage of shoppers per week (default: 5 interviews/week). Once a shopper has been invited, they won't see it again.</p>
+        <p>If a specific page or campaign is sensitive, you can exclude it from the intercept. You're in control of where Bento talks to shoppers.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">How is this different from the survey tool I already have?</summary>
+      <div class="faq-a">
+        <p>Surveys ask shoppers to pick from a list of answers <em>you</em> wrote. The actual reason for a problem rarely fits one of those buckets. Bento has open-ended conversations, so the AI moderator can chase the real "why" with follow-up questions &mdash; the same way a UX researcher would.</p>
+        <p>And surveys mostly catch the people who bought. Bento intercepts mid-shop, so you hear from the ones who were about to leave too.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">What about privacy and PII?</summary>
+      <div class="faq-a">
+        <p>Every conversation is run through a redactor before anything is stored. Names, emails, phone numbers, addresses, payment info &mdash; all scrubbed automatically. Merchants only ever see the redacted version.</p>
+        <p>Your data lives in your tenant only. It's never shared, never sold, and never fed into any model that benefits another merchant. Full export and full deletion on request.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">How much time does this take from me?</summary>
+      <div class="faq-a">
+        <p>Setup is ~30 minutes the first day. After that, the only thing you have to do is read the insights when they land. Most pilot merchants check in once a week and act on the issues that matter.</p>
+        <p>The dashboard is built to be scannable in 60 seconds. If a shopper raises something urgent &mdash; like a sale being lost to an avoidable issue &mdash; you'll get an email alert the same day.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">What does the gift card cost me?</summary>
+      <div class="faq-a">
+        <p>The default is a $15 store-credit gift card per completed interview. You set this in your settings &mdash; can be lower (e.g. $10) or higher. The codes are auto-generated through your store's gift-card system, so it's existing tech, not a new vendor.</p>
+        <p>At the default cap of 5 interviews/week, that's ~$300/mo in store credit (which is itself revenue you keep most of). Many merchants find that even one fix per quarter pays for the entire program many times over.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">What if I don't get any insights?</summary>
+      <div class="faq-a">
+        <p>Honest answer: it takes about 10&ndash;20 interviews before patterns are reliable. If by interview 20 you haven't seen at least one fix worth shipping, that's on us &mdash; the pilot is free, and we'll work with you to figure out what to adjust.</p>
+        <p>Most stores see a clear, actionable pattern in their first 5&ndash;10 interviews. Some of them are obvious in retrospect; some of them you'd never have guessed.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">What platforms does Bento support?</summary>
+      <div class="faq-a">
+        <p>Shopify is the primary integration &mdash; one-click install via the Shopify App Store. WooCommerce, Wix, and BigCommerce are on the roadmap; for the pilot, a generic embed snippet works on any e-commerce site that lets you add a script tag.</p>
+        <p>If you're on a custom-built store and want to be in the pilot, mention it in your application &mdash; we've helped a few non-Shopify merchants get installed.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">When does the pilot start?</summary>
+      <div class="faq-a">
+        <p>Rolling. We're admitting merchants in small batches as we onboard them. Once your application is in, expect to hear back within a few business days. If we're a fit, we'll get you set up the same week.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-q">Who's behind this?</summary>
+      <div class="faq-a">
+        <p>Jesse Livingston &mdash; UX researcher with 11 years across LinkedIn, Microsoft, ServiceNow, and Netflix, plus freelance work with smaller e-commerce brands. The whole point of Bento is bringing the kind of UX research the big brands rely on to the SMBs who could never afford it.</p>
+        <p>You can read more at <a href="https://jesselivingston.com" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">jesselivingston.com</a>.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══ APPLY FORM ═══ -->
+<section id="apply">
+  <div class="section-eyebrow">Apply</div>
+  <h2 class="section-title">Tell us about your store.</h2>
+  <p class="section-body">
+    Quick form. Five minutes max. We'll get back to you within a few business days &mdash; usually the same
+    day if we're around.
+  </p>
+
+  <div class="apply-card">
+    <form id="apply-form" onsubmit="return submitApply(event)">
+      <input type="hidden" name="access_key" value="fb8dd8b0-9dd9-4c39-a1e5-51f00ee8fe7d">
+      <input type="hidden" name="from_name" value="Bento Pilot Application">
+      <input type="hidden" name="subject" value="Bento Pilot Application">
+      <input type="text" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
+      <div class="form-grid">
+        <div class="fld">
+          <label for="ap-name">Your name <span class="req">*</span></label>
+          <input id="ap-name" type="text" name="name" required>
+        </div>
+        <div class="fld">
+          <label for="ap-email">Email <span class="req">*</span></label>
+          <input id="ap-email" type="email" name="email" required>
+        </div>
+        <div class="fld full">
+          <label for="ap-store">Your store URL <span class="req">*</span></label>
+          <input id="ap-store" type="url" name="store_url" placeholder="https://yourstore.com" required>
+        </div>
+        <div class="fld">
+          <label for="ap-platform">E-commerce platform <span class="req">*</span></label>
+          <select id="ap-platform" name="platform" required>
+            <option value="">Select…</option>
+            <option>Shopify</option>
+            <option>Shopify Plus</option>
+            <option>WooCommerce</option>
+            <option>Wix</option>
+            <option>BigCommerce</option>
+            <option>Squarespace</option>
+            <option>Custom / other</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="ap-volume">Monthly revenue band <span class="req">*</span></label>
+          <select id="ap-volume" name="monthly_revenue" required>
+            <option value="">Select…</option>
+            <option>Under $1K/mo</option>
+            <option>$1K&ndash;$10K/mo</option>
+            <option>$10K&ndash;$50K/mo</option>
+            <option>$50K&ndash;$250K/mo</option>
+            <option>$250K&ndash;$1M/mo</option>
+            <option>Over $1M/mo</option>
+          </select>
+          <span class="hint">Helps us understand your scale &mdash; not a filter.</span>
+        </div>
+        <div class="fld full">
+          <label for="ap-question">What's the biggest unanswered question you have about your customers right now? <span class="req">*</span></label>
+          <textarea id="ap-question" name="biggest_question" required placeholder="e.g. Why are returning customers waiting weeks before they buy again? Why do shoppers from Google ads bounce on the PDP?"></textarea>
+          <span class="hint">Whatever's been bugging you. The more specific the better &mdash; this helps us understand if Bento is a fit before we waste your time.</span>
+        </div>
+        <div class="fld full">
+          <label for="ap-stack">What customer-research tools do you use today? (optional)</label>
+          <textarea id="ap-stack" name="current_stack" placeholder="e.g. Hotjar for replays, Zigpoll for post-purchase, Yotpo for reviews"></textarea>
+        </div>
+      </div>
+
+      <div class="form-submit">
+        <button type="submit" id="apply-submit">Send application &nbsp;→</button>
+        <span class="form-status" id="apply-status">We'll reply within a few business days.</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+</div><!-- /page-wrap -->
+
+<footer>
+  <div>Bento Box Research &middot; Continuous UX research for SMBs &middot; 2026</div>
+  <div>
+    <a href="https://jesselivingston.com">Jesse Livingston</a> &middot;
+    <a href="mailto:jesse@jesselivingston.com">jesse@jesselivingston.com</a>
+  </div>
+</footer>
+
+<!-- ═══ PASSWORD GATE JS ═══ -->
+<script>
+(function() {
+  // Hash for "bento2026" — to change, run the simpleHash() function on
+  // your new password and paste the 8-char hex here.
+  var hash = '451c7648';
+  function simpleHash(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) {
+      h = ((h << 5) - h) + s.charCodeAt(i);
+      h = h & 0xffffffff;
+    }
+    return (h >>> 0).toString(16).slice(0, 8);
+  }
+  if (sessionStorage.getItem('bento_pilot_unlocked') === 'true') {
+    document.body.classList.remove('locked');
+  }
+  var input = document.getElementById('pw-input');
+  var hint = document.getElementById('pw-hint');
+  input.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    if (simpleHash(input.value) === hash) {
+      document.body.classList.remove('locked');
+      sessionStorage.setItem('bento_pilot_unlocked', 'true');
+    } else {
+      input.classList.add('shake');
+      hint.classList.add('show');
+      setTimeout(function() { input.classList.remove('shake'); }, 400);
+      setTimeout(function() { hint.classList.remove('show'); }, 2000);
+    }
+  });
+})();
+</script>
+
+<!-- ═══ FAQ ACCORDION JS (handled by <details> natively, but ensure consistent open/closed look) ═══ -->
+<script>
+document.querySelectorAll('.faq-item').forEach(function(item) {
+  item.addEventListener('toggle', function() {
+    if (item.open) item.classList.add('open'); else item.classList.remove('open');
+  });
+});
+</script>
+
+<!-- ═══ APPLY FORM JS ═══ -->
+<script>
+function submitApply(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = document.getElementById('apply-submit');
+  var status = document.getElementById('apply-status');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  status.className = 'form-status';
+  status.textContent = '';
+
+  var data = new FormData(form);
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+    .then(function(r) { return r.json(); })
+    .then(function(json) {
+      if (json && json.success) {
+        status.className = 'form-status ok';
+        status.textContent = 'Thanks — application received. Expect to hear back within a few business days.';
+        form.reset();
+        btn.textContent = 'Sent ✓';
+      } else {
+        throw new Error(json && json.message ? json.message : 'submit failed');
+      }
+    })
+    .catch(function(err) {
+      status.className = 'form-status err';
+      status.textContent = 'Something went wrong sending the form. Email jesse@jesselivingston.com directly and we\'ll sort it out.';
+      btn.disabled = false;
+      btn.textContent = 'Send application →';
+      console.error(err);
+    });
+  return false;
+}
+</script>
+
+</body>
+</html>
