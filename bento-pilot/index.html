@@ -180,50 +180,29 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .faq-a p:last-child { margin-bottom: 0; }
 .faq-a strong { color: var(--text-primary); font-weight: 600; }
 
-/* ============ APPLY FORM (Notion iframe embed) ============ */
-.apply-frame-wrap {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  max-width: 720px;
+/* ============ APPLY FORM ============ */
+.apply-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-lg); padding: 36px 40px; box-shadow: var(--shadow-md); max-width: 720px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid .full { grid-column: 1 / -1; }
+.fld { display: flex; flex-direction: column; gap: 6px; }
+.fld label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); font-weight: 500; }
+.fld label .req { color: var(--coral-500); margin-left: 2px; }
+.fld input, .fld select, .fld textarea {
+  width: 100%; padding: 11px 14px; background: var(--bg-page); border: 1px solid var(--border-default); border-radius: var(--r-sm);
+  color: var(--text-primary); font-size: 14px; font-family: var(--font-sans); outline: none;
+  transition: border-color var(--dur-fast);
 }
-#apply-iframe {
-  width: 100%;
-  height: 1100px;
-  border: 0;
-  display: block;
-  background: var(--bg-surface);
-}
-.apply-fallback {
-  padding: 20px 24px;
-  border-top: 1px solid var(--border-subtle);
-  font-size: 13px;
-  color: var(--text-tertiary);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.apply-fallback a {
-  color: var(--coral-600);
-  border-bottom: 1px solid var(--coral-200);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color var(--dur-fast);
-}
-.apply-fallback a:hover { color: var(--coral-700); }
-.apply-empty {
-  padding: 48px 32px;
-  text-align: center;
-  color: var(--text-tertiary);
-  font-size: 14px;
-  line-height: 1.5;
-}
-.apply-empty strong { color: var(--text-primary); display: block; margin-bottom: 8px; font-weight: 600; }
-.apply-empty a { color: var(--coral-600); border-bottom: 1px solid var(--coral-200); text-decoration: none; }
+.fld input:focus, .fld select:focus, .fld textarea:focus { border-color: var(--coral-500); box-shadow: 0 0 0 3px var(--coral-50); }
+.fld textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.fld .hint { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+
+.form-submit { margin-top: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.form-submit button { background: var(--coral-500); color: white; padding: 14px 32px; border-radius: var(--r-sm); border: 0; font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer; transition: background var(--dur-fast); }
+.form-submit button:hover { background: var(--coral-600); }
+.form-submit button:disabled { opacity: 0.6; cursor: default; }
+.form-status { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); }
+.form-status.ok { color: var(--seaweed-700, #1F6E33); }
+.form-status.err { color: var(--coral-700); }
 
 /* ============ FOOTER ============ */
 footer { max-width: 1200px; margin: 0 auto; padding: 40px 48px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.04em; }
@@ -245,7 +224,8 @@ footer a { color: var(--text-tertiary); }
   .nav-link:last-child { border-bottom: none; }
   .nav-hamburger { display: block; }
   .step-grid { grid-template-columns: 1fr; }
-  #apply-iframe { height: 1400px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .apply-card { padding: 28px 24px; }
 }
 </style>
 </head>
@@ -589,19 +569,6 @@ footer a { color: var(--text-tertiary); }
 </section>
 
 <!-- ═══ APPLY FORM ═══ -->
-<!--
-  This form is a Notion form view, embedded as an iframe. The Notion
-  side stores submissions directly in the "Pilot Applications"
-  database. To wire it up:
-    1. In Notion, open the Pilot Applications database.
-    2. Click the "Apply for the pilot" form view tab.
-    3. Drag the remaining property fields onto the form (Email,
-       Store URL, Platform, Monthly revenue, Biggest question,
-       Current stack). Mark the same fields required as before.
-    4. Click "Share form" → copy the public form URL.
-    5. Paste it into NOTION_FORM_URL below and commit.
-  Falls back to a "form not configured yet" panel until the URL is set.
--->
 <section id="apply">
   <div class="section-eyebrow">Apply</div>
   <h2 class="section-title">Tell us about your store.</h2>
@@ -609,24 +576,66 @@ footer a { color: var(--text-tertiary); }
     Five-minute form. We'll get back to you within a few business days.
   </p>
 
-  <div class="apply-frame-wrap" id="apply-frame-wrap">
-    <iframe
-      id="apply-iframe"
-      title="Bento pilot application form"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      style="display:none;"
-    ></iframe>
-    <div class="apply-fallback" id="apply-fallback" style="display:none;">
-      <span>Trouble seeing the form?</span>
-      <a id="apply-open-link" href="#" target="_blank" rel="noopener">Open it in a new tab →</a>
-    </div>
-    <div class="apply-empty" id="apply-empty">
-      <strong>Application form not yet configured.</strong>
-      Email <a href="mailto:jesse@jesselivingston.com">jesse@jesselivingston.com</a>
-      directly with your store URL and what you'd like to learn about your customers,
-      and we'll get back to you within a few business days.
-    </div>
+  <div class="apply-card">
+    <form id="apply-form" onsubmit="return submitApply(event)">
+      <input type="hidden" name="access_key" value="fb8dd8b0-9dd9-4c39-a1e5-51f00ee8fe7d">
+      <input type="hidden" name="from_name" value="Bento Pilot Application">
+      <input type="hidden" name="subject" value="Bento Pilot Application">
+      <input type="text" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
+      <div class="form-grid">
+        <div class="fld">
+          <label for="ap-name">Your name <span class="req">*</span></label>
+          <input id="ap-name" type="text" name="name" required>
+        </div>
+        <div class="fld">
+          <label for="ap-email">Email <span class="req">*</span></label>
+          <input id="ap-email" type="email" name="email" required>
+        </div>
+        <div class="fld full">
+          <label for="ap-store">Your store URL <span class="req">*</span></label>
+          <input id="ap-store" type="url" name="store_url" placeholder="https://yourstore.com" required>
+        </div>
+        <div class="fld">
+          <label for="ap-platform">E-commerce platform <span class="req">*</span></label>
+          <select id="ap-platform" name="platform" required>
+            <option value="">Select…</option>
+            <option>Shopify</option>
+            <option>Shopify Plus</option>
+            <option>WooCommerce</option>
+            <option>Wix</option>
+            <option>BigCommerce</option>
+            <option>Squarespace</option>
+            <option>Custom / other</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="ap-volume">Monthly revenue band <span class="req">*</span></label>
+          <select id="ap-volume" name="monthly_revenue" required>
+            <option value="">Select…</option>
+            <option>Under $1K/mo</option>
+            <option>$1K&ndash;$10K/mo</option>
+            <option>$10K&ndash;$50K/mo</option>
+            <option>$50K&ndash;$250K/mo</option>
+            <option>$250K&ndash;$1M/mo</option>
+            <option>Over $1M/mo</option>
+          </select>
+        </div>
+        <div class="fld full">
+          <label for="ap-question">Biggest unanswered question you have about your customers right now <span class="req">*</span></label>
+          <textarea id="ap-question" name="biggest_question" required placeholder="e.g. Why are returning customers waiting weeks before they buy again?"></textarea>
+        </div>
+        <div class="fld full">
+          <label for="ap-stack">What customer-research tools do you use today? (optional)</label>
+          <textarea id="ap-stack" name="current_stack" placeholder="e.g. Hotjar for replays, Zigpoll for surveys, Yotpo for reviews"></textarea>
+        </div>
+      </div>
+
+      <div class="form-submit">
+        <button type="submit" id="apply-submit">Send application &nbsp;→</button>
+        <span class="form-status" id="apply-status">We'll reply within a few business days.</span>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -694,29 +703,84 @@ document.querySelectorAll('.faq-item').forEach(function(item) {
 });
 </script>
 
-<!-- ═══ APPLY FORM (Notion iframe loader) ═══ -->
+<!-- ═══ APPLY FORM ═══ -->
 <script>
-// Public Notion form URL. To get this:
-//   Notion → Pilot Applications database → "Apply for the pilot"
-//   form view → Share form → copy public URL → paste here.
-// Until set, the page shows the "email Jesse directly" fallback below.
-var NOTION_FORM_URL = 'https://shelled-digestion-da1.notion.site/a3e51a4144734556b7be399f88bbd644?pvs=105';
+// Where the application form posts. Two endpoints:
+//   1. WEB3FORMS_URL — emails Jesse the application (always fires).
+//   2. NOTION_WORKER_URL — Cloudflare Worker that creates a row in
+//      the "Pilot Applications" Notion database. Worker holds the
+//      Notion integration token server-side so it never reaches
+//      this client JS. See ../worker/README.md for the deploy steps.
+//      Until the Worker is deployed, leave this empty — Web3Forms
+//      keeps the email flowing.
+var WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+var NOTION_WORKER_URL = 'https://bento-pilot.jesselivingston.workers.dev/';
 
-(function() {
-  var iframe = document.getElementById('apply-iframe');
-  var fallback = document.getElementById('apply-fallback');
-  var empty = document.getElementById('apply-empty');
-  var openLink = document.getElementById('apply-open-link');
-  if (NOTION_FORM_URL) {
-    iframe.src = NOTION_FORM_URL;
-    iframe.style.display = 'block';
-    fallback.style.display = 'flex';
-    empty.style.display = 'none';
-    openLink.href = NOTION_FORM_URL;
-  }
-  // If NOTION_FORM_URL is empty the iframe + fallback stay hidden and
-  // the "email directly" panel (visible by default) does the job.
-})();
+function submitApply(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = document.getElementById('apply-submit');
+  var status = document.getElementById('apply-status');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  status.className = 'form-status';
+  status.textContent = '';
+
+  var data = new FormData(form);
+
+  // Always fire the email backup. If the Notion worker is configured,
+  // also fire that — both succeed → success; either fails → still
+  // success so long as at least one landed (the merchant's
+  // application is captured somewhere).
+  var emailPromise = fetch(WEB3FORMS_URL, { method: 'POST', body: data })
+    .then(function(r) { return r.json(); })
+    .then(function(json) {
+      if (!json || !json.success) throw new Error('email submit failed');
+      return 'email';
+    });
+
+  var notionPromise = NOTION_WORKER_URL
+    ? fetch(NOTION_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          store_url: data.get('store_url'),
+          platform: data.get('platform'),
+          monthly_revenue: data.get('monthly_revenue'),
+          biggest_question: data.get('biggest_question'),
+          current_stack: data.get('current_stack'),
+          source: 'bento-pilot landing page',
+        }),
+      })
+        .then(function(r) {
+          if (!r.ok) throw new Error('notion worker ' + r.status);
+          return 'notion';
+        })
+    : Promise.resolve(null);
+
+  // Use allSettled so a single-leg failure doesn't kill the merchant's
+  // submission — they care that we got it, not which storage hit.
+  Promise.allSettled([emailPromise, notionPromise]).then(function(results) {
+    var anyFulfilled = results.some(function(r) { return r.status === 'fulfilled' && r.value; });
+    if (anyFulfilled) {
+      status.className = 'form-status ok';
+      status.textContent = 'Thanks — application received. Expect to hear back within a few business days.';
+      form.reset();
+      btn.textContent = 'Sent ✓';
+      var failures = results.filter(function(r) { return r.status === 'rejected'; });
+      if (failures.length) console.warn('partial submit failure', failures);
+    } else {
+      status.className = 'form-status err';
+      status.textContent = 'Something went wrong. Email jesse@jesselivingston.com directly and we\'ll sort it out.';
+      btn.disabled = false;
+      btn.textContent = 'Send application →';
+      console.error('all submission paths failed', results);
+    }
+  });
+  return false;
+}
 </script>
 
 </body>

@@ -14,9 +14,9 @@
 //      paste this file's contents.
 //   4. Set the worker's secrets:
 //        wrangler secret put NOTION_TOKEN       # paste the integration secret
-//        wrangler secret put NOTION_DATABASE_ID # paste e14702cc2f73498f80c334fe1e3f3816
-//      (Database ID is the data source ID returned when the database
-//      was created. No dashes.)
+//        wrangler secret put NOTION_DATABASE_ID # paste faf683ad7c8741efb71428a59ba9c6e7
+//      (Database ID = the UUID in the database's URL, no dashes.
+//      NOT the data source / collection ID — /v1/pages 404s on that.)
 //   5. Optional: set NOTION_DATABASE_ID directly in wrangler.toml as a
 //      vars entry instead of a secret — it's not sensitive on its own.
 //   6. Bind the worker to a route or let it run on its

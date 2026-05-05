@@ -27,8 +27,11 @@ and exposes a single, scoped endpoint the form can hit.
    → **Connections** → **Add connection** → pick the integration.
    Without this connection, every API call will 404.
 4. The database ID we'll need for `NOTION_DATABASE_ID`:
-   `e14702cc2f73498f80c334fe1e3f3816` (no dashes; this is the data
-   source ID that came back when the database was created).
+   `faf683ad7c8741efb71428a59ba9c6e7` (no dashes). This is the
+   **database ID** — the UUID in the database's URL, e.g.
+   `notion.so/<database-id>`. **Not** the data source / collection
+   ID (those look similar but live under `collection://...`); the
+   `/v1/pages` API rejects data-source IDs with a 404.
 
 ## Worker side
 
@@ -56,7 +59,7 @@ Wrangler will print the deployed URL — something like
    `pilot-application.mjs` → **Save and deploy**.
 3. Settings → **Variables and secrets** → add two secrets:
    - `NOTION_TOKEN` = the integration secret
-   - `NOTION_DATABASE_ID` = `e14702cc2f73498f80c334fe1e3f3816`
+   - `NOTION_DATABASE_ID` = `faf683ad7c8741efb71428a59ba9c6e7`
 4. Copy the worker's `*.workers.dev` URL.
 
 ## Wire it up to the form
