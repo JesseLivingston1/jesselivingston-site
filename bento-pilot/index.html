@@ -67,11 +67,15 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .hero-meta::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--coral-500); }
 
 /* ============ STAT CARDS (Problem) ============ */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-.stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: stretch; }
+/* flex-column on the card + flex:1 on the description pushes the
+   source row to the bottom of every card, so the divider line and
+   source link line up horizontally across all three regardless of
+   how short or long the description is. */
+.stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px; display: flex; flex-direction: column; }
 .stat-card .big-num { font-family: var(--font-display); font-size: 52px; font-weight: 900; font-variation-settings: "opsz" 60; line-height: 1; margin-bottom: 14px; letter-spacing: -0.03em; color: var(--coral-500); }
-.stat-card .stat-desc { font-size: 14.5px; color: var(--text-primary); line-height: 1.55; margin-bottom: 8px; text-wrap: pretty; }
-.stat-card .stat-source { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+.stat-card .stat-desc { font-size: 14.5px; color: var(--text-primary); line-height: 1.55; margin-bottom: 8px; text-wrap: pretty; flex: 1; }
+.stat-card .stat-source { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-subtle); }
 .stat-card .stat-source a { color: var(--text-tertiary); border-bottom: 1px solid var(--border-default); text-decoration: none; transition: color var(--dur-fast); }
 .stat-card .stat-source a:hover { color: var(--coral-600); border-bottom-color: var(--coral-500); }
 
@@ -277,6 +281,7 @@ footer a { color: var(--text-tertiary); }
   <p class="hero-sub">
     Your analytics tell you <strong>what</strong> shoppers do. Your tickets tell you what they
     <strong>complain about</strong>. Neither tells you <strong>why</strong> they don't buy.
+    Bento gets your real shoppers into 5-minute conversations and surfaces exactly what's costing you sales.
   </p>
   <div>
     <a href="#apply" class="hero-cta">Apply for the pilot &nbsp;→</a>
@@ -364,8 +369,8 @@ footer a { color: var(--text-tertiary); }
     </div>
     <div class="step-card" data-step="03">
       <div class="step-num">Step 03</div>
-      <div class="step-title">Patterns surface automatically</div>
-      <div class="step-body">Conversations get scored on Ease, Trust, and Value. Recurring frustrations cluster into issues so you see what's costing sales as soon as it's a pattern.</div>
+      <div class="step-title">The expensive issues surface</div>
+      <div class="step-body">Recurring frictions cluster into issues, ranked by what each one is costing you. Every interview also adds to a knowledge base of your shoppers &mdash; the system gets smarter about your store with every conversation.</div>
     </div>
     <div class="step-card" data-step="04">
       <div class="step-num">Step 04</div>
@@ -409,7 +414,6 @@ footer a { color: var(--text-tertiary); }
       <strong>On each out-of-stock product page</strong>, show an estimated restock date if known
       and add a "notify me" email field directly below the unavailable Add to Cart button.
     </p>
-    <span class="finding-impact">↗ Recovers ~3% of category visitors</span>
   </div>
 </section>
 
@@ -497,8 +501,7 @@ footer a { color: var(--text-tertiary); }
     <details class="faq-item">
       <summary class="faq-q">Won't this annoy my customers?</summary>
       <div class="faq-a">
-        <p>The intercept is small, in your brand colors, and easy to dismiss. By default it only fires for ~5 shoppers per week (you set the volume). Once a shopper sees it, they won't see it again.</p>
-        <p>Per-page targeting controls aren't in the product yet &mdash; pilot merchants will help us figure out which controls actually matter. If you have a specific concern about a page or campaign, tell us and we'll work through it.</p>
+        <p>The intercept is small, in your brand colors, and easy to dismiss. To collect ~5 completed interviews per week (the default), Bento shows the intercept to roughly 50 shoppers per week &mdash; about 1 in 10 shoppers who see it will accept and start a conversation. Once a shopper has seen the invitation, they won't see it again.</p>
       </div>
     </details>
 
@@ -506,16 +509,14 @@ footer a { color: var(--text-tertiary); }
       <summary class="faq-q">How is this different from the survey tool I already have?</summary>
       <div class="faq-a">
         <p>Surveys ask shoppers to pick from answers <em>you</em> wrote. The actual reason for a problem rarely fits one of those buckets. Bento has open-ended conversations &mdash; the AI moderator chases the real "why" with follow-up questions, the same way a professional customer researcher would.</p>
-        <p>And surveys mostly catch the people who bought. Bento intercepts mid-shop, so you hear from the ones who were about to leave too.</p>
       </div>
     </details>
 
     <details class="faq-item">
       <summary class="faq-q">What about privacy and PII?</summary>
       <div class="faq-a">
-        <p>Every interview is run through a redactor before storage. Names, emails, phone numbers, addresses, payment details &mdash; all scrubbed automatically. Merchants only ever see the redacted version.</p>
-        <p>Raw transcripts are kept for 24 hours (a short QA window) and then dropped. Redacted transcripts roll off after 12 months. Shopper email is never collected &mdash; the gift-card code is shown on screen.</p>
-        <p>One thing we're transparent about: a future Bento feature will surface anonymized cross-merchant benchmarks &mdash; dimension-level distributions and issue-theme frequency by category. <strong>Transcripts, quotes, and per-shopper data never enter that pool</strong>, and it ships behind explicit opt-in.</p>
+        <p>Every interview is run through a redactor before storage. Names, emails, phone numbers, addresses, payment details &mdash; all scrubbed automatically. Merchants only ever see the redacted version. Shopper email is never collected &mdash; the gift-card code is shown on screen at the end of the conversation.</p>
+        <p>Full details are in our <a href="#" id="privacy-policy-link" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">data privacy policy</a>.</p>
       </div>
     </details>
 
@@ -539,7 +540,6 @@ footer a { color: var(--text-tertiary); }
       <summary class="faq-q">What if I don't get useful insights?</summary>
       <div class="faq-a">
         <p>Patterns get reliable somewhere around the second or third interview that surfaces the same theme. If after the pilot you haven't seen a fix worth shipping, we'll work with you to figure out what to adjust &mdash; targeting, question sequence, sample size.</p>
-        <p>One interview is one signal. By interview 20, the picture starts to harden.</p>
       </div>
     </details>
 
@@ -705,6 +705,17 @@ document.querySelectorAll('.faq-item').forEach(function(item) {
 
 <!-- ═══ APPLY FORM ═══ -->
 <script>
+// Where the application form posts. Two endpoints:
+//   1. WEB3FORMS_URL — emails Jesse the application (always fires).
+//   2. NOTION_WORKER_URL — Cloudflare Worker that creates a row in
+//      the "Pilot Applications" Notion database. Worker holds the
+//      Notion integration token server-side so it never reaches
+//      this client JS. See ../worker/README.md for the deploy steps.
+//      Until the Worker is deployed, leave this empty — Web3Forms
+//      keeps the email flowing.
+var WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+var NOTION_WORKER_URL = ''; // e.g. 'https://bento-pilot.jesselivingston.workers.dev/'
+
 function submitApply(e) {
   e.preventDefault();
   var form = e.target;
@@ -716,25 +727,58 @@ function submitApply(e) {
   status.textContent = '';
 
   var data = new FormData(form);
-  fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+
+  // Always fire the email backup. If the Notion worker is configured,
+  // also fire that — both succeed → success; either fails → still
+  // success so long as at least one landed (the merchant's
+  // application is captured somewhere).
+  var emailPromise = fetch(WEB3FORMS_URL, { method: 'POST', body: data })
     .then(function(r) { return r.json(); })
     .then(function(json) {
-      if (json && json.success) {
-        status.className = 'form-status ok';
-        status.textContent = 'Thanks — application received. Expect to hear back within a few business days.';
-        form.reset();
-        btn.textContent = 'Sent ✓';
-      } else {
-        throw new Error(json && json.message ? json.message : 'submit failed');
-      }
-    })
-    .catch(function(err) {
+      if (!json || !json.success) throw new Error('email submit failed');
+      return 'email';
+    });
+
+  var notionPromise = NOTION_WORKER_URL
+    ? fetch(NOTION_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          store_url: data.get('store_url'),
+          platform: data.get('platform'),
+          monthly_revenue: data.get('monthly_revenue'),
+          biggest_question: data.get('biggest_question'),
+          current_stack: data.get('current_stack'),
+          source: 'bento-pilot landing page',
+        }),
+      })
+        .then(function(r) {
+          if (!r.ok) throw new Error('notion worker ' + r.status);
+          return 'notion';
+        })
+    : Promise.resolve(null);
+
+  // Use allSettled so a single-leg failure doesn't kill the merchant's
+  // submission — they care that we got it, not which storage hit.
+  Promise.allSettled([emailPromise, notionPromise]).then(function(results) {
+    var anyFulfilled = results.some(function(r) { return r.status === 'fulfilled' && r.value; });
+    if (anyFulfilled) {
+      status.className = 'form-status ok';
+      status.textContent = 'Thanks — application received. Expect to hear back within a few business days.';
+      form.reset();
+      btn.textContent = 'Sent ✓';
+      var failures = results.filter(function(r) { return r.status === 'rejected'; });
+      if (failures.length) console.warn('partial submit failure', failures);
+    } else {
       status.className = 'form-status err';
       status.textContent = 'Something went wrong. Email jesse@jesselivingston.com directly and we\'ll sort it out.';
       btn.disabled = false;
       btn.textContent = 'Send application →';
-      console.error(err);
-    });
+      console.error('all submission paths failed', results);
+    }
+  });
   return false;
 }
 </script>
