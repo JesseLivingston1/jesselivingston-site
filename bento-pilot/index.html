@@ -594,7 +594,11 @@ footer a { color: var(--text-tertiary); }
         </div>
         <div class="fld full">
           <label for="ap-store">Your store URL <span class="req">*</span></label>
-          <input id="ap-store" type="url" name="store_url" placeholder="https://yourstore.com" required>
+          <!-- type=text + inputmode=url so that scheme-less inputs
+               like "mystore.com" or "www.mystore.com" are accepted.
+               submitApply() normalizes by prepending https:// before
+               sending to the worker. -->
+          <input id="ap-store" type="text" inputmode="url" name="store_url" placeholder="yourstore.com" required>
         </div>
         <div class="fld">
           <label for="ap-platform">E-commerce platform <span class="req">*</span></label>
@@ -727,6 +731,15 @@ function submitApply(e) {
   status.textContent = '';
 
   var data = new FormData(form);
+
+  // Normalize the store URL: most merchants type "mystore.com" or
+  // "www.mystore.com" without the scheme. Prepend https:// so the
+  // value lands in Notion as a real URL the user can click.
+  var rawStore = (data.get('store_url') || '').trim();
+  if (rawStore && !/^https?:\/\//i.test(rawStore)) {
+    rawStore = 'https://' + rawStore.replace(/^\/+/, '');
+    data.set('store_url', rawStore);
+  }
 
   // Always fire the email backup. If the Notion worker is configured,
   // also fire that — both succeed → success; either fails → still
