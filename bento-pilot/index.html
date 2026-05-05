@@ -156,14 +156,17 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 /* ============ PILOT CARD ============ */
 .pilot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .pilot-side { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px 32px; }
-.pilot-side h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 16px; color: var(--text-primary); }
+.pilot-side h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 0; color: var(--text-primary); }
+/* pilot-side-head puts the price pill in the top-right of the box,
+   inline with the heading instead of stacked below it. */
+.pilot-side-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
 .pilot-side ul { margin: 0; padding-left: 0; list-style: none; }
 .pilot-side ul li { padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-size: 14.5px; line-height: 1.55; color: var(--text-primary); display: flex; gap: 12px; }
 .pilot-side ul li:last-child { border-bottom: 0; }
 .pilot-side ul li::before { content: '→'; color: var(--coral-500); flex-shrink: 0; font-family: var(--font-mono); font-weight: 600; }
 .pilot-side.you-give ul li::before { color: var(--text-tertiary); }
 .pilot-side strong { color: var(--text-primary); font-weight: 600; }
-.pilot-price { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; background: var(--coral-50); border: 1px solid var(--coral-200); border-radius: var(--r-full); margin-bottom: 16px; }
+.pilot-price { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; background: var(--coral-50); border: 1px solid var(--coral-200); border-radius: var(--r-full); flex-shrink: 0; }
 .pilot-price .amt { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--coral-700); letter-spacing: -0.01em; }
 .pilot-price .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--coral-600); letter-spacing: 0.06em; text-transform: uppercase; }
 
@@ -328,9 +331,6 @@ footer a { color: var(--text-tertiary); }
 <section id="bento">
   <div class="section-eyebrow">What Bento is</div>
   <h2 class="section-title">Find out <em>why</em> your customers are &mdash; and aren't &mdash; buying.</h2>
-  <p class="section-body">
-    Install Bento on your store. The app handles the rest.
-  </p>
 
   <div class="bento-do">
     <strong>Bento gets your real shoppers into 5-minute conversations &mdash; mid-shop &mdash;
@@ -360,12 +360,12 @@ footer a { color: var(--text-tertiary); }
     <div class="step-card" data-step="01">
       <div class="step-num">Step 01</div>
       <div class="step-title">Install in one click</div>
-      <div class="step-body">From the Shopify App Store. Pick how many interviews you want per week.</div>
+      <div class="step-body">From the Shopify App Store. Bento targets ~5 completed interviews per week &mdash; enough for patterns to surface fast without overwhelming you.</div>
     </div>
     <div class="step-card" data-step="02">
       <div class="step-num">Step 02</div>
       <div class="step-title">Bento talks to real shoppers</div>
-      <div class="step-body">Customers on your site get invited into a 5-minute conversation in exchange for a gift card. The AI moderator asks the right follow-ups to get past surface answers.</div>
+      <div class="step-body">Customers on your site get invited into a 5-minute conversation in exchange for a small gift card you fund (default $15 of store credit, configurable). The AI moderator asks the right follow-ups to get past surface answers.</div>
     </div>
     <div class="step-card" data-step="03">
       <div class="step-num">Step 03</div>
@@ -460,13 +460,15 @@ footer a { color: var(--text-tertiary); }
 
   <div class="pilot-grid">
     <div class="pilot-side">
-      <h3>What you get</h3>
-      <div class="pilot-price">
-        <span class="amt">$50/mo</span>
-        <span class="lbl">Pilot pricing</span>
+      <div class="pilot-side-head">
+        <h3>What you get</h3>
+        <div class="pilot-price">
+          <span class="amt">$50</span>
+          <span class="lbl">total &middot; pilot pricing</span>
+        </div>
       </div>
       <ul>
-        <li><span><strong>Pilot pricing locked in.</strong> $50/mo for the duration of the pilot. Locked in for life if you continue afterward.</span></li>
+        <li><span><strong>$50 for the entire pilot.</strong> One-time. No subscription, no auto-renewal. Pricing for continued access gets discussed before the pilot ends.</span></li>
         <li><span><strong>Hands-on setup.</strong> The founder personally walks through your install, helps target the right pages, and tunes the question sequence to your store.</span></li>
         <li><span><strong>Direct line to the founder.</strong> Suggest features, flag issues, ask anything. You're influencing what ships.</span></li>
         <li><span><strong>Influence the roadmap.</strong> Pilot merchants are who we build for first. What you say matters more right now than at any point in the future.</span></li>
@@ -486,8 +488,7 @@ footer a { color: var(--text-tertiary); }
 
 <!-- ═══ FAQ ═══ -->
 <section id="faq">
-  <div class="section-eyebrow">Frequently asked</div>
-  <h2 class="section-title">Answers to <em>the obvious questions.</em></h2>
+  <h2 class="section-title">Frequently asked questions.</h2>
 
   <div class="faq-list">
     <details class="faq-item">
@@ -559,10 +560,11 @@ footer a { color: var(--text-tertiary); }
     </details>
 
     <details class="faq-item">
-      <summary class="faq-q">Who's behind this?</summary>
+      <summary class="faq-q">Who is Bento Box Research?</summary>
       <div class="faq-a">
-        <p>Jesse Livingston &mdash; customer researcher with 11 years across LinkedIn, Microsoft, ServiceNow, and Netflix, plus freelance work with smaller e-commerce brands. Bento exists to bring the kind of customer research the big brands rely on to the SMBs who could never afford it.</p>
-        <p>You can read more at <a href="https://jesselivingston.com" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">jesselivingston.com</a>.</p>
+        <p><strong>Bento Box Research</strong> is an independent research-tools company. The thesis: SMB merchants make most of the same kinds of conversion-killing UX mistakes that the big brands make &mdash; but the customer-research methods that catch those problems have always been priced for enterprises, not for someone running a $50K/month Shopify store. Bento exists to close that gap.</p>
+        <p>Bento is the first product. We started on Shopify because that's where the highest density of under-served-but-high-potential SMB merchants are.</p>
+        <p>The founder is <strong>Jesse Livingston</strong> &mdash; 11 years as a customer researcher across LinkedIn, Microsoft, ServiceNow, and Netflix, plus freelance work with smaller e-commerce brands. <a href="https://www.linkedin.com/in/jesselivingston" target="_blank" rel="noopener" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">LinkedIn</a> &middot; <a href="https://jesselivingston.com" target="_blank" rel="noopener" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">jesselivingston.com</a>.</p>
       </div>
     </details>
   </div>
