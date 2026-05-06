@@ -42,6 +42,48 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .nav-links { display: flex; gap: 4px; flex: 1; justify-content: center; }
 .nav-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--text-tertiary); text-transform: uppercase; padding: 8px 14px; border-radius: var(--r-sm); text-decoration: none; transition: all var(--dur-fast) var(--ease-out); }
 .nav-link:hover { color: var(--text-primary); background: var(--bg-inset); }
+/* ============ NAV DROPDOWNS ============ */
+/* Three top-level groups (Product / Trust / Pilot). Each has a
+   button trigger that reveals a dropdown of section anchors below.
+   Hover shows on desktop; click toggles aria-expanded for keyboard
+   + mobile users. */
+.nav-group { position: relative; }
+.nav-group-toggle { display: inline-flex; align-items: center; gap: 5px; background: none; border: 0; cursor: pointer; }
+.nav-group-toggle:hover, .nav-group-toggle[aria-expanded="true"] { color: var(--text-primary); background: var(--bg-inset); }
+.nav-caret { width: 10px; height: 10px; flex-shrink: 0; transition: transform var(--dur-fast); opacity: 0.7; }
+.nav-group:hover .nav-caret, .nav-group-toggle[aria-expanded="true"] .nav-caret { transform: rotate(180deg); }
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+  padding: 6px;
+  min-width: 200px;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+}
+/* Show on hover (desktop) OR when toggle is expanded (a11y / click) */
+.nav-group:hover .nav-dropdown,
+.nav-group-toggle[aria-expanded="true"] + .nav-dropdown { display: flex; }
+.nav-dropdown-link {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.nav-dropdown-link:hover { background: var(--bg-inset); color: var(--coral-600); }
 .nav-cta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: white; background: var(--coral-500); padding: 8px 16px; border-radius: var(--r-sm); text-decoration: none; transition: background var(--dur-fast); flex-shrink: 0; }
 .nav-cta:hover { background: var(--coral-600); }
 .nav-hamburger { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 8px; }
@@ -283,6 +325,24 @@ footer a { color: var(--text-tertiary); }
   .nav-link { padding: 10px 0; border-bottom: 1px solid var(--border-subtle); border-radius: 0; }
   .nav-link:last-child { border-bottom: none; }
   .nav-hamburger { display: block; }
+  /* Mobile: dropdowns become flat sections — show all sub-links inline,
+     no hover/popover behavior. Group toggle buttons act as section
+     headers. */
+  .nav-group { width: 100%; border-bottom: 1px solid var(--border-subtle); }
+  .nav-group:last-child { border-bottom: none; }
+  .nav-group-toggle { width: 100%; justify-content: space-between; padding: 12px 0; }
+  .nav-dropdown {
+    display: flex;
+    position: static;
+    transform: none;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0 0 12px 16px;
+    min-width: 0;
+  }
+  .nav-dropdown-link { padding: 8px 0; font-size: 14px; }
+  .nav-caret { display: none; }
   .step-timeline { grid-template-columns: 1fr; gap: 32px; }
   .quality-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
@@ -325,13 +385,39 @@ footer a { color: var(--text-tertiary); }
     <span>Bento Box</span>
   </a>
   <div class="nav-links" id="nav-links">
-    <a href="#problem" class="nav-link">The problem</a>
-    <a href="#bento" class="nav-link">What it is</a>
-    <a href="#how" class="nav-link">How it works</a>
-    <a href="#quality" class="nav-link">Quality</a>
-    <a href="#trust" class="nav-link">Privacy</a>
-    <a href="#pilot" class="nav-link">The pilot</a>
-    <a href="#faq" class="nav-link">FAQ</a>
+    <div class="nav-group">
+      <button class="nav-link nav-group-toggle" type="button" aria-expanded="false" aria-controls="nav-product">
+        Product
+        <svg class="nav-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown" id="nav-product" role="menu">
+        <a href="#bento" class="nav-dropdown-link" role="menuitem">What Bento is</a>
+        <a href="#how" class="nav-dropdown-link" role="menuitem">How it works</a>
+        <a href="#quality" class="nav-dropdown-link" role="menuitem">Quality control</a>
+        <a href="#example" class="nav-dropdown-link" role="menuitem">A real example</a>
+        <a href="#compare" class="nav-dropdown-link" role="menuitem">How is this different</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <button class="nav-link nav-group-toggle" type="button" aria-expanded="false" aria-controls="nav-trust">
+        Trust
+        <svg class="nav-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown" id="nav-trust" role="menu">
+        <a href="#trust" class="nav-dropdown-link" role="menuitem">Privacy &amp; Security</a>
+        <a href="#quality" class="nav-dropdown-link" role="menuitem">Quality control</a>
+      </div>
+    </div>
+    <div class="nav-group">
+      <button class="nav-link nav-group-toggle" type="button" aria-expanded="false" aria-controls="nav-pilot">
+        Pilot
+        <svg class="nav-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown" id="nav-pilot" role="menu">
+        <a href="#pilot" class="nav-dropdown-link" role="menuitem">The pilot</a>
+        <a href="#faq" class="nav-dropdown-link" role="menuitem">FAQ</a>
+      </div>
+    </div>
   </div>
   <a href="#apply" class="nav-cta">Apply now</a>
   <button class="nav-hamburger" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Menu">
@@ -491,7 +577,7 @@ footer a { color: var(--text-tertiary); }
 </section>
 
 <!-- ═══ SAMPLE — what you actually see ═══ -->
-<section>
+<section id="example">
   <div class="section-eyebrow">A real example</div>
   <h2 class="section-title">This is what shows up in your <em>dashboard.</em></h2>
   <p class="section-body">
@@ -528,7 +614,7 @@ footer a { color: var(--text-tertiary); }
 </section>
 
 <!-- ═══ COMPARE ═══ -->
-<section>
+<section id="compare">
   <div class="section-eyebrow">How is this different?</div>
   <h2 class="section-title">You probably already have <em>tools that try.</em></h2>
   <p class="section-body">
@@ -834,13 +920,46 @@ footer a { color: var(--text-tertiary); }
 })();
 </script>
 
-<!-- ═══ NAV LINK SCROLL + ACTIVE STATE ═══ -->
+<!-- ═══ NAV LINK SCROLL + DROPDOWN TOGGLES ═══ -->
 <script>
 (function() {
-  document.querySelectorAll('.nav-link').forEach(function(l) {
-    l.addEventListener('click', function() {
-      document.getElementById('nav-links').classList.remove('open');
+  var navLinks = document.getElementById('nav-links');
+  var toggles = document.querySelectorAll('.nav-group-toggle');
+
+  // Close every dropdown by setting all toggles back to aria-expanded=false.
+  function closeAllDropdowns() {
+    toggles.forEach(function(t) { t.setAttribute('aria-expanded', 'false'); });
+  }
+
+  // Click a group toggle: open this one, close the others. (Hover-open
+  // on desktop comes from CSS; this handler is for click + keyboard +
+  // mobile, where there is no hover.)
+  toggles.forEach(function(toggle) {
+    toggle.addEventListener('click', function(e) {
+      var wasOpen = toggle.getAttribute('aria-expanded') === 'true';
+      closeAllDropdowns();
+      toggle.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
+      e.stopPropagation();
     });
+  });
+
+  // Click a sub-link: scroll happens via href, then collapse both the
+  // mobile nav drawer and any open dropdown.
+  document.querySelectorAll('.nav-dropdown-link').forEach(function(l) {
+    l.addEventListener('click', function() {
+      navLinks.classList.remove('open');
+      closeAllDropdowns();
+    });
+  });
+
+  // Click outside a nav group: close any open dropdown.
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.nav-group')) closeAllDropdowns();
+  });
+
+  // Esc closes any open dropdown.
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeAllDropdowns();
   });
 })();
 </script>
