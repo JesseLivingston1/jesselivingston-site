@@ -154,7 +154,10 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .compare-card.us .compare-body { color: var(--coral-800); }
 
 /* ============ PRIVACY & SECURITY (trust cards) ============ */
-.trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+/* Explicit 2x2 grid on desktop/tablet (collapses to single column at
+   the existing 768px breakpoint) — auto-fit was packing into 3+1 at
+   the 1104px content width, breaking the visual rhythm. */
+.trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .trust-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 26px 28px; display: flex; flex-direction: column; gap: 10px; }
 .trust-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-600); font-weight: 500; }
 .trust-headline { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.25; color: var(--text-primary); letter-spacing: -0.01em; }
@@ -235,6 +238,7 @@ footer a { color: var(--text-tertiary); }
   .nav-link:last-child { border-bottom: none; }
   .nav-hamburger { display: block; }
   .step-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .apply-card { padding: 28px 24px; }
 }
@@ -470,7 +474,7 @@ footer a { color: var(--text-tertiary); }
     <div class="trust-card">
       <div class="trust-eyebrow">Consent</div>
       <div class="trust-headline">Shoppers opt in &mdash; plainly.</div>
-      <div class="trust-body">An 18+ consent screen runs before the conversation starts. Plain language: the AI runs the chat, no human eavesdrops. If a shopper uses the mic, transcription happens in their browser &mdash; Bento never receives the raw audio, only text.</div>
+      <div class="trust-body">An 18+ consent screen runs before any conversation starts. Plain language: the AI runs the chat, no human eavesdrops. Shoppers explicitly consent to audio recording so you can hear what was actually said &mdash; or they can type instead and skip the mic entirely. Shopper email is never collected; the gift card code is shown on screen.</div>
     </div>
     <div class="trust-card">
       <div class="trust-eyebrow">Redaction</div>
@@ -479,13 +483,13 @@ footer a { color: var(--text-tertiary); }
     </div>
     <div class="trust-card">
       <div class="trust-eyebrow">Encryption &amp; retention</div>
-      <div class="trust-headline">Encrypted in transit and at rest.</div>
-      <div class="trust-body">TLS 1.2+ everywhere; AES-256-GCM at rest for the highest-sensitivity fields (raw transcripts, access tokens). Raw transcripts are deleted within 24 hours of analysis; redacted versions are kept on a 12-month rolling window. Shopper email is never collected &mdash; the gift card code is shown on screen.</div>
+      <div class="trust-headline">Encrypted everywhere, kept only as long as needed.</div>
+      <div class="trust-body">TLS 1.2+ in transit. AES-256-GCM at rest for the highest-sensitivity fields. Raw transcripts deleted within 24 hours of analysis; redacted transcripts and audio recordings kept on a 12-month rolling window. Audio is served via short-TTL signed URLs from a private per-tenant bucket &mdash; never re-shared, never exported, no voiceprint extraction or speaker biometrics.</div>
     </div>
     <div class="trust-card">
       <div class="trust-eyebrow">Your data is yours</div>
       <div class="trust-headline">No transcripts cross merchant lines.</div>
-      <div class="trust-body">Per-shop data never pools with another merchant's. Future category benchmarks will ship explicit opt-in only and will pool aggregate metrics &mdash; never transcripts, quotes, or shop names. GDPR + CCPA compliant. Full deletion via Shopify webhook or one click in your admin.</div>
+      <div class="trust-body">Per-shop data never pools with another merchant's. Future category benchmarks will ship explicit opt-in only and will pool aggregate metrics &mdash; never transcripts, quotes, audio, or shop names. GDPR + CCPA compliant. Full deletion via Shopify webhook or one click in your admin.</div>
     </div>
   </div>
 
