@@ -153,6 +153,13 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .compare-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 .compare-card.us .compare-body { color: var(--coral-800); }
 
+/* ============ QUALITY CONTROL (focus area + filter cards) ============ */
+.quality-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.quality-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 26px 28px; display: flex; flex-direction: column; gap: 10px; }
+.quality-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-600); font-weight: 500; }
+.quality-headline { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.25; color: var(--text-primary); letter-spacing: -0.01em; }
+.quality-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; text-wrap: pretty; }
+
 /* ============ PRIVACY & SECURITY (trust cards) ============ */
 /* Explicit 2x2 grid on desktop/tablet (collapses to single column at
    the existing 768px breakpoint) — auto-fit was packing into 3+1 at
@@ -238,6 +245,7 @@ footer a { color: var(--text-tertiary); }
   .nav-link:last-child { border-bottom: none; }
   .nav-hamburger { display: block; }
   .step-grid { grid-template-columns: 1fr; }
+  .quality-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .apply-card { padding: 28px 24px; }
@@ -281,6 +289,7 @@ footer a { color: var(--text-tertiary); }
     <a href="#problem" class="nav-link">The problem</a>
     <a href="#bento" class="nav-link">What it is</a>
     <a href="#how" class="nav-link">How it works</a>
+    <a href="#quality" class="nav-link">Quality</a>
     <a href="#trust" class="nav-link">Privacy</a>
     <a href="#pilot" class="nav-link">The pilot</a>
     <a href="#faq" class="nav-link">FAQ</a>
@@ -386,6 +395,38 @@ footer a { color: var(--text-tertiary); }
       <div class="step-num">Step 04</div>
       <div class="step-title">Brainstorm a fix</div>
       <div class="step-body">Bento helps you brainstorm the best solution to each issue, giving you step-by-step instructions on what to do.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUALITY CONTROL ═══ -->
+<section id="quality">
+  <div class="section-eyebrow">Quality control</div>
+  <h2 class="section-title">Built so every conversation stays <em>on track.</em></h2>
+  <p class="section-body">
+    Bento is built so every interview produces useful signal, not noise.
+  </p>
+
+  <div class="quality-grid">
+    <div class="quality-card">
+      <div class="quality-eyebrow">Focus areas</div>
+      <div class="quality-headline">Pick what to learn about: Ease, Trust, or Value.</div>
+      <div class="quality-body">Each interview is targeted to one of three focus areas. Ease (can shoppers do what they came to do?), Trust (do they believe you?), or Value (is it worth their time and money?). You set the focus and the moderator drives toward it.</div>
+    </div>
+    <div class="quality-card">
+      <div class="quality-eyebrow">Stay on track</div>
+      <div class="quality-headline">The moderator keeps shoppers on topic.</div>
+      <div class="quality-body">When a shopper drifts off-topic, the AI moderator redirects them back toward the focus area with real follow-up questions. Not a script, not a survey.</div>
+    </div>
+    <div class="quality-card">
+      <div class="quality-eyebrow">Bad-faith filter</div>
+      <div class="quality-headline">Gamers don't get paid, and don't pollute your data.</div>
+      <div class="quality-body">Keyboard mashing, refusals to engage, and prompt-injection attempts get one polite warning, then a hard-stop. No gift card, no record in your data, and a permanent ban from your widget.</div>
+    </div>
+    <div class="quality-card">
+      <div class="quality-eyebrow">Sincere shoppers paid</div>
+      <div class="quality-headline">Real effort always earns the reward.</div>
+      <div class="quality-body">Sincere shoppers earn the gift card even when their answers are short or shaky. Every interview is graded after the fact for substance, so what shows up on your dashboard is the signal, not the noise.</div>
     </div>
   </div>
 </section>
