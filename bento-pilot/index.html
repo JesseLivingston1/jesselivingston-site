@@ -153,6 +153,14 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .compare-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 .compare-card.us .compare-body { color: var(--coral-800); }
 
+/* ============ PRIVACY & SECURITY (trust cards) ============ */
+.trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.trust-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 26px 28px; display: flex; flex-direction: column; gap: 10px; }
+.trust-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-600); font-weight: 500; }
+.trust-headline { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.25; color: var(--text-primary); letter-spacing: -0.01em; }
+.trust-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; text-wrap: pretty; }
+.trust-footnote { margin-top: 24px; font-size: 13px; color: var(--text-tertiary); max-width: 720px; line-height: 1.55; }
+
 /* ============ PILOT CARD ============ */
 .pilot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .pilot-side { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px 32px; }
@@ -269,6 +277,7 @@ footer a { color: var(--text-tertiary); }
     <a href="#problem" class="nav-link">The problem</a>
     <a href="#bento" class="nav-link">What it is</a>
     <a href="#how" class="nav-link">How it works</a>
+    <a href="#trust" class="nav-link">Privacy</a>
     <a href="#pilot" class="nav-link">The pilot</a>
     <a href="#faq" class="nav-link">FAQ</a>
   </div>
@@ -449,6 +458,42 @@ footer a { color: var(--text-tertiary); }
   </div>
 </section>
 
+<!-- ═══ PRIVACY & SECURITY ═══ -->
+<section id="trust">
+  <div class="section-eyebrow">Privacy &amp; Security</div>
+  <h2 class="section-title">Built for the trust your shoppers <em>and your data</em> require.</h2>
+  <p class="section-body">
+    Bento handles real shopper voices about real brands. A leak would end the business &mdash; so we operate at the highest defensible privacy posture from day one. No minimum-viable shortcuts. Conservative by default.
+  </p>
+
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-eyebrow">Consent</div>
+      <div class="trust-headline">Shoppers opt in &mdash; plainly.</div>
+      <div class="trust-body">An 18+ consent screen runs before the conversation starts. Plain language: the AI runs the chat, no human eavesdrops. If a shopper uses the mic, transcription happens in their browser &mdash; Bento never receives the raw audio, only text.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-eyebrow">Redaction</div>
+      <div class="trust-headline">PII scrubbed before you ever see it.</div>
+      <div class="trust-body">A two-stage redactor (deterministic regex + LLM) strips names, emails, phone numbers, addresses, payment fragments, and order IDs from every transcript. A database write-guard rejects any record that fails redaction. Validated at 100% recall on a planted-PII test corpus.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-eyebrow">Encryption &amp; retention</div>
+      <div class="trust-headline">Encrypted in transit and at rest.</div>
+      <div class="trust-body">TLS 1.2+ everywhere; AES-256-GCM at rest for the highest-sensitivity fields (raw transcripts, access tokens). Raw transcripts are deleted within 24 hours of analysis; redacted versions are kept on a 12-month rolling window. Shopper email is never collected &mdash; the gift card code is shown on screen.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-eyebrow">Your data is yours</div>
+      <div class="trust-headline">No transcripts cross merchant lines.</div>
+      <div class="trust-body">Per-shop data never pools with another merchant's. Future category benchmarks will ship explicit opt-in only and will pool aggregate metrics &mdash; never transcripts, quotes, or shop names. GDPR + CCPA compliant. Full deletion via Shopify webhook or one click in your admin.</div>
+    </div>
+  </div>
+
+  <p class="trust-footnote">
+    Detailed Privacy Policy, Terms of Service, and Data Processing Agreement are drafted and available on request &mdash; final counsel review pending before public launch. Ask anytime.
+  </p>
+</section>
+
 <!-- ═══ THE PILOT ═══ -->
 <section id="pilot">
   <div class="section-eyebrow">The pilot</div>
@@ -516,8 +561,7 @@ footer a { color: var(--text-tertiary); }
     <details class="faq-item">
       <summary class="faq-q">What about privacy and PII?</summary>
       <div class="faq-a">
-        <p>Every interview is run through a redactor before storage. Names, emails, phone numbers, addresses, payment details &mdash; all scrubbed automatically. Merchants only ever see the redacted version. Shopper email is never collected &mdash; the gift-card code is shown on screen at the end of the conversation.</p>
-        <p>Full details are in our <a href="#" id="privacy-policy-link" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">data privacy policy</a>.</p>
+        <p>See the <a href="#trust" style="color:var(--coral-600); border-bottom:1px solid var(--coral-200);">Privacy &amp; Security</a> section above for the full picture. Short version: shoppers consent before they say a word, every transcript is PII-redacted before you ever see it, your data never pools with other merchants, and we're GDPR + CCPA compliant. Full Privacy Policy, Terms, and DPA available on request.</p>
       </div>
     </details>
 
