@@ -119,14 +119,47 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .demo-placeholder .demo-headline { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
 .demo-placeholder .demo-sub { font-size: 13px; color: var(--text-tertiary); max-width: 360px; }
 
-/* ============ HOW IT WORKS (4 step cards) ============ */
-.step-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.step-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 26px; position: relative; overflow: hidden; transition: border-color var(--dur-fast); }
-.step-card:hover { border-color: var(--coral-500); }
-.step-card::before { content: attr(data-step); position: absolute; top: -10px; right: 16px; font-family: var(--font-display); font-size: 92px; font-weight: 900; font-variation-settings: "opsz" 60; color: var(--coral-50); line-height: 1; pointer-events: none; letter-spacing: -0.04em; }
-.step-num { font-family: var(--font-mono); font-size: 11px; color: var(--coral-600); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; font-weight: 500; position: relative; z-index: 1; }
-.step-title { font-family: var(--font-display); font-size: 19px; font-weight: 600; line-height: 1.2; color: var(--text-primary); margin-bottom: 8px; text-wrap: balance; letter-spacing: -0.015em; position: relative; z-index: 1; }
-.step-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; text-wrap: pretty; position: relative; z-index: 1; }
+/* ============ HOW IT WORKS — horizontal timeline ============ */
+/* Four numbered circles on a horizontal coral line. The line is a
+   pseudo-element on the grid container; each circle's box-shadow
+   creates a same-color "ring" against the page bg, so the line
+   visually disappears behind the circles instead of poking through. */
+.step-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; padding-top: 4px; }
+.step-timeline::before {
+  content: '';
+  position: absolute;
+  top: 30px;          /* center-y of marker (4px padding-top + 56px/2) */
+  left: 12.5%;        /* center-x of first marker (1/8 of grid width) */
+  right: 12.5%;       /* center-x of last marker */
+  height: 2px;
+  background: var(--coral-200);
+  z-index: 0;
+  pointer-events: none;
+}
+.step-item { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 1; }
+.step-marker {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--coral-500);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: "opsz" 32;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  /* page-bg ring hides the connecting line where it would otherwise pass through the circle */
+  box-shadow: 0 0 0 8px var(--bg-page);
+  position: relative;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.step-item:hover .step-marker { transform: scale(1.06); }
+.step-content { max-width: 280px; margin: 0 auto; }
+.step-title { font-family: var(--font-display); font-size: 19px; font-weight: 600; line-height: 1.2; color: var(--text-primary); margin-bottom: 8px; text-wrap: balance; letter-spacing: -0.015em; }
+.step-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; text-wrap: pretty; }
 
 /* ============ SAMPLE FINDING ============ */
 .preview { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-lg); padding: 28px 32px; box-shadow: var(--shadow-md); }
@@ -155,7 +188,12 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 
 /* ============ QUALITY CONTROL (focus area + filter cards) ============ */
 .quality-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.quality-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 26px 28px; display: flex; flex-direction: column; gap: 10px; }
+.quality-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 26px 28px; display: flex; flex-direction: column; gap: 10px; transition: border-color var(--dur-fast); }
+.quality-card:hover { border-color: var(--coral-500); }
+/* Coral-tinted icon chip — gives Quality control its own visual
+   signature distinct from the plain text-only Privacy cards below. */
+.quality-icon { width: 40px; height: 40px; border-radius: var(--r-sm); background: var(--coral-50); border: 1px solid var(--coral-200); color: var(--coral-600); display: grid; place-items: center; flex-shrink: 0; margin-bottom: 4px; }
+.quality-icon svg { width: 20px; height: 20px; display: block; }
 .quality-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-600); font-weight: 500; }
 .quality-headline { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.25; color: var(--text-primary); letter-spacing: -0.01em; }
 .quality-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; text-wrap: pretty; }
@@ -232,7 +270,8 @@ footer a { color: var(--text-tertiary); }
 /* ============ RESPONSIVE ============ */
 @media (max-width: 1024px) {
   #page-wrap { padding: 0 32px 80px; }
-  .step-grid { grid-template-columns: repeat(2, 1fr); }
+  .step-timeline { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+  .step-timeline::before { display: none; }
   .pilot-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
@@ -244,7 +283,7 @@ footer a { color: var(--text-tertiary); }
   .nav-link { padding: 10px 0; border-bottom: 1px solid var(--border-subtle); border-radius: 0; }
   .nav-link:last-child { border-bottom: none; }
   .nav-hamburger { display: block; }
-  .step-grid { grid-template-columns: 1fr; }
+  .step-timeline { grid-template-columns: 1fr; gap: 32px; }
   .quality-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
@@ -375,26 +414,34 @@ footer a { color: var(--text-tertiary); }
   <div class="section-eyebrow">How it works</div>
   <h2 class="section-title">Four steps. <em>One install.</em></h2>
 
-  <div class="step-grid">
-    <div class="step-card" data-step="01">
-      <div class="step-num">Step 01</div>
-      <div class="step-title">Install in one click</div>
-      <div class="step-body">Install from the Shopify App Store, turn on Bento in your theme editor, and it just works. No custom development required.</div>
+  <div class="step-timeline">
+    <div class="step-item">
+      <div class="step-marker">01</div>
+      <div class="step-content">
+        <div class="step-title">Install in one click</div>
+        <div class="step-body">Install from the Shopify App Store, turn on Bento in your theme editor, and it just works. No custom development required.</div>
+      </div>
     </div>
-    <div class="step-card" data-step="02">
-      <div class="step-num">Step 02</div>
-      <div class="step-title">Bento talks to real shoppers</div>
-      <div class="step-body">A small subset of shoppers on your site get invited into a 5-minute conversation in exchange for a gift card you fund (default $15 of store credit, configurable). An AI moderator, trained in customer research, asks questions to understand their shopping behavior.</div>
+    <div class="step-item">
+      <div class="step-marker">02</div>
+      <div class="step-content">
+        <div class="step-title">Bento talks to real shoppers</div>
+        <div class="step-body">A small subset of shoppers on your site get invited into a 5-minute conversation in exchange for a gift card you fund (default $15 of store credit, configurable). An AI moderator, trained in customer research, asks questions to understand their shopping behavior.</div>
+      </div>
     </div>
-    <div class="step-card" data-step="03">
-      <div class="step-num">Step 03</div>
-      <div class="step-title">The expensive issues surface</div>
-      <div class="step-body">Recurring frictions cluster into issues, ranked by what each one is costing you. Every interview also adds to a knowledge base of your shoppers, so the picture of your store gets sharper with every conversation.</div>
+    <div class="step-item">
+      <div class="step-marker">03</div>
+      <div class="step-content">
+        <div class="step-title">The expensive issues surface</div>
+        <div class="step-body">Recurring frictions cluster into issues, ranked by what each one is costing you. Every interview also adds to a knowledge base of your shoppers, so the picture of your store gets sharper with every conversation.</div>
+      </div>
     </div>
-    <div class="step-card" data-step="04">
-      <div class="step-num">Step 04</div>
-      <div class="step-title">Brainstorm a fix</div>
-      <div class="step-body">Bento helps you brainstorm the best solution to each issue, giving you step-by-step instructions on what to do.</div>
+    <div class="step-item">
+      <div class="step-marker">04</div>
+      <div class="step-content">
+        <div class="step-title">Brainstorm a fix</div>
+        <div class="step-body">Bento helps you brainstorm the best solution to each issue, giving you step-by-step instructions on what to do.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -409,21 +456,33 @@ footer a { color: var(--text-tertiary); }
 
   <div class="quality-grid">
     <div class="quality-card">
+      <div class="quality-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
       <div class="quality-eyebrow">Focus areas</div>
       <div class="quality-headline">Pick what to learn about: Ease, Trust, or Value.</div>
       <div class="quality-body">Each interview is targeted to one of three focus areas. Ease (can shoppers do what they came to do?), Trust (do they believe you?), or Value (is it worth their time and money?). You set the focus and the moderator drives toward it.</div>
     </div>
     <div class="quality-card">
+      <div class="quality-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+      </div>
       <div class="quality-eyebrow">Stay on track</div>
       <div class="quality-headline">The moderator keeps shoppers on topic.</div>
       <div class="quality-body">When a shopper drifts off-topic, the AI moderator redirects them back toward the focus area with real follow-up questions. Not a script, not a survey.</div>
     </div>
     <div class="quality-card">
+      <div class="quality-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/><line x1="14.5" y1="9.5" x2="9.5" y2="14.5"/></svg>
+      </div>
       <div class="quality-eyebrow">Bad-faith filter</div>
       <div class="quality-headline">Gamers don't get paid, and don't pollute your data.</div>
       <div class="quality-body">Keyboard mashing, refusals to engage, and prompt-injection attempts get one polite warning, then a hard-stop. No gift card, no record in your data, and a permanent ban from your widget.</div>
     </div>
     <div class="quality-card">
+      <div class="quality-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+      </div>
       <div class="quality-eyebrow">Sincere shoppers paid</div>
       <div class="quality-headline">Real effort always earns the reward.</div>
       <div class="quality-body">Sincere shoppers earn the gift card even when their answers are short or shaky. Every interview is graded after the fact for substance, so what shows up on your dashboard is the signal, not the noise.</div>
