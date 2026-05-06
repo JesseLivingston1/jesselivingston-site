@@ -467,29 +467,29 @@ footer a { color: var(--text-tertiary); }
   <div class="section-eyebrow">Privacy &amp; Security</div>
   <h2 class="section-title">Built for the trust your shoppers <em>and your data</em> require.</h2>
   <p class="section-body">
-    Bento handles real shopper voices about real brands. A leak would end the business &mdash; so we operate at the highest defensible privacy posture from day one. No minimum-viable shortcuts. Conservative by default.
+    Protecting your shoppers' privacy &mdash; and your data &mdash; is foundational to how Bento is built.
   </p>
 
   <div class="trust-grid">
     <div class="trust-card">
       <div class="trust-eyebrow">Consent</div>
       <div class="trust-headline">Shoppers opt in &mdash; plainly.</div>
-      <div class="trust-body">An 18+ consent screen runs before any conversation starts. Plain language: the AI runs the chat, no human eavesdrops. Shoppers explicitly consent to audio recording so you can hear what was actually said &mdash; or they can type instead and skip the mic entirely. Shopper email is never collected; the gift card code is shown on screen.</div>
+      <div class="trust-body">An 18+ consent screen runs before any conversation starts; the AI is identified up-front, no human eavesdrops, and shoppers explicitly consent to audio recording (or can type instead and skip the mic). Shopper email is never collected &mdash; the gift card code is shown on screen.</div>
     </div>
     <div class="trust-card">
       <div class="trust-eyebrow">Redaction</div>
       <div class="trust-headline">PII scrubbed before you ever see it.</div>
-      <div class="trust-body">A two-stage redactor (deterministic regex + LLM) strips names, emails, phone numbers, addresses, payment fragments, and order IDs from every transcript. A database write-guard rejects any record that fails redaction. Validated at 100% recall on a planted-PII test corpus.</div>
+      <div class="trust-body">A two-stage redactor (regex + LLM) strips names, emails, phone numbers, addresses, payment fragments, and order IDs from every transcript before it's stored. A database write-guard rejects any record that fails redaction &mdash; validated at 100% recall on a planted-PII test corpus.</div>
     </div>
     <div class="trust-card">
       <div class="trust-eyebrow">Encryption &amp; retention</div>
       <div class="trust-headline">Encrypted everywhere, kept only as long as needed.</div>
-      <div class="trust-body">TLS 1.2+ in transit. AES-256-GCM at rest for the highest-sensitivity fields. Raw transcripts deleted within 24 hours of analysis; redacted transcripts and audio recordings kept on a 12-month rolling window. Audio is served via short-TTL signed URLs from a private per-tenant bucket &mdash; never re-shared, never exported, no voiceprint extraction or speaker biometrics.</div>
+      <div class="trust-body">TLS 1.2+ in transit and AES-256-GCM at rest for the highest-sensitivity fields; raw transcripts deleted within 24 hours and redacted transcripts + audio kept on a 12-month rolling window. Audio is served via short-TTL signed URLs from a private per-tenant bucket &mdash; no re-sharing, no export, no voiceprint extraction or speaker biometrics.</div>
     </div>
     <div class="trust-card">
       <div class="trust-eyebrow">Your data is yours</div>
       <div class="trust-headline">No transcripts cross merchant lines.</div>
-      <div class="trust-body">Per-shop data never pools with another merchant's. Future category benchmarks will ship explicit opt-in only and will pool aggregate metrics &mdash; never transcripts, quotes, audio, or shop names. GDPR + CCPA compliant. Full deletion via Shopify webhook or one click in your admin.</div>
+      <div class="trust-body">Per-shop data never pools with another merchant's; future category benchmarks will ship explicit opt-in only and will pool aggregate metrics &mdash; never transcripts, quotes, audio, or shop names. GDPR + CCPA compliant, with full deletion via Shopify webhook or one click in your admin.</div>
     </div>
   </div>
 
