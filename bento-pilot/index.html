@@ -51,7 +51,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .nav-group-toggle { display: inline-flex; align-items: center; gap: 5px; background: none; border: 0; cursor: pointer; }
 .nav-group-toggle:hover, .nav-group-toggle[aria-expanded="true"] { color: var(--text-primary); background: var(--bg-inset); }
 .nav-caret { width: 10px; height: 10px; flex-shrink: 0; transition: transform var(--dur-fast); opacity: 0.7; }
-.nav-group:hover .nav-caret, .nav-group-toggle[aria-expanded="true"] .nav-caret { transform: rotate(180deg); }
+.nav-group-toggle[aria-expanded="true"] .nav-caret { transform: rotate(180deg); }
 .nav-dropdown {
   display: none;
   position: absolute;
@@ -68,8 +68,10 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
   gap: 2px;
   z-index: 100;
 }
-/* Show on hover (desktop) OR when toggle is expanded (a11y / click) */
-.nav-group:hover .nav-dropdown,
+/* Click-to-open only — hover-open was unstable (dropdown closed when
+   the cursor traveled the gap from trigger to menu). aria-expanded
+   on the toggle is the single source of truth; the JS handler flips
+   it on click and the outside-click / Escape handlers close it. */
 .nav-group-toggle[aria-expanded="true"] + .nav-dropdown { display: flex; }
 .nav-dropdown-link {
   font-family: var(--font-sans);
