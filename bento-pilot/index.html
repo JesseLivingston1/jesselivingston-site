@@ -109,6 +109,9 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .hero-cta:hover { background: var(--coral-600); }
 .hero-meta { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); letter-spacing: 0.04em; }
 .hero-meta::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--coral-500); }
+.hero-trust { font-size: 14px; color: var(--text-tertiary); margin-top: 22px; line-height: 1.5; }
+.hero-trust a { color: var(--coral-600); border-bottom: 1px solid var(--coral-200); text-decoration: none; transition: border-color var(--dur-fast); }
+.hero-trust a:hover { border-bottom-color: var(--coral-500); }
 
 /* ============ STAT CARDS (Problem) ============ */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: stretch; }
@@ -246,6 +249,16 @@ section:first-of-type { border-top: none; padding-top: 56px; }
 .trust-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; text-wrap: pretty; }
 .trust-footnote { margin-top: 24px; font-size: 13px; color: var(--text-tertiary); max-width: 720px; line-height: 1.55; }
 
+/* ============ FOUNDER BLOCK (in Pilot section) ============ */
+/* Sits between the pilot intro paragraph and the what-you-get /
+   what-we-ask grid. Subtle card so it reads as credibility weight
+   without shouting; rhymes with the .pilot-side cards just below. */
+.founder-block { margin: 0 0 32px; padding: 22px 26px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); max-width: 720px; }
+.founder-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-600); font-weight: 500; margin-bottom: 10px; }
+.founder-block p { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); margin: 0; text-wrap: pretty; }
+.founder-block a { color: var(--coral-600); border-bottom: 1px solid var(--coral-200); text-decoration: none; transition: border-color var(--dur-fast); }
+.founder-block a:hover { border-bottom-color: var(--coral-500); }
+
 /* ============ PILOT CARD ============ */
 .pilot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .pilot-side { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--r-md); padding: 28px 32px; }
@@ -369,6 +382,7 @@ footer a { color: var(--text-tertiary); }
   /* Pilot card padding: trim sides so the bullets get more room. */
   .pilot-side { padding: 24px 20px; }
   .pilot-side-head { gap: 12px; }
+  .founder-block { padding: 18px 20px; }
 
   /* Compare card padding trim. */
   .compare-card { padding: 20px; }
@@ -467,6 +481,9 @@ footer a { color: var(--text-tertiary); }
     <a href="#apply" class="hero-cta">Apply for the pilot &nbsp;→</a>
     <span class="hero-meta">Limited cohort</span>
   </div>
+  <p class="hero-trust">
+    Built by a <a href="https://www.linkedin.com/in/jesseliv" target="_blank" rel="noopener">customer researcher</a> from LinkedIn, Microsoft, ServiceNow, and Netflix.
+  </p>
 </div>
 
 <!-- ═══ THE PROBLEM ═══ -->
@@ -548,14 +565,14 @@ footer a { color: var(--text-tertiary); }
       <div class="step-marker">03</div>
       <div class="step-content">
         <div class="step-title">The expensive leaks surface</div>
-        <div class="step-body">Recurring patterns cluster into issues, ranked by what each one is costing you. Every interview sharpens what Bento Box knows about your shoppers, so the picture of where your sales are going gets sharper with every conversation.</div>
+        <div class="step-body">Every conversation is analyzed for what stopped the sale. When the same friction recurs across shoppers, it clusters into an issue, ranked by the revenue at risk: an estimate of the dollars tied to the shoppers who hit it. The picture sharpens with every interview.</div>
       </div>
     </div>
     <div class="step-item">
       <div class="step-marker">04</div>
       <div class="step-content">
         <div class="step-title">Brainstorm a fix</div>
-        <div class="step-body">A Bento Box agent brainstorms with you to find the right fix for each issue, then gives you step-by-step instructions on what to do.</div>
+        <div class="step-body">A Bento Box agent works through each issue with you, drawing on your specific store (its products, its setup) to land on the right fix. You get concrete, step-by-step instructions, not generic advice. You decide what to ship: Bento Box never changes your store itself.</div>
       </div>
     </div>
   </div>
@@ -719,18 +736,23 @@ footer a { color: var(--text-tertiary); }
     for 60 days, and tell us what works and what doesn't.
   </p>
 
+  <div class="founder-block">
+    <div class="founder-eyebrow">About the founder</div>
+    <p>Bento Box is built by <a href="https://www.linkedin.com/in/jesseliv" target="_blank" rel="noopener">Jesse Livingston</a>, a customer researcher with 11 years at LinkedIn, Microsoft, ServiceNow, and Netflix. The thesis: SMB merchants make most of the same conversion-killing mistakes the big brands make, but the research methods that catch them have always been priced for enterprises. Bento Box closes that gap.</p>
+  </div>
+
   <div class="pilot-grid">
     <div class="pilot-side">
       <div class="pilot-side-head">
         <h3>What you get</h3>
         <div class="pilot-price">
           <span class="amt">$50</span>
-          <span class="lbl">total &middot; pilot pricing</span>
+          <span class="lbl">+ gift card budget &middot; 60-day pilot</span>
         </div>
       </div>
       <ul>
-        <li><span><strong>$50 for the 60-day pilot.</strong> One-time fee, no subscription. Plans expected to start at $49/mo after the pilot.</span></li>
-        <li><span><strong>Plus your gift card budget.</strong> At default settings (~5 interviews/week × $15 store credit), expect ~$300/mo in gift cards issued. Most comes back as revenue when shoppers redeem it.</span></li>
+        <li><span><strong>$50 platform fee for the 60-day pilot.</strong> One-time, no subscription. Plans expected to start at $49/mo after.</span></li>
+        <li><span><strong>Plus your gift card budget &mdash; roughly $300/mo at default settings</strong> (~5 interviews/week × $15 store credit). Store credit typically redeems as revenue when shoppers spend it on your store.</span></li>
         <li><span><strong>Hands-on setup.</strong> You'll work directly with the founder for setup and ongoing questions, with active monitoring to make sure everything's running smoothly.</span></li>
         <li><span><strong>Direct line to the founder.</strong> Suggest features, flag issues, ask anything. You're influencing what ships.</span></li>
         <li><span><strong>Influence the roadmap.</strong> Pilot merchants are who we build for first. What you say matters more right now than at any point in the future.</span></li>
@@ -794,7 +816,7 @@ footer a { color: var(--text-tertiary); }
       <summary class="faq-q">What's the financial impact of the gift cards?</summary>
       <div class="faq-a">
         <p>The default is a $15 store-credit gift card per completed interview. You set this in your settings; it can be lower or higher.</p>
-        <p>Two things to keep in mind. First, the codes are store credit, redeemable on your site, so most of that comes back as revenue when shoppers use them. Second, at the default cap of ~5 interviews/week that's about $300/mo of credit issued. Even one shipped fix per quarter typically clears that several times over.</p>
+        <p>Two things to keep in mind. First, the codes are store credit, redeemable on your site. Store credit typically redeems as revenue when shoppers spend it. Second, at the default cap of ~5 interviews/week that's about $300/mo of credit issued. Even one shipped fix per quarter usually clears that several times over.</p>
       </div>
     </details>
 
