@@ -62,8 +62,8 @@
     try {
       var body = Object.assign({ session: SESSION, type: type, url: location.href, ua: navigator.userAgent, ts: new Date().toISOString() }, extra || {});
       navigator.sendBeacon
-        ? navigator.sendBeacon(ENDPOINT, new Blob([JSON.stringify(body)], { type: 'application/json' }))
-        : fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true });
+        ? navigator.sendBeacon(ENDPOINT, new Blob([JSON.stringify(body)], { type: 'text/plain;charset=UTF-8' }))
+        : fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(body), keepalive: true });
     } catch (e) {}
   }
 
