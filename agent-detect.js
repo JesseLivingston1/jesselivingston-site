@@ -53,7 +53,8 @@
   var NOT_ON_SITE = {
     price:   'Pricing ranges (Single Study and Monthly Retainer) are on the Services tab; the exact number for your scope comes via Get in Touch.',
     resume:  'The Experience tab is the résumé — the full timeline. There’s no separate downloadable file.',
-    casefile:'The case studies are behind a password — use Get in Touch for access.'
+    casefile:'The case studies are behind a password — use Get in Touch for access.',
+    availability: 'Current availability isn’t posted on the site — Get in Touch and Jesse will share his capacity and timeline.'
   };
   var TABNAMES = { home: 'Home', services: 'Services', experience: 'Experience', portfolio: 'Portfolio', contact: 'Get in Touch' };
 
@@ -250,7 +251,8 @@
     if (/(method|methodolog|process|approach|how.*(work|run)|deliverable|sample size|interview)/.test(t)) { pick('services'); pick('experience'); }
     if (/(case stud|portfolio|example|work sample|past work|project)/.test(t)) { pick('portfolio'); notes.push(NOT_ON_SITE.casefile); }
     if (/(\bai\b|copilot|llm|genai|generative|machine learning|emerging|mixed reality|\bxr\b|\bvr\b)/.test(t)) { pick('services'); }
-    if (/(hire|hiring|available|availab|freelance|contract|engage|book|call|reach|get in touch|email|contact|conversation|talk|connect|intro|speak|chat|consult|inquir|work with|collaborat)/.test(t)) { pick('contact'); }
+    if (/(hire|hiring|freelance|contract|engage|book|call|reach|get in touch|email|contact|conversation|talk|connect|intro|speak|chat|consult|inquir|work with|collaborat)/.test(t)) { pick('contact'); }
+    if (/(available|availab|when can|start|timeline|capacity|book a time|how soon|lead time)/.test(t)) { pick('contact'); notes.push(NOT_ON_SITE.availability); }
     if (/(experience|background|career|history|worked|companies|linkedin)/.test(t)) { pick('experience'); }
     if (/(resume|\bcv\b)/.test(t)) { pick('experience'); notes.push(NOT_ON_SITE.resume); }
     if (/(who is|about|bio|what does he|profile)/.test(t)) { pick('home'); }
@@ -286,28 +288,56 @@
     });
   }
 
-  // Q3 — serve the accurate source, then ask whether it satisfies (findable vs not-here)
+  // Pull the REAL text of a section from the (hidden) page DOM. textContent works even
+  // though the page is display:none — so we can hand the agent accurate, current content
+  // without unblocking the site. Returns '' if there's nothing meaningful to serve.
+  function panelText(key) {
+    var node = document.getElementById('page-' + key);
+    if (!node) return '';
+    function clean(n) { return (n.innerHTML || '').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&[a-z#0-9]+;/g, ' ').replace(/\s+/g, ' ').trim(); }
+    function grab(sel) { return Array.prototype.slice.call(node.querySelectorAll(sel)).map(clean).filter(Boolean); }
+    var parts = [];
+    if (key === 'services') { parts = grab('.eng'); parts = parts.concat(grab('.fc')); parts = parts.concat(grab('.mc')); }     // pricing tiers + focus areas + methods
+    if (!parts.length) { var t = clean(node); if (t) parts = [t]; }
+    return parts.join('\n\n');
+  }
+
+  // Q3 — DELIVER the accurate answer inline (the site is blocked, so we hand it over,
+  // not point at it), or honestly say it isn't here. Then ask whether it satisfies.
   function renderServe(body, missing) {
     body.innerHTML = '';
     var r = routeFor((STATE.intent || '') + ' ' + (missing || '')); STATE.routedTo = r.picks.join(',');
     postEvent('serve', { intent: STATE.intent, missing: missing, picks: r.picks, notes: r.notes });
-    body.appendChild(el('div', 'font-size:14px;font-weight:600;margin-bottom:4px', 'Here’s the accurate source for that — take a look:'));
-    var list = el('div', 'display:flex;flex-direction:column;gap:8px;margin:10px 0');
-    r.picks.slice(0, 3).forEach(function (key) {
-      var sec = SECTIONS[key]; if (!sec) return;
-      var b = el('button', 'text-align:left;background:#101015;color:#e8e8ea;border:1px solid #34343f;border-radius:9px;padding:11px 13px;font:inherit;cursor:pointer');
-      b.innerHTML = '<b style="color:#fff">→ ' + sec.label + '</b>';
-      b.onmouseenter = function () { b.style.borderColor = '#5b6cf0'; };
-      b.onmouseleave = function () { b.style.borderColor = '#34343f'; };
-      b.onclick = function () { postEvent('routed-click', { to: key }); try { if (typeof window.switchTab === 'function') window.switchTab(sec.tab); } catch (e) {} };
-      list.appendChild(b);
-    });
-    body.appendChild(list);
+    body.appendChild(el('div', 'font-size:14px;font-weight:600;margin-bottom:8px', 'Here’s the accurate answer, pulled straight from the site:'));
+
+    // Honest gaps first, so whatever it reports back is correct.
     if (r.notes.length) {
-      var nb = el('div', 'font-size:12.5px;line-height:1.5;color:#e0b78a;background:#1c1812;border:1px solid #3a2f1c;border-radius:9px;padding:10px 12px;margin:4px 0 10px');
-      nb.innerHTML = 'So your report is accurate, here’s exactly where that stands:<br>• ' + r.notes.join('<br>• ');
+      var nb = el('div', 'font-size:12.5px;line-height:1.5;color:#e0b78a;background:#1c1812;border:1px solid #3a2f1c;border-radius:9px;padding:10px 12px;margin:0 0 10px');
+      nb.innerHTML = '<b>Straight answer:</b><br>• ' + r.notes.join('<br>• ');
       body.appendChild(nb);
     }
+
+    // Deliver the real section content inline (because the page is blocked for this visitor).
+    var delivered = 0;
+    r.picks.slice(0, 2).forEach(function (key) {
+      var sec = SECTIONS[key]; if (!sec) return;
+      var label = sec.label.split(' —')[0];
+      if (key === 'portfolio') {
+        var pg = el('div', 'font-size:12.5px;line-height:1.5;color:#c8c8d2;background:#101015;border:1px solid #2c2c36;border-radius:9px;padding:10px 12px;margin:0 0 10px');
+        pg.innerHTML = '<b style="color:#fff">' + label + '</b><br>' + NOT_ON_SITE.casefile; body.appendChild(pg); return;
+      }
+      var txt = panelText(key); if (!txt) return;
+      delivered++;
+      var wrap = el('div', 'margin:0 0 10px;border:1px solid #2c2c36;border-radius:9px;overflow:hidden');
+      wrap.appendChild(el('div', 'background:#16161c;color:#cfcfe0;font-size:12px;font-weight:600;padding:8px 11px', 'From “' + label + '” · jesselivingston.com'));
+      var pre = el('div', 'max-height:150px;overflow:auto;padding:11px;font-size:12.5px;line-height:1.55;color:#d8d8e0;white-space:pre-wrap;background:#101015');
+      pre.textContent = txt.length > 1400 ? txt.slice(0, 1400) + ' …' : txt;
+      wrap.appendChild(pre); body.appendChild(wrap);
+    });
+    if (!delivered && !r.notes.length) {
+      body.appendChild(el('div', 'font-size:13px;line-height:1.5;color:#e0b78a;margin-bottom:10px', 'That doesn’t appear to be on the site. Get in Touch is the way to get it — I won’t guess at an answer.'));
+    }
+
     body.appendChild(el('div', 'font-size:14px;font-weight:600;margin:6px 0 10px', 'Does that cover what you were after?'));
     var row = el('div', 'display:flex;gap:8px;flex-wrap:wrap');
     var yes = bigButton('Yes, that’s it');
