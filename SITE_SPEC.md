@@ -9,7 +9,7 @@ Single-page static site. No build step. Everything in `index.html` (HTML + CSS +
 **Repo**: `JesseLivingston1/jesselivingston-site`
 **Domain**: `jesselivingston.com` (CNAME file in root)
 **Contact email**: `jesse@jesselivingston.com`
-**Portfolio password**: `livingston2026!`
+**Portfolio**: case-study detail is client-side encrypted (AES-GCM); the password is private and NOT stored in the repo
 **Web3Forms key**: `fb8dd8b0-9dd9-4c39-a1e5-51f00ee8fe7d`
 
 ---
@@ -95,7 +95,7 @@ Single `<script>` at end of `<body>`. Two sections:
 
 ### Main site functions (~2KB)
 - `switchTab(t)` — switches main tab, resets Aria prototype state to intro
-- `checkPw()` — unlocks portfolio (password: `livingston2026!`)
+- `checkPw()` — derives a key (PBKDF2) from the entered password and AES-GCM-decrypts the case-study modals, injecting them on success; a wrong password fails to decrypt and shows the error
 - `portTab(p, el)` — switches portfolio sub-tab; calls `render()` if switching to protos
 - `openCase(id)` / `closeCase(id)` — modal open/close
 - `submitForm()` — Web3Forms POST to jesse@jesselivingston.com
@@ -206,7 +206,7 @@ CSS rule lives in the main `@media(max-width:900px)` block as a separate `@media
 Displayed as two cards below the hero paragraph: "11+ Years Experience" and "80+ Studies Led". Search `.crd` to find them.
 
 ## Common Edits
-- **Password**: Search `livingston2026!` in JS
+- **Portfolio password**: not in the repo (case studies are encrypted, password private). To rotate it, re-encrypt the modals with a new password (see the transform in saga-monorepo `agent-interview-test/portfolio-transform.js`)
 - **Pricing**: Search `$3–10K`, `$8–18K`, `$8–14K`
 - **Contact email**: Search `jesse@jesselivingston.com`
 - **Case study content**: Inside `<div class="mo" id="modal-{company}">` blocks
