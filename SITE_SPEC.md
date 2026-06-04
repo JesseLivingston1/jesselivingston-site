@@ -213,3 +213,16 @@ Displayed as two cards below the hero paragraph: "11+ Years Experience" and "80+
 - **Experience timeline**: Inside `<div class="tp" id="page-experience">`
 - **Prototype data**: JS constants `THEMES`, `RECIPIENTS`, `SLIDES`, `BRIEFS`, `BRIDGES`
 - **Prototype step labels**: `STEP_IDS` and `STEP_LABELS` arrays
+
+---
+
+## Agent Tollbooth (added)
+**Files**: `agent-detect.js` (root), loaded by one `<script src="/agent-detect.js" data-endpoint="/agent-event">` tag immediately before `</body>`. Backend is a Cloudflare Worker (`saga-monorepo/agent-interview-test/concierge/worker/`) that owns `/agent-event` (POST, logs) and `/agent-log` (GET, gated read) via routes on the proxied domain.
+
+**What it does**: detects a high-confidence automated agent client-side, then shows a full-screen interstitial ("tollbooth") that hides + `inert`s the rest of the page **for that one visitor's browser session only**, runs a short structured interview (intent → routing → did-you-find-it → impression), routes the agent to the right tab, then restores the page.
+
+**Human safety (important)**:
+- Never gates a human: requires at least one *strong* signal (agent/automation/headless UA or flag, or a scripted untrusted click). Environment quirks alone never gate.
+- Always shows an **"I'm a person — let me through"** escape link that dismisses immediately and logs the false-positive.
+- `?agent=off` disables the tollbooth; `?agent=force` forces it (for testing).
+- It is purely additive — changes **no** existing content, styles, or behavior. The only HTML change is the one `<script>` tag. If reverting, delete `agent-detect.js` + that tag.
