@@ -25,7 +25,7 @@ The site uses JS-driven tabs, not separate pages. Five tabs:
 - **Home** — Hero, about, principles
 - **Services** — Focus areas, research methods, engagement models + pricing
 - **Experience** — Timeline resume (8 roles)
-- **Portfolio** — Password-protected (`livingston2026`). Two sub-tabs:
+- **Portfolio** — Case studies are client-side encrypted (AES-GCM); the password is private and NOT in the repo. Two sub-tabs:
   - **Case Studies** — 4 cards (LinkedIn, Microsoft, Treehouse, Dwarven Forge) with detail modals
   - **Prototype** — Full embedded Aria demo (research communication pipeline)
 - **Contact** — Form (mailto-based)
@@ -76,7 +76,7 @@ Domain: `jesselivingston.com` (DNS already on Cloudflare from existing setup)
 **Update `SITE_SPEC.md` before touching any code.** If a change affects content, styles, or behavior described in the spec, update the spec first — then make the code change. This applies to every session.
 
 ## Common Edits
-- **Password**: Search for `livingston2026` in the JS
+- **Portfolio password**: not in the repo — case studies are encrypted; the password is shared privately
 - **Pricing**: Search for `$3–10K`, `$8–18K`, `$8–14K` in the HTML
 - **Contact email**: Search for `jesselivingston1@gmail.com`
 - **Case study content**: Inside `<div class="mo" id="modal-{company}">` blocks
