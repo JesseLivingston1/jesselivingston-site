@@ -219,10 +219,12 @@ Displayed as two cards below the hero paragraph: "11+ Years Experience" and "80+
 ## Agent Tollbooth (added)
 **Files**: `agent-detect.js` (root), loaded by one `<script src="/agent-detect.js" data-endpoint="/agent-event">` tag immediately before `</body>`. Backend is a Cloudflare Worker (`saga-monorepo/agent-interview-test/concierge/worker/`) that owns `/agent-event` (POST, logs) and `/agent-log` (GET, gated read) via routes on the proxied domain.
 
-**What it does**: detects a high-confidence automated agent client-side, then shows a full-screen interstitial ("tollbooth") that hides + `inert`s the rest of the page **for that one visitor's browser session only**, runs a short structured interview (intent → routing → did-you-find-it → impression), routes the agent to the right tab, then restores the page.
+**What it does**: detects a likely automated agent client-side, then **observes quietly for ~75s** — it does *not* interrupt on arrival; we want to see what the agent actually does first. When the window elapses (or earlier once it's taken a few actions / shows exit intent), it shows a full-screen interstitial that hides + `inert`s the rest of the page **for that one visitor's session only**, anchored on the observed journey ("you looked at Services → Portfolio…"). Structured interview: what were you doing + what did you try → routing to the right tab (honest about what's *not* here) → did-you-find-it → impression. Then it restores the page on the tab it routed to.
+
+**Detection**: layered confidence — static (agent/automation/headless UA or flags) + behavioral (scripted/untrusted events, action-without-mouse, superhuman timing). Organic mouse/scroll/typing counts as *human evidence* and de-escalates.
 
 **Human safety (important)**:
-- Never gates a human: requires at least one *strong* signal (agent/automation/headless UA or flag, or a scripted untrusted click). Environment quirks alone never gate.
-- Always shows an **"I'm a person — let me through"** escape link that dismisses immediately and logs the false-positive.
-- `?agent=off` disables the tollbooth; `?agent=force` forces it (for testing).
-- It is purely additive — changes **no** existing content, styles, or behavior. The only HTML change is the one `<script>` tag. If reverting, delete `agent-detect.js` + that tag.
+- Never gates someone who looks human: requires a *strong* signal, AND if human evidence appears during the observe window the intercept is aborted (`intercept-aborted-human`). The delay therefore also *lowers* false-positives.
+- Always shows a prominent **"I'm not an agent — let me through"** button that dismisses immediately and logs the full signal set (so false-positives train detection).
+- Controls: `?agent=off` (disable) · `?agent=force` (gate now) · `?toll=observe` (always observe→intercept, for the friend test) · `?toll-delay=SEC` (shorten the window for testing). Default window tunable via `data-delay` (ms) on the script tag.
+- Purely additive — changes **no** existing content/styles/behavior. Only HTML change is the one `<script>` tag. To revert: delete `agent-detect.js` + that tag.
