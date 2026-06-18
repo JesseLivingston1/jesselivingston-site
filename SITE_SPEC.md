@@ -220,7 +220,10 @@ Displayed as two cards below the hero paragraph: "11+ Years Experience" and "80+
 An experiment that detected automated agents and offered them a structured Q&A: "tollbooth" v1 (`agent-detect.js`), swapped for a voluntary "concierge" v2 (`concierge-widget.js`). Fully removed as of June 12, 2026:
 - `concierge-widget.js` was deleted June 7, 2026 (commit `b93525d`) along with the `jl-tollbooth` Cloudflare Worker, but the `<script src="/concierge-widget.js">` tag before `</body>` was left behind and 404'd on every page load. Tag removed June 12, 2026.
 - `agent-detect.js` deleted June 12, 2026 (orphaned since the v2 swap replaced its script tag).
-- Nothing references `jl-tollbooth.jesselivingston.workers.dev` anymore. The page loads no external scripts.
+- Nothing references `jl-tollbooth.jesselivingston.workers.dev` anymore.
 - Do not re-add any of this without explicit instruction.
+
+## Saga Analytics Widget (added June 2026)
+`cdn.sagainsights.ai/widget/v1.js` is loaded as a `defer` script just before `</body>`. Client ID: `sk_wgt_gPj49ydphMxZzujJkOXay5PUzxEOTxJ0`. Display name: `Jesse Personal Site`. This is a publishable/embed key (safe to commit publicly).
 
 **Kept from that work** (do not revert): case-study encryption. The portfolio modals live AES-GCM-encrypted in the inline JS (`SAGA_S` salt / `SAGA_I` IV / `SAGA_D` data + `_sb()` and `_sagaDecrypt()`); `checkPw()` derives the key from the entered password (PBKDF2, 100k iterations, SHA-256) and injects the decrypted modal HTML before `<footer>`. The password is not in the repo — see Common Edits for rotation.
