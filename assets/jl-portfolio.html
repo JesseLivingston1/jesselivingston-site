@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 (function(){
   // Slide indices after cover removal (Selected Work = 0)
   var TARGETS = {'Saga': 1, 'Microsoft Copilot': 7, 'LinkedIn Talent Insights': 13, 'Treehouse': 21};
+  var ACCENT = '#16584A';
 
   function wireLinks(stage) {
     var toc = stage.children[0];
@@ -190,13 +191,34 @@ document.addEventListener('DOMContentLoaded', async function() {
       var node;
       while ((node = walker.nextNode())) {
         if (node.textContent.trim() === name) {
-          // Text node -> SPAN -> row DIV (confirmed 2-hop target)
-          var el = node.parentElement && node.parentElement.parentElement;
-          if (el && el !== toc) {
-            el.style.cursor = 'pointer';
-            el.addEventListener('mouseenter', function(){ this.style.opacity = '0.75'; });
-            el.addEventListener('mouseleave', function(){ this.style.opacity = ''; });
-            el.addEventListener('click', (function(s){ return function(e){
+          var titleSpan = node.parentElement;      // the title <span>
+          var row = titleSpan && titleSpan.parentElement;  // the row <div>
+          if (row && row !== toc) {
+            // Make the title read as a link
+            titleSpan.style.color = ACCENT;
+            titleSpan.style.textDecoration = 'underline';
+            titleSpan.style.textDecorationThickness = '2px';
+            titleSpan.style.textUnderlineOffset = '4px';
+
+            // Persistent arrow at the far right of the row
+            if (!row.querySelector('.jl-arrow')) {
+              var arrow = document.createElement('span');
+              arrow.className = 'jl-arrow';
+              arrow.textContent = '→';
+              arrow.style.cssText = 'margin-left:auto;color:' + ACCENT + ';font-family:"JetBrains Mono",monospace;font-size:20px;line-height:1;transition:transform 150ms ease;';
+              row.appendChild(arrow);
+            }
+
+            row.style.cursor = 'pointer';
+            row.addEventListener('mouseenter', function(){
+              this.style.opacity = '0.72';
+              var a = this.querySelector('.jl-arrow'); if (a) a.style.transform = 'translateX(5px)';
+            });
+            row.addEventListener('mouseleave', function(){
+              this.style.opacity = '';
+              var a = this.querySelector('.jl-arrow'); if (a) a.style.transform = '';
+            });
+            row.addEventListener('click', (function(s){ return function(e){
               e.stopPropagation(); stage.goTo(s);
             }; })(idx));
           }
