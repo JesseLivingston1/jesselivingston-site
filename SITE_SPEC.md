@@ -1,230 +1,52 @@
 # jesselivingston.com — Site Spec
 
 ## Spec Rule
-Update this file **before** making any code changes. If a change affects content, styles, or behavior described here, update the spec first.
+Update this file **before** any code change. Spec first, then code.
 
 ## Overview
-Single-page static site. No build step. Everything in `index.html` (HTML + CSS + JS inline). Images in `/images/`. Deployed via GitHub Pages with Cloudflare DNS.
+Static **multi-page** marketing/portfolio site for jesselivingston.com. No build step. One HTML file per page (root-relative links), shared CSS in `/styles.css`, images + the gated PDF in `/assets/`. Deployed via GitHub Pages (push to `main`); DNS on Cloudflare; `CNAME` in repo root.
 
-**Repo**: `JesseLivingston1/jesselivingston-site`
-**Domain**: `jesselivingston.com` (CNAME file in root)
-**Contact email**: `jesse@jesselivingston.com`
-**Portfolio**: case-study detail is client-side encrypted (AES-GCM); the password is private and NOT stored in the repo
-**Web3Forms key**: `fb8dd8b0-9dd9-4c39-a1e5-51f00ee8fe7d`
+**Redesigned 2026** to the cream/forest "trust" system (from a Claude design handoff), and split into one page per nav item. This **replaces** the previous dark-purple single-file tabbed site and the embedded Aria prototype, both removed.
 
----
+## Architecture
+- **Pages:** `index.html` (Home: hero + About + Research-as-Performance) · `experience.html` · `portfolio.html` · `services.html` · `contact.html`. About is merged into Home; nav "About" is the `/#about` anchor (the rest are page links). Each page is standalone; header (nav) and footer are duplicated (no build/includes); the current page's nav link carries `class="nl active"`.
+- **Shared CSS:** `/styles.css` (base + hover/active + the 880px responsive breakpoint), linked from every page with a `?v=` cache-busting query (bump it when CSS changes). The body is a flex column (`footer{margin-top:auto}`) so the footer pins to the bottom on short pages. `header > div` is widened to `1220px` so the nav column aligns with the section content column. Section layout stays as inline styles (each section lives on one page, so nothing is duplicated).
+- **Per-page JS:** the password gate is inline on `portfolio.html` only; the Web3Forms handler is inline on `contact.html` only.
+- Desktop-first; one responsive breakpoint at **880px** (stacks grids, hero, timeline; hides nav text links). No framework/routing; nav links are root-relative page links (`/about.html` …), wordmark → `/`.
 
-## Tab Structure
-Five main tabs (JS-driven, no routing):
-- **Home** — Hero, About, Principles
-- **Services** — Focus areas, Research Methods, Engagement Models + pricing (no "Most Popular" label). Two engagement tiers: Single Study + Monthly Retainer. No prototype offerings.
-- **Experience** — Timeline resume (8 roles, see below)
-- **Portfolio** — Password-gated. No sub-tab buttons shown — case studies display directly. 4 cards: LinkedIn, Microsoft, Treehouse, Dwarven Forge. Role tags do NOT include "(sole)".
-  - ~~Prototype~~ — Panel hidden (commented out in HTML), JS intact. To restore: uncomment `<!-- PROTOTYPE PANEL -->` block, add back the `.ptabs` div with both buttons, and re-show `.ptabs`.
-- **Contact** — Web3Forms form → jesse@jesselivingston.com. Header centered.
+## Pages
+- **Nav (every page):** wordmark → Home; About (→ `/#about`) · Experience · Portfolio · Services · "Get in touch" (forest pill → contact). Active page link highlighted.
+- **Home** (`index.html`): hero (cream) → **About** (`#about`, **forest/green band**: "I do the research most teams skip." + two concise paras on the skipped foundational questions + the "Orchestra conductor turned researcher" card) → **Research as Performance** (**cream band**, distilled/dramatic/targeted/timely) → footer. Bands alternate cream → green → cream → green, so no separator is needed. Hero subtitle is about finding the foundational questions + turning them into stories/frameworks, and **ends after "ServiceNow"** (no Saga mention in the hero copy). The four company logos sit **under the avatar** (no stat chips, no "trusted by teams at" label).
+- **Experience** (`experience.html`): timeline **mirroring `Standalone Resume (7).pdf`** (the current resume): 7 roles in order Saga (**Founder**, Mar 2026 - Present) → ServiceNow → Freelance (ends Aug 2024) → Microsoft → Velir → Netflix → LinkedIn, with the resume's bullets and spaced-hyphen dates (no em dashes), a **company logo beside each role** (`/assets/exp-*.png`, extracted from the resume; Freelance is a recreated blue rounded square `#29B2FE` since its resume logo was vector), + Education + Key Skills (AI Evaluation · LLM-as-Judge · Mixed-Methods · Generative AI · Rubric Design · Human-in-the-Loop). Source of truth = `Standalone Resume (7).pdf`; keep them in sync.
+- **Portfolio** (`portfolio.html`): four case cards (**all cream** — Saga was de-greened to match the others) under a "Selected work" kicker (the "Four trust stories" headline was removed by request) + an "Unlock the full portfolio" link. All gated (see Portfolio gate). Card titles mirror the case-study PDF's section headers: Saga "Evaluating the experience of AI at Scale"; Copilot "Helping users guide an AI experience"; LinkedIn "Data backed by transparency and trust"; Treehouse "Earning trust from burned car buyers".
+- **Services** (`services.html`): Focus Areas (cream panel) → Research Methods ("What I can run for you", **forest band**, 3×3 cards) → Engagement Models (Single Study $3–10K / Monthly Retainer $8–14K/mo).
+- **Contact** (`contact.html`, forest): Web3Forms form + LinkedIn, with a thin (6px) cream separator before the footer. The email address is **not** displayed anywhere (by request) — the form (delivers to Jesse's inbox) and LinkedIn are the contact channels. The portfolio gate copy and error text reference "get in touch", not the address.
+- **Footer (every page):** forest-deep wordmark + "© 2026 · UX Research & Strategy".
 
-## Prototyping
-Prototyping has been removed from all user-facing content (title, hero, services, portfolio). Do NOT add it back without explicit instruction. The Aria prototype JS and HTML remain in the file but are hidden.
+## Portfolio gate (case studies)
+- The four case cards and the "Unlock" link are password-gated (soft, client-side). Correct password opens the case-study PDF in a new tab and remembers via `localStorage['jl_pf_ok']='1'`.
+- PDF: `/assets/jl-portfolio-8fa31c7e.pdf` (unguessable filename). Password: `livingston2026!` (a `const` in the inline script; configurable).
+- **SECURITY (important):** this is a **soft deterrent only**. The PDF is a static file in a public repo, reachable at its URL by anyone who has it; the gate hides the link, not the file. For real protection, host the PDF behind server-side auth / a signed link, or keep it out of the public repo.
 
----
+## Design tokens
+- **Color:** page cream `#F4EFE4`, panel `#FBF8F2`, border `#E1D8C6`, divider `#E7DECB`, ink `#122231`, body `#34424B`, secondary `#5E6B63`, forest `#123A33`, forest-deep `#0D2A24`, green accent `#16584A`, mint `#9FD3BF`, coral `#D8553A`, sand label `#9E8A6C`. On forest/green bands, **body text is white (`#fff`)** for legibility — the muted `forest-body #9DB3AB` is retired for body copy; mint `#9FD3BF` stays for small kicker labels only.
+- **Type:** Source Serif 4 (900, headings), DM Sans (body), JetBrains Mono (uppercase kickers / labels / data). `text-wrap:balance` on headings.
+- **Voice:** plain, measured, first person. **No em dashes.** Say "users"/"participants", not "people".
 
-## Design System
-| Token | Value |
-|---|---|
-| Primary purple | `#7F77DD` |
-| Light purple | `#AFA9EC` |
-| Background | `#1E2025` |
-| Card | `#252830` / `#2A2D36` |
-| Text primary | `#E8E6F0` |
-| Text secondary | `#B8B5C6` |
-| Text muted | `#7B7891` |
-| Border | `rgba(127,119,221,.12)` |
-| Border hover | `rgba(127,119,221,.3)` |
-| Warm accent | `#E8A87C` |
-| Green accent | `#7DD4A7` |
-| Blue accent | `#77B8DD` |
-| Radius large | `12px` |
-| Radius small | `8px` |
+## Preserved from the prior site
+- **SEO:** title / description / canonical / Open Graph / Twitter / JSON-LD in `<head>` (updated copy; og:image still `/images/headshot.jpg`).
+- **Contact:** Web3Forms (access key `fb8dd8b0-9dd9-4c39-a1e5-51f00ee8fe7d`, delivers to Jesse's configured inbox); AJAX submit with inline status.
+- `CNAME` (jesselivingston.com).
 
-**Fonts** (loaded from Google Fonts):
-- `Fraunces` — display/headings (serif)
-- `DM Sans` — body
-- `DM Mono` — labels, code, tags
+## Removed
+- The **agent tollbooth** (`agent-detect.js` script tag) is intentionally NOT loaded — it was removed from the live site earlier; the rebuild keeps it out. The `agent-detect.js` file is now orphaned in the repo (unreferenced); safe to delete.
 
-**Rules**: No emoji in UI. Font weights as numbers (600, 700), never "bold".
-
-**Experience timeline text**: All text (dates, role titles, descriptions, bullets) uses `#fff`. Only the `→` arrows use `var(--mt)` (muted). Do NOT use `var(--t2)` or `var(--tx)` in the timeline — both have a purple cast that reads as purple on the dark background.
-
----
-
-## CSS Architecture
-Three `<style>` blocks in `<head>`:
-1. **Main site CSS** (~14KB) — short class names (`.tp`, `.bp`, `.cc`, etc.), CSS vars in `:root` prefixed `--`
-2. **Comms pipeline CSS** (~6KB) — `.cm-` prefix (legacy, partially used)
-3. **Aria prototype CSS** (~20KB) — `--a-` prefixed CSS vars. Scoped to `.aria-wrap` where possible. Step nav classes scoped to `.step-nav .sl`, `.step-nav .sn` to avoid conflict with main site `.sl`
-
-**Critical**: Never use bare `body{}` rules in blocks 2/3. Scope to class selectors.
-
----
-
-## Key CSS Classes (Main Site)
-| Class | Purpose |
-|---|---|
-| `.tp` / `.tp.on` | Page panels (hidden/shown), fades in on `.on` |
-| `.sl` | Section label (DM Mono, uppercase, purple, left-aligned) |
-| `.st` | Section title (Fraunces serif) |
-| `.bp` | Primary button (purple fill) |
-| `.bs` | Secondary button (border) |
-| `.cc` | Case study card |
-| `.cco` | Card logo area |
-| `.cct` | Card title |
-| `.mo` / `.mo.vis` | Modal overlay |
-| `.lgo` | Logo strip item (hero) |
-| `.fc` | Focus area card (Services) |
-| `.eng` | Engagement model card |
-| `.imp` | Impact bullet (diamond prefix) |
-| `.ins` | Pull quote / insight callout |
-| `.clb` | Collaboration callout box |
-| `.fw` | 2-column framework grid (use `style="grid-template-columns:1fr 1fr 1fr"` for 3-col) |
-| `.fi` | Framework card item |
-
----
-
-## JS Architecture
-Single `<script>` at end of `<body>`. Two sections:
-
-### Main site functions (~2KB)
-- `switchTab(t)` — switches main tab, resets Aria prototype state to intro
-- `checkPw()` — derives a key (PBKDF2) from the entered password and AES-GCM-decrypts the case-study modals, injecting them on success; a wrong password fails to decrypt and shows the error
-- `portTab(p, el)` — switches portfolio sub-tab; calls `render()` if switching to protos
-- `openCase(id)` / `closeCase(id)` — modal open/close
-- `submitForm()` — Web3Forms POST to jesse@jesselivingston.com
-
-### Aria prototype (~48KB)
-State variables (all `var`, not `let` — required for inline onclick access):
-- `view` — `"intro"` | `"loading"` | `"scanning"` | `"wizard"`
-- `step` — 0–6 (Ingest/Distill/Shape/Present/Target/Brief/Finale)
-- `ingestSub`, `shapeSub`, `activeSlide`, `activeFw`
-- `themeOrder`, `openThemes`, `openRecipients`
-
-Key render functions:
-- `render()` — top-level, routes by `view`
-- `ariaStepTo(n)` — navigate to step n; calls `render()` if no `#aria-content` exists (e.g. from intro)
-- `ariaUpdateContent()` — partial re-render of `#aria-content` only
-- `updateSlide()` — updates slide canvas + thumbnails without full re-render
-- `attachEvents()` — re-attaches all event listeners after innerHTML replacement
-
-**Critical**: All state vars must be `var` (not `let`/`const`) since inline `onclick` attributes can't access block-scoped variables.
-
-**Reset behavior**: `switchTab()` resets prototype to `view='intro'` whenever navigating away from portfolio tab.
-
----
-
-## Prototype Flow
-```
-intro → [See it in action] → ingest (step 0)
-  → [Distill your data] → loading (2.5s) → distill (step 1)
-  → [Shape narrative] → shape (step 2, sub 1 skeleton → sub 2 full)
-  → [Present] → present (step 3, slide viewer)
-  → [Target] → scanning (2.8s) → target (step 4)
-  → [Brief] → brief (step 5)
-  → [Finale] → finale (step 6)
-```
-
----
-
-## Images
-| File | Usage |
-|---|---|
-| `headshot.jpg` | Hero section (343KB, no rotation needed) |
-| `linkedin.png` | LinkedIn "in" icon (22×22, object-fit:contain) |
-| `servicenow.png` | ServiceNow logo |
-| `netflix.png` | Netflix N logo |
-| `dwarvenforge.png` | Dwarven Forge gold smith logo |
-
-Microsoft logo = inline SVG (4-square grid). Treehouse logo = inline SVG (house + tree). Favicon = inline SVG data URI (purple circle, white "J").
-
----
+## Assets (`/assets/`)
+`jesse-hi.png` (illustrated avatar), `saga-mark.png`, `saga-mark-gradient.png`, `logo-linkedin.png` / `logo-linkedin-navy.png`, `logo-microsoft.png` / `logo-microsoft-navy.png`, `logo-netflix.png`, `logo-servicenow.png`, the experience-timeline logos `exp-saga.png` / `exp-servicenow.png` / `exp-microsoft.png` / `exp-velir.png` / `exp-netflix.png` / `exp-linkedin.png` (extracted from the resume), `jl-portfolio-8fa31c7e.pdf`. Treehouse mark + the Freelance timeline mark are inline (an SVG / a blue rounded square).
 
 ## Deployment
-**GitHub Pages**:
-1. Push to `main` branch of `JesseLivingston1/jesselivingston-site`
-2. Repo Settings → Pages → Source: `main`, folder: `/`
-3. CNAME file in root already set to `jesselivingston.com`
+GitHub Pages on push to `main` (repo `JesseLivingston1/jesselivingston-site`). `CNAME` in root. Cloudflare DNS unchanged.
 
-**DNS (Cloudflare)**:
-- Remove Wix DNS records (A records, CNAME for www pointing to Wix)
-- Add GitHub Pages A records:
-  ```
-  185.199.108.153
-  185.199.109.153
-  185.199.110.153
-  185.199.111.153
-  ```
-- Add CNAME: `www` → `jesselivingston1.github.io`
-- Enable "Proxied" (orange cloud) on A records for Cloudflare SSL
-
----
-
-## SEO / Meta Tags
-Added to `<head>`:
-- `<meta name="description">` — search snippet
-- `<title>` — "Jesse Livingston — UX Researcher & Prototyper"
-- Open Graph tags (`og:title`, `og:description`, `og:image` → headshot.jpg)
-- Twitter card tags
-- Schema.org `Person` structured data (JSON-LD)
-- `<link rel="canonical" href="https://jesselivingston.com/">`
-
-## Mobile Nav
-`<ul class="nv" id="nv">` is a **sibling of `<nav>`**, not a child. This is intentional — placing it inside `<nav>` caused `backdrop-filter` to create a stacking context that made the mobile dropdown background transparent.
-
-Mobile open state (`.nv.mob`) requires `height:auto` explicitly — without it, the desktop `height:64px` rule overrides `bottom:0` and collapses the menu.
-
-## Experience Timeline Mobile Layout
-The timeline wrapper has `class="exp-tl"`. On mobile (`max-width:768px`):
-- Rows stack vertically (`flex-direction:column`)
-- Date column goes full-width, left-aligned above company name
-- Vertical line/dot column is hidden
-- Content is full-width, no squishing
-
-Date text is purple (`var(--pl)`) on mobile only — overrides the `#fff` inline style via `.tl .te-date div` in the `@media(max-width:768px)` block.
-
-CSS rule lives in the main `@media(max-width:900px)` block as a separate `@media(max-width:768px)` block.
-
-## Experience Timeline
-8 roles in chronological order (newest first):
-1. Freelance — Jan 2021–Present
-2. ServiceNow — Aug 2024–Mar 2026
-3. Microsoft — Mar–Aug 2024
-4. Velir Studios — Jan 2023–Mar 2024
-5. Netflix — Jun–Nov 2020
-6. LinkedIn — Nov 2016–Jun 2020
-7. Think Company — Apr 2015–Nov 2016
-8. Haystack — Jan 2014–Mar 2015
-
-## Hero Stats
-Displayed as two cards below the hero paragraph: "11+ Years Experience" and "80+ Studies Led". Search `.crd` to find them.
-
-## Common Edits
-- **Portfolio password**: not in the repo (case studies are encrypted, password private). To rotate it, re-encrypt the modals with a new password (see the transform in saga-monorepo `agent-interview-test/portfolio-transform.js`)
-- **Pricing**: Search `$3–10K`, `$8–18K`, `$8–14K`
-- **Contact email**: Search `jesse@jesselivingston.com`
-- **Case study content**: Inside `<div class="mo" id="modal-{company}">` blocks
-- **Experience timeline**: Inside `<div class="tp" id="page-experience">`
-- **Prototype data**: JS constants `THEMES`, `RECIPIENTS`, `SLIDES`, `BRIEFS`, `BRIDGES`
-- **Prototype step labels**: `STEP_IDS` and `STEP_LABELS` arrays
-
----
-
-## Agent Tollbooth (added)
-**Files**: `agent-detect.js` (root), loaded by one `<script src="/agent-detect.js" data-endpoint="/agent-event">` tag immediately before `</body>`. Backend is a Cloudflare Worker (`saga-monorepo/agent-interview-test/concierge/worker/`) that owns `/agent-event` (POST, logs) and `/agent-log` (GET, gated read) via routes on the proxied domain.
-
-**What it does**: detects a likely automated agent client-side, then **observes quietly for ~75s** — it does *not* interrupt on arrival; we want to see what the agent actually does first. When the window elapses (or earlier once it's taken a few actions / shows exit intent), it shows a full-screen interstitial that hides + `inert`s the rest of the page **for that one visitor's session only**, anchored on the observed journey ("you looked at Services → Portfolio…"). Structured interview, framed as the fast + accurate way to brief their operator (never "I have secret info"): **(1)** what did you come to do (intent) → **(2)** did you find everything (gaps) → **(3)** if not, **deliver the relevant on-site content inline** — read live from the (blocked) page via `textContent`, so it's accurate and current — or honestly say it isn't here (never guess), then ask whether that covers it (separates *hard-to-find* from *not-here*) → **(4)** accuracy gate — "what are you reporting back about Jesse? I'll flag anything off" (captures mental model / impression, and is the hook for correcting misinformation later). Then it restores the page on the tab it routed to.
-
-**Detection**: layered confidence — static (agent/automation/headless UA or flags) + behavioral (scripted/untrusted events, action-without-mouse, superhuman timing). Organic mouse/scroll/typing counts as *human evidence* and de-escalates.
-
-**Human safety (important)**:
-- Never gates someone who looks human: requires a *strong* signal, AND if human evidence appears during the observe window the intercept is aborted (`intercept-aborted-human`). The delay therefore also *lowers* false-positives.
-- Always shows a prominent **"I'm not an agent — let me through"** button that dismisses immediately and logs the full signal set (so false-positives train detection).
-- Controls: `?agent=off` (disable) · `?agent=force` (gate now) · `?toll=observe` (always observe→intercept, for the friend test) · `?toll-delay=SEC` (shorten the window for testing). Default window tunable via `data-delay` (ms) on the script tag.
-- Purely additive — changes **no** existing content/styles/behavior. Only HTML change is the one `<script>` tag. To revert: delete `agent-detect.js` + that tag.
+## Open / to confirm
+- **LinkedIn URL:** `/in/jesseliv` (confirmed by Jesse 2026-06-20).
+- **Contact email:** **not displayed** anywhere (removed by request 2026-06-20); the Web3Forms form (delivers to Jesse's inbox) + LinkedIn are the only contact channels.
