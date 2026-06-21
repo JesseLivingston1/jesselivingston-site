@@ -179,41 +179,19 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 <script>
 (function(){
-  var TOC = 1; // index of the Selected Work / TOC slide
-  // Slide indices (0-based) for each case study title
-  var TARGETS = {'Saga': 2, 'Microsoft Copilot': 8, 'LinkedIn Talent Insights': 14, 'Treehouse': 22};
+  // Slide indices after cover removal (Selected Work = 0)
+  var TARGETS = {'Saga': 1, 'Microsoft Copilot': 7, 'LinkedIn Talent Insights': 13, 'Treehouse': 21};
 
-  function init() {
-    var stage = document.querySelector('deck-stage');
-    if (!stage || typeof stage.goTo !== 'function') { setTimeout(init, 300); return; }
-
-    var slides = Array.from(stage.children);
-
-    // Mark cover slide as skipped (native deck mechanism)
-    if (!slides[0].hasAttribute('data-deck-skip')) {
-      stage._toggleSkip(0);
-    }
-
-    // Start on the TOC
-    stage.goTo(TOC);
-
-    // Prevent navigating back to the skipped cover
-    var origPrev = stage.__proto__.prev;
-    stage.prev = function() { if (this.index <= TOC) return; origPrev.call(this); };
-
-    // Wire TOC item clicks
-    var toc = slides[TOC];
+  function wireLinks(stage) {
+    var toc = stage.children[0];
     Object.keys(TARGETS).forEach(function(name) {
       var idx = TARGETS[name];
       var walker = document.createTreeWalker(toc, NodeFilter.SHOW_TEXT, null, false);
       var node;
       while ((node = walker.nextNode())) {
         if (node.textContent.trim() === name) {
-          var el = node.parentElement;
-          for (var i = 0; i < 6 && el && el !== toc; i++) {
-            if (el.getBoundingClientRect().width > 300) break;
-            el = el.parentElement;
-          }
+          // Text node -> SPAN -> row DIV (confirmed 2-hop target)
+          var el = node.parentElement && node.parentElement.parentElement;
           if (el && el !== toc) {
             el.style.cursor = 'pointer';
             el.addEventListener('mouseenter', function(){ this.style.opacity = '0.75'; });
@@ -226,6 +204,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       }
     });
+  }
+
+  function init() {
+    var stage = document.querySelector('deck-stage');
+    if (!stage || typeof stage.goTo !== 'function') { setTimeout(init, 300); return; }
+    var slides = Array.from(stage.children);
+    if (slides.length < 5) { setTimeout(init, 300); return; }
+
+    // Remove the cover slide entirely from the DOM
+    slides[0].remove();
+
+    // Give the web component one tick to register the slot change
+    setTimeout(function() {
+      stage.goTo(0);
+      wireLinks(stage);
+    }, 100);
   }
 
   window.addEventListener('load', function(){ setTimeout(init, 800); });
