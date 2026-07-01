@@ -187,13 +187,15 @@
   var err = document.getElementById('gate-err');
   var desk = document.getElementById('deskonly');
   function isMobile(){ return window.matchMedia('(max-width:768px)').matches; }
-  function unlocked(){ try { return localStorage.getItem('jl_pf_ok') === '1'; } catch(e){ return false; } }
+  // sessionStorage (not localStorage): the unlock lasts for the browsing session but clears when the
+  // browser is closed, so a returning visitor is asked for the password again.
+  function unlocked(){ try { return sessionStorage.getItem('jl_pf_ok') === '1'; } catch(e){ return false; } }
   function openPdf(){ window.open(PDF, '_blank', 'noopener'); }
   // On a small screen, don't open the deck (or the gate) — the case studies are a poor mobile
   // experience. Nudge to desktop instead, regardless of unlock state.
   function open(e){ if(e && e.preventDefault) e.preventDefault(); if(isMobile()){ desk.style.display='flex'; return; } if(unlocked()){ openPdf(); return; } err.style.display='none'; pw.value=''; gate.style.display='flex'; setTimeout(function(){ pw.focus(); }, 30); }
   function close(){ gate.style.display='none'; }
-  function submit(){ if((pw.value||'').trim().toLowerCase() === PASS){ try { localStorage.setItem('jl_pf_ok','1'); } catch(e){} close(); openPdf(); } else { err.style.display='block'; } }
+  function submit(){ if((pw.value||'').trim().toLowerCase() === PASS){ try { sessionStorage.setItem('jl_pf_ok','1'); } catch(e){} close(); openPdf(); } else { err.style.display='block'; } }
   document.querySelectorAll('[data-gate]').forEach(function(el){ el.addEventListener('click', open); });
   document.getElementById('gate-submit').addEventListener('click', submit);
   document.getElementById('gate-cancel').addEventListener('click', close);
