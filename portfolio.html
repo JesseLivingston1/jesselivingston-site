@@ -157,6 +157,18 @@
   </div>
 </div>
 
+<!-- DESKTOP-ONLY NUDGE — the case-study decks are a poor experience on a small screen -->
+<div id="deskonly" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(13,42,36,0.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:24px;">
+  <div style="background:#F4EFE4;border:1px solid #E1D8C6;border-radius:18px;padding:34px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 30px 70px -20px rgba(0,0,0,0.45);">
+    <div style="width:46px;height:46px;border-radius:999px;background:#DCE6D9;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16584A" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+    </div>
+    <h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:24px;letter-spacing:-0.02em;margin:0 0 10px;color:#122231;">Best viewed on desktop</h3>
+    <p style="font-size:15px;line-height:1.55;color:#5E6B63;margin:0 0 22px;">The case studies are detailed, visual decks that really shine on a bigger screen. For the best experience, head to a desktop or laptop.</p>
+    <button id="deskonly-ok" style="width:100%;background:#123A33;color:#EDE7DA;border:none;border-radius:999px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Got it</button>
+  </div>
+</div>
+
 <!-- FOOTER (same on every page) -->
 <footer style="background:#0d2a24;color:#fff;padding:26px 40px;">
   <div style="max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;">
@@ -173,14 +185,20 @@
   var gate = document.getElementById('gate');
   var pw = document.getElementById('gate-pw');
   var err = document.getElementById('gate-err');
+  var desk = document.getElementById('deskonly');
+  function isMobile(){ return window.matchMedia('(max-width:768px)').matches; }
   function unlocked(){ try { return localStorage.getItem('jl_pf_ok') === '1'; } catch(e){ return false; } }
   function openPdf(){ window.open(PDF, '_blank', 'noopener'); }
-  function open(e){ if(e && e.preventDefault) e.preventDefault(); if(unlocked()){ openPdf(); return; } err.style.display='none'; pw.value=''; gate.style.display='flex'; setTimeout(function(){ pw.focus(); }, 30); }
+  // On a small screen, don't open the deck (or the gate) — the case studies are a poor mobile
+  // experience. Nudge to desktop instead, regardless of unlock state.
+  function open(e){ if(e && e.preventDefault) e.preventDefault(); if(isMobile()){ desk.style.display='flex'; return; } if(unlocked()){ openPdf(); return; } err.style.display='none'; pw.value=''; gate.style.display='flex'; setTimeout(function(){ pw.focus(); }, 30); }
   function close(){ gate.style.display='none'; }
   function submit(){ if((pw.value||'').trim().toLowerCase() === PASS){ try { localStorage.setItem('jl_pf_ok','1'); } catch(e){} close(); openPdf(); } else { err.style.display='block'; } }
   document.querySelectorAll('[data-gate]').forEach(function(el){ el.addEventListener('click', open); });
   document.getElementById('gate-submit').addEventListener('click', submit);
   document.getElementById('gate-cancel').addEventListener('click', close);
+  document.getElementById('deskonly-ok').addEventListener('click', function(){ desk.style.display='none'; });
+  desk.addEventListener('click', function(e){ if(e.target === desk) desk.style.display='none'; });
   gate.addEventListener('click', function(e){ if(e.target === gate) close(); });
   pw.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
 })();
