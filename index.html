@@ -63,13 +63,11 @@
       <span></span><span></span><span></span>
     </button>
     <nav id="mobilemenu" onclick="if(event.target.closest('a'))this.style.display='none';">
-      <a class="nl" href="/#about">About</a>
       <a class="nl" href="/experience.html">Experience</a>
       <a class="nl" href="/portfolio.html">Portfolio</a>
       <a class="nl" href="/services.html">Services</a>
     </nav>
     <nav id="navlinks" style="display:flex;align-items:center;gap:30px;font-size:14.5px;color:#34424B;">
-      <a class="nl" href="/#about">About</a>
       <a class="nl" href="/experience.html">Experience</a>
       <a class="nl" href="/portfolio.html">Portfolio</a>
       <a class="nl" href="/services.html">Services</a>
@@ -84,7 +82,7 @@
     <div style="flex:1.25;">
       <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#16584A;margin-bottom:22px;">UX Researcher & Builder</div>
       <h1 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:48px;line-height:1.08;letter-spacing:-0.03em;margin:0 0 24px;text-wrap:balance;">I research what's worth building. Now I build it too.</h1>
-      <p style="font-size:18px;line-height:1.6;color:#34424B;margin:0 0 40px;max-width:580px;">I come from a design background and spent 11 years in UX research, finding the foundational questions teams skip, across LinkedIn, Netflix, Microsoft, and ServiceNow. Now, with AI coding tools, I build the products too instead of just specifying them: Saga, Aria, and Corpus.</p>
+      <p style="font-size:18px;line-height:1.6;color:#34424B;margin:0 0 40px;max-width:580px;">I come from a design background and spent 12 years in UX research, finding the foundational questions teams skip, across LinkedIn, Netflix, Microsoft, and ServiceNow. Now, with AI coding tools, I build research tools and prototypes based on the gaps I see in our tooling.</p>
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
         <a class="btn-d" href="/contact.html" style="background:#123A33;color:#EDE7DA;padding:14px 26px;border-radius:999px;font-weight:500;font-size:15.5px;">Start a conversation →</a>
         <a class="btn-o" href="/portfolio.html" style="padding:14px 24px;border-radius:999px;font-weight:500;font-size:15.5px;border:1px solid #C9B99F;color:#122231;">See what I've built</a>
@@ -104,21 +102,18 @@
   </div>
 </section>
 
-<!-- ABOUT (green band) -->
-<section id="about" style="padding:84px 40px;background:#123A33;color:#fff;">
+<!-- WHAT I'VE BUILT (green band) -->
+<section id="built" style="padding:84px 40px;background:#123A33;color:#fff;">
   <div style="max-width:1140px;margin:0 auto;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#9FD3BF;margin-bottom:16px;">About</div>
-    <h2 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:42px;line-height:1.06;letter-spacing:-0.03em;margin:0 0 36px;max-width:760px;text-wrap:balance;color:#fff;">The most important questions are usually the simplest.</h2>
-    <div style="display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap;">
-      <div style="flex:1.1;min-width:300px;display:flex;flex-direction:column;gap:18px;">
-        <p style="font-size:18px;line-height:1.6;color:#fff;margin:0;">I'm drawn to foundational questions, the ones that sound almost too basic to ask: who is this really for? What do they actually need? Is this worth building? In my experience, those simple questions are the ones that decide everything else.</p>
-        <p style="font-size:18px;line-height:1.6;color:#fff;margin:0;">That's how I ran research for LinkedIn Talent Insights, <strong style="font-weight:600;color:#fff;">the fastest product to reach $50M in revenue in LinkedIn's history</strong>. It's also the instinct behind what I build now. Saga, Aria, and Corpus each started as a problem I kept running into in the research itself.</p>
-      </div>
-      <div style="flex:1;min-width:300px;background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:16px;padding:28px 30px;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#9FD3BF;margin-bottom:14px;">DESIGN → RESEARCH → BUILD</div>
-        <p style="font-size:16.5px;line-height:1.6;color:#fff;margin:0;">I started in design, then spent over a decade in UX research learning what makes a product worth building. AI coding tools closed the last gap: now I can build the tools I used to only sketch and spec, and put them in front of real users.</p>
-      </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#9FD3BF;margin-bottom:16px;">What I've built</div>
+    <h2 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:34px;line-height:1.1;letter-spacing:-0.025em;margin:0 0 14px;max-width:760px;text-wrap:balance;color:#fff;">Research problems, turned into products.</h2>
+    <p style="font-size:18px;line-height:1.55;color:#fff;margin:0 0 40px;max-width:680px;">I've always had an eye to spot research tools that should exist, but don't. Now, I can finally build them.</p>
+    <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;"><h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Saga</h3><p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0;">AI-moderated interviews that run continuously and score every session against a fixed rubric.</p><a href="https://saga-dashboard.onrender.com/#/dashboard" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9FD3BF;border-bottom:1px solid rgba(159,211,191,0.4);padding-bottom:2px;">Open the live demo →</a><div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.7);">demo@sagainsights.ai&nbsp;·&nbsp;saga-demo-2026<br><span style="color:rgba(255,255,255,0.48);">first load ~30s</span></div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;"><h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Aria</h3><p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0;">A research communication workflow that turns raw findings into compellings stories.</p><a href="/prototypes/aria/" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9FD3BF;border-bottom:1px solid rgba(159,211,191,0.4);padding-bottom:2px;">Try the prototype →</a></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;"><h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Corpus</h3><p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0;">A searchable research library and communications platform so past studies stay findable and reusable.</p><a href="/prototypes/corpus/" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9FD3BF;border-bottom:1px solid rgba(159,211,191,0.4);padding-bottom:2px;">Try the prototype →</a></div>
     </div>
+    <a class="btn-l" href="/portfolio.html" style="display:inline-block;margin-top:32px;background:#EDE7DA;color:#123A33;padding:13px 24px;border-radius:999px;font-weight:600;font-size:15px;">See the work →</a>
   </div>
 </section>
 
@@ -134,21 +129,6 @@
       <div style="border-top:2px solid #16584A;padding-top:16px;"><div style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;color:#122231;margin-bottom:6px;">Targeted</div><div style="font-size:14px;line-height:1.5;color:#5E6B63;">Specific insights to specific people.</div></div>
       <div style="border-top:2px solid #16584A;padding-top:16px;"><div style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;color:#122231;margin-bottom:6px;">Timely</div><div style="font-size:14px;line-height:1.5;color:#5E6B63;">Deliver insights when decisions are made.</div></div>
     </div>
-  </div>
-</section>
-
-<!-- WHAT I'VE BUILT (green band) -->
-<section id="built" style="padding:84px 40px;background:#123A33;color:#fff;">
-  <div style="max-width:1140px;margin:0 auto;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#9FD3BF;margin-bottom:16px;">What I've built</div>
-    <h2 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:34px;line-height:1.1;letter-spacing:-0.025em;margin:0 0 14px;max-width:760px;text-wrap:balance;color:#fff;">Research problems, turned into products.</h2>
-    <p style="font-size:18px;line-height:1.55;color:#fff;margin:0 0 40px;max-width:680px;">The tools I kept wishing existed while doing the work. I designed and built each one with AI coding tools.</p>
-    <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;"><h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Saga</h3><p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0;">AI-moderated interviews that run continuously and score every session against a fixed rubric.</p><a href="https://saga-dashboard.onrender.com/#/dashboard" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9FD3BF;border-bottom:1px solid rgba(159,211,191,0.4);padding-bottom:2px;">Open the live demo →</a><div style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.7);">demo@sagainsights.ai&nbsp;·&nbsp;saga-demo-2026<br><span style="color:rgba(255,255,255,0.48);">first load ~30s</span></div></div>
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;"><h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Aria</h3><p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0;">A research communication workflow that turns raw findings into targeted, on-time stories.</p><a href="/prototypes/aria/" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9FD3BF;border-bottom:1px solid rgba(159,211,191,0.4);padding-bottom:2px;">Try the prototype →</a></div>
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;"><h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Corpus</h3><p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0;">A searchable research library so past studies stay findable and reusable.</p><a href="/prototypes/corpus/" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:#9FD3BF;border-bottom:1px solid rgba(159,211,191,0.4);padding-bottom:2px;">Try the prototype →</a></div>
-    </div>
-    <a class="btn-l" href="/portfolio.html" style="display:inline-block;margin-top:32px;background:#EDE7DA;color:#123A33;padding:13px 24px;border-radius:999px;font-weight:600;font-size:15px;">See the work →</a>
   </div>
 </section>
 
