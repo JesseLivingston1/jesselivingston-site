@@ -3,12 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8f7f5" />
     <title>SubNote | Corpus</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%23123a33'/></svg>" />
+    <style>
+      body { background: #f8f7f5; }
+      /* Soft password gate — shares the portfolio's session key (jl_pf_ok) + password */
+      html.jl-gated #root { display: none !important; }
+      #jl-gate { position: fixed; inset: 0; z-index: 2147483647; display: none;
+        align-items: center; justify-content: center; padding: 24px;
+        background: rgba(13,42,36,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+      html.jl-gated #jl-gate { display: flex; }
+      #jl-gate .jl-card { width: 100%; max-width: 400px; background: #F4EFE4; border: 1px solid #E1D8C6;
+        border-radius: 16px; padding: 32px 30px; box-shadow: 0 20px 60px rgba(13,42,36,0.35); }
+      #jl-gate h3 { font-family: Georgia, 'Source Serif 4', serif; font-weight: 800; font-size: 25px;
+        letter-spacing: -0.02em; margin: 0 0 10px; color: #122231; }
+      #jl-gate p { font-size: 14.5px; line-height: 1.5; color: #5E6B63; margin: 0 0 18px; }
+      #jl-gate input { width: 100%; border: 1px solid #C9B99F; border-radius: 10px; padding: 13px 15px;
+        font-size: 15px; background: #fff; color: #122231; margin-bottom: 10px; outline: none;
+        font-family: inherit; }
+      #jl-gate input:focus { border-color: #123A33; }
+      #jl-gate .jl-err { display: none; font-size: 13px; color: #D8553A; margin-bottom: 10px; }
+      #jl-gate button { width: 100%; background: #123A33; color: #EDE7DA; border: none; border-radius: 999px;
+        padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    </style>
+    <script>
+      /* Gate BEFORE the app mounts: hide #root if this session isn't unlocked. */
+      (function(){ try { if (sessionStorage.getItem('jl_pf_ok') !== '1') document.documentElement.className += ' jl-gated'; } catch(e){ document.documentElement.className += ' jl-gated'; } })();
+    </script>
     <script type="module" crossorigin src="./assets/index-BQjV2whh.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CMGohzld.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
+    <div id="jl-gate">
+      <div class="jl-card">
+        <h3>Enter the password</h3>
+        <p>This prototype is private. Enter the access password, or get in touch and I'll share it.</p>
+        <input id="jl-pw" type="password" placeholder="Password" autocomplete="off" aria-label="Password" />
+        <div class="jl-err" id="jl-err">That's not it. Try again.</div>
+        <button id="jl-go">Unlock</button>
+      </div>
+    </div>
+    <script>
+      (function(){
+        var PASS = 'livingston2026!';
+        function unlock(){ try { sessionStorage.setItem('jl_pf_ok','1'); } catch(e){}
+          document.documentElement.className = document.documentElement.className.replace(/\bjl-gated\b/,'').trim(); }
+        function tryPw(){ var v = (document.getElementById('jl-pw').value||'').trim().toLowerCase();
+          if (v === PASS) { unlock(); } else { document.getElementById('jl-err').style.display = 'block'; } }
+        var go = document.getElementById('jl-go'), pw = document.getElementById('jl-pw');
+        if (go) go.addEventListener('click', tryPw);
+        if (pw) pw.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryPw(); });
+        if (document.documentElement.className.indexOf('jl-gated') > -1) { setTimeout(function(){ if (pw) pw.focus(); }, 50); }
+      })();
+    </script>
   </body>
 </html>
