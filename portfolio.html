@@ -28,8 +28,9 @@
     2. Do NOT change the <tags>, the style="..." values, or the class names.
     3. Save the file, then refresh your browser to see it.
     4. To publish to the live site, commit and push to GitHub (it redeploys automatically).
-  SECTIONS ON THIS PAGE, IN ORDER:  HEADER / NAV  >  SELECTED WORK (4 cards: Saga, Copilot, LinkedIn, Treehouse)  >  BUILT PRODUCTS (3 ungated prototype cards -> /prototypes/*)  >  PASSWORD GATE  >  FOOTER
+  SECTIONS ON THIS PAGE, IN ORDER:  HEADER / NAV  >  TAB TOGGLE (Portfolio / Prototypes)  >  SELECTED WORK (4 cards: Saga, Copilot, LinkedIn, Treehouse)  >  PROTOTYPES (3 ungated prototype cards -> /prototypes/*, desktop-only nudge on mobile)  >  PASSWORD GATE  >  FOOTER
   The portfolio password and the PDF link live in the <script> at the very bottom of this file.
+  Portfolio and Prototypes are two tabs on this one page (toggled by the script near the bottom) — only one section is visible at a time.
 -->
 <!-- HEADER / NAV (same on every page) -->
 <header style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(244,239,228,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #E1D8C6;">
@@ -61,8 +62,18 @@
   </div>
 </header>
 
+<!-- TAB TOGGLE -->
+<div style="padding:124px 40px 32px;">
+  <div style="max-width:1140px;margin:0 auto;">
+    <div id="tabnav" role="tablist" style="display:inline-flex;gap:4px;background:#EDE4D2;border:1px solid #E1D8C6;border-radius:999px;padding:4px;">
+      <button type="button" class="tab-btn" data-tab="portfolio" role="tab" aria-selected="true" style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.04em;padding:9px 22px;border:none;border-radius:999px;cursor:pointer;background:#123A33;color:#EDE7DA;">Portfolio</button>
+      <button type="button" class="tab-btn" data-tab="prototypes" role="tab" aria-selected="false" style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.04em;padding:9px 22px;border:none;border-radius:999px;cursor:pointer;background:transparent;color:#34424B;">Prototypes</button>
+    </div>
+  </div>
+</div>
+
 <!-- SELECTED WORK (gated) -->
-<section id="work" style="padding:124px 40px 84px;">
+<section id="work" data-panel="portfolio" style="padding:32px 40px 84px;">
   <div style="max-width:1140px;margin:0 auto;">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px;">
       <div>
@@ -138,23 +149,22 @@
 </section>
 
 <!-- BUILT PRODUCTS (ungated interactive prototypes) -->
-<section id="prototypes" style="padding:84px 40px;background:#123A33;color:#fff;">
+<section id="prototypes" data-panel="prototypes" style="display:none;padding:40px 40px 84px;background:#123A33;color:#fff;">
   <div style="max-width:1140px;margin:0 auto;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#9FD3BF;margin-bottom:16px;">Built products</div>
-    <h2 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:34px;line-height:1.1;letter-spacing:-0.025em;margin:0 0 14px;max-width:760px;text-wrap:balance;color:#fff;">Don't take my word for it. Click around.</h2>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#9FD3BF;margin-bottom:16px;">Prototypes</div>
     <p style="font-size:18px;line-height:1.55;color:#fff;margin:0 0 40px;max-width:680px;">Working prototypes of the three products I designed and built. Each runs entirely in your browser on sample data, so explore freely.</p>
     <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
-      <a href="/prototypes/saga/" target="_blank" rel="noopener" style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;display:flex;flex-direction:column;">
+      <a href="/prototypes/saga/" target="_blank" rel="noopener" data-desktop-only style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;display:flex;flex-direction:column;">
         <h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Saga</h3>
         <p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0 0 18px;">AI-moderated interviews that run continuously and score every session against a fixed rubric.</p>
         <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#9FD3BF;">LIVE PRODUCT · SANDBOX DEMO →</span>
       </a>
-      <a href="/prototypes/aria/" target="_blank" rel="noopener" style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;display:flex;flex-direction:column;">
+      <a href="/prototypes/aria/" target="_blank" rel="noopener" data-desktop-only style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;display:flex;flex-direction:column;">
         <h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Aria</h3>
         <p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0 0 18px;">A research communication workflow that turns raw findings into targeted, on-time stories.</p>
         <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#9FD3BF;">INTERACTIVE PROTOTYPE · SAMPLE DATA →</span>
       </a>
-      <a href="/prototypes/corpus/" target="_blank" rel="noopener" style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;display:flex;flex-direction:column;">
+      <a href="/prototypes/corpus/" target="_blank" rel="noopener" data-desktop-only style="background:rgba(255,255,255,0.05);border:1px solid rgba(191,224,210,0.2);border-radius:14px;padding:26px 28px;display:flex;flex-direction:column;">
         <h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:21px;margin:0 0 8px;color:#fff;">Corpus</h3>
         <p style="font-size:14.5px;line-height:1.5;color:#fff;margin:0 0 18px;">A searchable research library so past studies stay findable and reusable.</p>
         <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#9FD3BF;">INTERACTIVE PROTOTYPE · SAMPLE DATA →</span>
@@ -188,7 +198,7 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16584A" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
     </div>
     <h3 style="font-family:'Source Serif 4',serif;font-weight:900;font-size:24px;letter-spacing:-0.02em;margin:0 0 10px;color:#122231;">Best viewed on desktop</h3>
-    <p style="font-size:15px;line-height:1.55;color:#5E6B63;margin:0 0 22px;">The case studies are detailed, visual decks that really shine on a bigger screen. For the best experience, head to a desktop or laptop.</p>
+    <p style="font-size:15px;line-height:1.55;color:#5E6B63;margin:0 0 22px;">This is a detailed, interactive experience that really shines on a bigger screen. For the best experience, head to a desktop or laptop.</p>
     <button id="deskonly-ok" style="width:100%;background:#123A33;color:#EDE7DA;border:none;border-radius:999px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Got it</button>
   </div>
 </div>
@@ -202,6 +212,24 @@
 </footer>
 
 <script>
+/* Portfolio / Prototypes tab toggle */
+(function(){
+  var tabs = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('[data-panel]');
+  function activate(name, push){
+    panels.forEach(function(p){ p.style.display = (p.getAttribute('data-panel') === name) ? '' : 'none'; });
+    tabs.forEach(function(t){
+      var on = t.getAttribute('data-tab') === name;
+      t.style.background = on ? '#123A33' : 'transparent';
+      t.style.color = on ? '#EDE7DA' : '#34424B';
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if (push) history.replaceState(null, '', '#' + name);
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ activate(t.getAttribute('data-tab'), true); }); });
+  activate(location.hash === '#prototypes' ? 'prototypes' : 'portfolio', false);
+})();
+
 /* Portfolio password gate (soft, client-side) → opens the case-study PDF */
 (function(){
   var PASS = 'livingston2026!';                       // configurable
@@ -221,6 +249,9 @@
   function close(){ gate.style.display='none'; }
   function submit(){ if((pw.value||'').trim().toLowerCase() === PASS){ try { sessionStorage.setItem('jl_pf_ok','1'); } catch(e){} close(); openPdf(); } else { err.style.display='block'; } }
   document.querySelectorAll('[data-gate]').forEach(function(el){ el.addEventListener('click', open); });
+  // Prototype links aren't gated, but they're still a poor experience on a small screen —
+  // nudge to desktop instead of letting the tap open the prototype.
+  document.querySelectorAll('[data-desktop-only]').forEach(function(el){ el.addEventListener('click', function(e){ if(isMobile()){ e.preventDefault(); desk.style.display='flex'; } }); });
   document.getElementById('gate-submit').addEventListener('click', submit);
   document.getElementById('gate-cancel').addEventListener('click', close);
   document.getElementById('deskonly-ok').addEventListener('click', function(){ desk.style.display='none'; });
