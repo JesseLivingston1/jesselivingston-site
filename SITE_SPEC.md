@@ -54,7 +54,7 @@ Static **multi-page** marketing/portfolio site for jesselivingston.com. No build
 ## Design tokens
 - **Color:** page cream `#F4EFE4`, panel `#FBF8F2`, border `#E1D8C6`, divider `#E7DECB`, ink `#122231`, body `#34424B`, secondary `#5E6B63`, forest `#123A33`, forest-deep `#0D2A24`, green accent `#16584A`, mint `#9FD3BF`, coral `#D8553A`, sand label `#9E8A6C`. On forest/green bands, **body text is white (`#fff`)** for legibility — the muted `forest-body #9DB3AB` is retired for body copy; mint `#9FD3BF` stays for small kicker labels only.
 - **Type:** Source Serif 4 (900, headings), DM Sans (body), JetBrains Mono (uppercase kickers / labels / data). `text-wrap:balance` on headings.
-- **Voice:** plain, measured, first person. **No em dashes.** Say "users"/"participants", not "people". Identity string site-wide is **"UX Researcher & Builder"** (was "UX Researcher & Founder of Saga").
+- **Voice:** plain, measured, first person. **No em dashes.** Say "users"/"participants", not "people". **Avoid stock AI-sounding constructions** (2026-09 cleanup of the site and the case-study deck `assets/jl-portfolio.html`): no "it wasn't X, it was Y" contrasts, no "The answer?" style rhetorical setups, no "X, not Y" taglines, no one-line aphorisms, no filler adjectives like "robust" or "gold standard". State the finding directly. Identity string site-wide is **"UX Researcher & Builder"** (was "UX Researcher & Founder of Saga").
 
 ## Preserved from the prior site
 - **SEO:** title / description / canonical / Open Graph / Twitter / JSON-LD in `<head>` (updated copy; og:image still `/images/headshot.jpg`).
